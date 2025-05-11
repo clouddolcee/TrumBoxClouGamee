@@ -6,8 +6,6 @@
     <title>Cloud Game PC - Thuê Trên Điện Thoại</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -141,6 +139,70 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.8rem;
+        }
+        .admin-section {
+            background: rgba(40, 40, 40, 0.9);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 10px;
+            border: 1px solid #FFD700;
+        }
+        .admin-section h3 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .admin-section label {
+            display: block;
+            margin: 0.5rem 0 0.2rem;
+            color: #FFD700;
+            font-size: 0.9rem;
+        }
+        .admin-section input,
+        .admin-section textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            background: #2c2c2c;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        .admin-section button {
+            background: #FFD700;
+            color: #1a1a1a;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            transition: background 0.3s ease;
+        }
+        .admin-section button:hover {
+            background: #e6c200;
+        }
+        .admin-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .admin-section th,
+        .admin-section td {
+            border: 1px solid #FFD700;
+            padding: 0.8rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .admin-section th {
+            background: #FFD700;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        .admin-section td button {
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
         }
         .pricing {
             display: flex;
@@ -313,6 +375,12 @@
             color: #d0d0d0;
             margin: 0.3rem 0;
         }
+        .modal-content p.note {
+            font-size: 0.85rem;
+            color: #FF4500;
+            font-weight: 500;
+            text-align: left;
+        }
         .modal-content a {
             color: #FFD700;
             text-decoration: none;
@@ -334,52 +402,6 @@
         .modal-content .success {
             color: #FFD700;
         }
-        #adminManagement {
-            display: none;
-        }
-        #adminLink {
-            display: none;
-        }
-        .admin-subsection {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(40, 40, 40, 0.9);
-            border-radius: 8px;
-        }
-        .admin-subsection h4 {
-            font-family: 'Montserrat', sans-serif;
-            color: #FFD700;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .admin-subsection .item {
-            background: #2c2c2c;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        .admin-subsection button {
-            background: #FFD700;
-            color: #1a1a1a;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .admin-subsection button.change-password {
-            background: #00CED1;
-        }
-        .admin-subsection button.delete,
-        .admin-subsection button.reject {
-            background: #FF4500;
-            color: white;
-        }
         footer {
             background: #0f0f0f;
             color: #FFD700;
@@ -387,8 +409,29 @@
             padding: 1rem;
             width: 100%;
         }
-
-        /* Mobile Styles */
+        .loading-spinner {
+            display: none;
+            border: 4px solid #FFD700;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        .notification {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid #FFD700;
+            font-size: 0.9rem;
+            color: #FFD700;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         @media (max-width: 768px) {
             header {
                 padding: 1.5rem 0.5rem;
@@ -442,6 +485,22 @@
             .section p {
                 font-size: 0.9rem;
             }
+            .admin-section {
+                padding: 1rem;
+            }
+            .admin-section h3 {
+                font-size: 1.1rem;
+            }
+            .admin-section table {
+                font-size: 0.8rem;
+            }
+            .admin-section th, .admin-section td {
+                padding: 0.5rem;
+            }
+            .admin-section button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
             .plan {
                 padding: 1rem;
             }
@@ -484,25 +543,14 @@
             .modal-content img.qr-code {
                 max-width: 120px;
             }
-            .admin-subsection {
-                padding: 0.8rem;
-            }
-            .admin-subsection h4 {
-                font-size: 1.1rem;
-            }
-            .admin-subsection .item {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .admin-subsection button {
-                padding: 0.5rem 0.8rem;
+            .modal-content p.note {
                 font-size: 0.8rem;
-                width: 100%;
-                margin-top: 0.5rem;
             }
             footer {
+                padding: 0.8rem;
+                font-size: 0.8rem;
+            }
+            .notification {
                 padding: 0.8rem;
                 font-size: 0.8rem;
             }
@@ -523,7 +571,6 @@
                 <a href="#pricing">Gói Dịch Vụ</a>
                 <a href="#about">Về Chúng Tôi</a>
                 <a href="#contact">Liên Hệ</a>
-                <a href="#adminManagement" id="adminLink">Quản Lý Admin</a>
             </div>
             <div class="wallet">
                 <span class="balance">Số dư: 0 VNĐ</span>
@@ -540,64 +587,99 @@
         </div>
     </nav>
     <div class="container">
+        <div id="notificationArea"></div>
         <div class="section" id="home">
             <h2>Chào Mừng</h2>
             <p>Chơi game PC yêu thích trên điện thoại với kết nối internet. Không cần cấu hình mạnh!</p>
+            <div class="admin-section" id="adminSection" style="display: none;">
+                <h3>Quản Lý Admin</h3>
+                <div>
+                    <h4>Tặng Số Dư</h4>
+                    <label for="giftId">ID Người Dùng</label>
+                    <input type="number" id="giftId" placeholder="VD: 123456">
+                    <label for="giftAmount">Số Tiền (VNĐ)</label>
+                    <input type="number" id="giftAmount" placeholder="VD: 10000">
+                    <button onclick="giftBalanceById()">Tặng</button>
+                    <p class="success" id="giftSuccess" style="display: none;">Tặng thành công!</p>
+                    <p class="error" id="giftError" style="display: none;"></p>
+                </div>
+                <div>
+                    <h4>Quản Lý Người Dùng</h4>
+                    <table id="userTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Player ID</th>
+                                <th>Số Dư</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>Chỉnh Gói Dịch Vụ</h4>
+                    <label for="trumboxPrice">Giá Thuê Trumbox (VNĐ/giờ)</label>
+                    <input type="number" id="trumboxPrice" placeholder="VD: 3000">
+                    <label for="trumboxDesc">Mô Tả Trumbox</label>
+                    <textarea id="trumboxDesc" placeholder="Mô tả gói Trumbox"></textarea>
+                    <label for="premiumPrice">Giá Gói Nâng Cao (VNĐ)</label>
+                    <input type="number" id="premiumPrice" placeholder="VD: 350000">
+                    <label for="premiumDesc">Mô Tả Gói Nâng Cao</label>
+                    <textarea id="premiumDesc" placeholder="Mô tả gói Nâng Cao"></textarea>
+                    <button onclick="updatePlans()">Cập Nhật Gói</button>
+                    <p class="success" id="planSuccess" style="display: none;">Cập nhật thành công!</p>
+                    <p class="error" id="planError" style="display: none;"></p>
+                </div>
+                <div>
+                    <h4>Thông Báo Hệ Thống</h4>
+                    <label for="notificationMessage">Nội Dung Thông Báo</label>
+                    <textarea id="notificationMessage" placeholder="VD: Server bảo trì 22h-23h"></textarea>
+                    <button onclick="sendNotification()">Gửi</button>
+                    <p class="success" id="notificationSuccess" style="display: none;">Gửi thành công!</p>
+                    <p class="error" id="notificationError" style="display: none;"></p>
+                </div>
+                <div>
+                    <h4>Lịch Sử Giao Dịch</h4>
+                    <table id="transactionTable">
+                        <thead>
+                            <tr>
+                                <th>Player ID</th>
+                                <th>Loại</th>
+                                <th>Số Tiền</th>
+                                <th>Thời Gian</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="section" id="pricing">
             <h2>Gói Dịch Vụ</h2>
             <div class="pricing">
-                <div class="plan recommended">
+                <div class="plan recommended" id="trumboxPlan">
                     <h3>Thuê Máy Trumbox</h3>
                     <p class="price">3.000 VNĐ/giờ</p>
                     <p class="subscribers">1,234 người thuê</p>
                     <p>Chơi không giới hạn game.</p>
                     <p>Hỗ trợ trên mọi thiết bị.</p>
                     <p>Băng thông ổn định, độ trễ thấp.</p>
-                    <button onclick="rentTrumbox()">Thuê Ngay</button>
+                    <button onclick="rentTrumbox(event)">Thuê Ngay</button>
+                    <div class="loading-spinner" id="trumboxSpinner"></div>
                 </div>
-                <div class="plan">
+                <div class="plan" id="premiumPlan">
                     <h3>Gói Nâng Cao</h3>
                     <p class="price">350.000 VNĐ/Vĩnh Viễn</p>
                     <p class="subscribers">567 người thuê</p>
                     <p>Truy cập toàn bộ game.</p>
                     <p>Hỗ trợ độ phân giải 4K.</p>
                     <p>Máy chủ VIP.</p>
-                    <button onclick="purchasePlan('Gói Nâng Cao', 350000)">Mua Gói</button>
+                    <button onclick="purchasePlan('Gói Nâng Cao', 350000, event)">Mua Gói</button>
+                    <div class="loading-spinner" id="premiumSpinner"></div>
                 </div>
             </div>
-        </div>
-        <div class="section admin-section" id="adminManagement">
-            <h2>Quản Lý Admin</h2>
-            <div class="admin-subsection">
-                <button onclick="refreshData()">Làm Mới Dữ Liệu</button>
-            </div>
-            <div class="admin-subsection" id="manage-users">
-                <h4>Quản Lý Người Dùng</h4>
-                <div id="userList"></div>
-            </div>
-            <div class="admin-subsection" id="gift-balance">
-                <h4>Tặng Số Dư</h4>
-                <label for="playerIds">ID Người Chơi:</label>
-                <input type="text" id="playerIds" placeholder="ID123, ID456">
-                <label for="giftAmount">Số Tiền (VNĐ):</label>
-                <input type="number" id="giftAmount" min="1000" placeholder="Số tiền">
-                <button onclick="giftBalanceToPlayers()">Tặng</button>
-            </div>
-            <div class="admin-subsection pending-rentals">
-                <h4>Yêu Cầu Thuê Máy</h4>
-                <div id="pendingRentals"></div>
-            </div>
-            <div class="admin-subsection pending-transactions">
-                <h4>Yêu Cầu Nạp Tiền</h4>
-                <div id="pendingTransactions"></div>
-            </div>
-            <div class="admin-subsection" id="statistics">
-                <h4>Thống Kê</h4>
-                <div id="statsDisplay"></div>
-                <button onclick="refreshStats()">Làm Mới Thống Kê</button>
-            </div>
-            <button onclick="logoutAdmin()">Đăng Xuất Admin</button>
         </div>
         <div class="section" id="about">
             <h2>Về Chúng Tôi</h2>
@@ -621,13 +703,13 @@
                     <option value="card">Thẻ Cào</option>
                 </select>
                 <div id="bankForm">
-                    <p>Quét mã QR để thanh toán:</p>
+                    <p>Quét mã QR để chuyển khoản.</p>
                     <img src="https://i.imgur.com/4mmpR89.png" alt="QR Code VietinBank" class="qr-code">
-                    <p>Tối thiểu: 15.000đ</p>
-                    <label for="qrAmount">Số Tiền (VNĐ)</label>
-                    <input type="number" id="qrAmount" name="qrAmount" placeholder="Số tiền" min="15000" required>
+                    <p class="note">Lưu ý: Số tiền nạp tối thiểu 15.000 VNĐ. Các giao dịch dưới 15.000 VNĐ sẽ không được cộng tiền.</p>
+                    <p class="note">Lưu ý: Phần ghi chú khi chuyển khoản phải ghi ID tài khoản của bạn trên website (VD: 123456).</p>
                 </div>
                 <div id="cardForm" style="display: none;">
+                    <p>Nhập mã thẻ và serial.</p>
                     <p>Tối thiểu: 10.000đ</p>
                     <label for="cardProvider">Nhà Mạng</label>
                     <select id="cardProvider" name="cardProvider">
@@ -647,8 +729,10 @@
                     <label for="cardSerial">Số Serial</label>
                     <input type="text" id="cardSerial" name="cardSerial" placeholder="Số serial" required>
                 </div>
-                <button type="submit">Xác Nhận</button>
-                <p class="success" id="topupSuccess">Yêu cầu đã gửi!</p>
+                <button type="submit">Gửi Yêu Cầu</button>
+                <div class="loading-spinner" id="topupSpinner"></div>
+                <p class="success" id="topupSuccess" style="display: none;">Yêu cầu đã gửi!</p>
+                <p class="error" id="topupError" style="display: none;"></p>
             </form>
         </div>
     </div>
@@ -657,12 +741,13 @@
             <span class="close" id="closeLoginModal">×</span>
             <h3>Đăng Nhập</h3>
             <form id="loginForm">
-                <p class="error" id="loginError"></p>
+                <p class="error" id="loginError" style="display: none;"></p>
                 <label for="loginEmail">Email</label>
                 <input type="email" id="loginEmail" name="loginEmail" placeholder="Email" required>
                 <label for="loginPassword">Mật Khẩu</label>
                 <input type="password" id="loginPassword" name="loginPassword" placeholder="Mật khẩu" required>
                 <button type="submit">Đăng Nhập</button>
+                <div class="loading-spinner" id="loginSpinner"></div>
                 <p>Chưa có tài khoản? <a href="#" id="showRegister">Đăng Ký</a></p>
             </form>
         </div>
@@ -672,8 +757,8 @@
             <span class="close" id="closeRegisterModal">×</span>
             <h3>Đăng Ký</h3>
             <form id="registerForm">
-                <p class="error" id="registerError"></p>
-                <p class="success" id="registerSuccess">Đăng ký thành công!</p>
+                <p class="error" id="registerError" style="display: none;"></p>
+                <p class="success" id="registerSuccess" style="display: none;">Đăng ký thành công!</p>
                 <label for="registerUsername">Tên Người Dùng</label>
                 <input type="text" id="registerUsername" name="registerUsername" placeholder="Tên người dùng" required>
                 <label for="registerEmail">Email</label>
@@ -683,22 +768,27 @@
                 <label for="confirmPassword">Xác Nhận Mật Khẩu</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
                 <button type="submit" id="registerButton">Đăng Ký</button>
+                <div class="loading-spinner" id="registerSpinner"></div>
                 <p>Đã có tài khoản? <a href="#" id="showLogin">Đăng Nhập</a></p>
             </form>
         </div>
     </div>
-    <div class="modal" id="changePasswordModal">
+    <div class="modal" id="editUserModal">
         <div class="modal-content">
-            <span class="close" id="closeChangePasswordModal">×</span>
-            <h3>Đổi Mật Khẩu</h3>
-            <form id="changePasswordForm">
-                <p class="error" id="changePasswordError"></p>
-                <p class="success" id="changePasswordSuccess">Đổi mật khẩu thành công!</p>
-                <label for="newPassword">Mật Khẩu Mới</label>
-                <input type="password" id="newPassword" name="newPassword" placeholder="Mật khẩu mới" required>
-                <label for="confirmNewPassword">Xác Nhận</label>
-                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Xác nhận mật khẩu" required>
-                <button type="submit">Xác Nhận</button>
+            <span class="close" id="closeEditUserModal">×</span>
+            <h3>Chỉnh Sửa Người Dùng</h3>
+            <form id="editUserForm">
+                <p class="error" id="editUserError" style="display: none;"></p>
+                <p class="success" id="editUserSuccess" style="display: none;">Cập nhật thành công!</p>
+                <label for="editUsername">Tên Người Dùng</label>
+                <input type="text" id="editUsername" name="editUsername" required>
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" name="editEmail" required>
+                <label for="editBalance">Số Dư (VNĐ)</label>
+                <input type="number" id="editBalance" name="editBalance" required>
+                <input type="hidden" id="editPlayerId">
+                <button type="submit">Lưu</button>
+                <div class="loading-spinner" id="editUserSpinner"></div>
             </form>
         </div>
     </div>
@@ -706,415 +796,589 @@
         <p>© 2025 Cloud Game PC.</p>
     </footer>
     <script>
-        // Particles.js
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 50, density: { enable: true, value_area: 800 } },
-                color: { value: '#FFD700' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#FFD700', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
+        // Particles.js Configuration
+        const isMobile = window.innerWidth <= 768;
+        if (typeof particlesJS !== 'undefined') {
+            try {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: isMobile ? 20 : 50, density: { enable: true, value_area: 800 } },
+                        color: { value: '#FFD700' },
+                        shape: { type: 'circle' },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: '#FFD700', opacity: 0.4, width: 1 },
+                        move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                    },
+                    interactivity: {
+                        detect_on: 'canvas',
+                        events: { onhover: { enable: !isMobile, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                    },
+                    retina_detect: true
+                });
+            } catch (error) {
+                console.error('Lỗi khi khởi tạo Particles.js:', error);
+            }
+        } else {
+            console.warn('Particles.js không tải được, bỏ qua hiệu ứng hạt.');
+        }
 
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        // Utility: Hash Password (SHA-256)
+        async function hashPassword(password) {
+            try {
+                const msgBuffer = new TextEncoder().encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            } catch (error) {
+                console.error('Lỗi khi mã hóa mật khẩu:', error);
+                throw error;
+            }
+        }
+
+        // Utility: Generate Numeric Player ID
+        function generatePlayerId() {
+            return Math.floor(100000 + Math.random() * 900000); // Sinh số 6 chữ số
+        }
 
         // Default Data
         const defaultUsers = [
-            { username: "minh14", email: "minh14@example.com", password: "minh2008", playerId: "IDADMIN1", balance: 0, isAdmin: true },
-            { username: "Người Chơi 1", email: "player1@example.com", password: "123456", playerId: "ID123456", balance: 0, isAdmin: false }
+            { username: "Người Chơi 1", email: "player1@example.com", password: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", playerId: 123456, balance: 0 }
         ];
-        const defaultStats = { totalUsers: 1800, revenue: 150000000, activeUsers: 1200 };
+        const defaultPlans = {
+            trumbox: { price: 3000, description: "Chơi không giới hạn game. Hỗ trợ trên mọi thiết bị. Băng thông ổn định, độ trễ thấp." },
+            premium: { price: 350000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." }
+        };
 
-        let users = [];
-        let pendingTransactions = [];
-        let pendingRentals = [];
-        let approvedRentals = [];
-        let stats = {};
+        // Global State
+        let users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
+        let plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
+        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
         let isLoggedIn = false;
-        let isAdmin = false;
-        let userData = { username: "", playerId: "", balance: 0 };
+        let userData = { username: "", email: "", playerId: 0, balance: 0 };
 
-        // Initialize Firebase Data
-        database.ref('users').once('value', snapshot => {
-            if (!snapshot.val()) {
-                database.ref('users').set(defaultUsers);
-                users = defaultUsers;
-            } else {
-                users = snapshot.val();
-            }
-        });
-        database.ref('pendingTransactions').once('value', snapshot => {
-            pendingTransactions = snapshot.val() || [];
-        });
-        database.ref('pendingRentals').once('value', snapshot => {
-            pendingRentals = snapshot.val() || [];
-        });
-        database.ref('approvedRentals').once('value', snapshot => {
-            approvedRentals = snapshot.val() || [];
-        });
-        database.ref('stats').once('value', snapshot => {
-            if (!snapshot.val()) {
-                database.ref('stats').set(defaultStats);
-                stats = defaultStats;
-            } else {
-                stats = snapshot.val();
-            }
-        });
-
-        // Load login state
-        isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        isAdmin = localStorage.getItem('isAdmin') === 'true';
-        userData = JSON.parse(localStorage.getItem('userData')) || { username: "", playerId: "", balance: 0 };
-
-        const adminLink = document.getElementById('adminLink');
-        const adminSection = document.getElementById('adminManagement');
+        // DOM Elements
         const authLinks = document.getElementById('authLinks');
         const userInfo = document.getElementById('userInfo');
         const userDetails = document.getElementById('userDetails');
         const balanceDisplay = document.querySelector('.balance');
         const logoutButton = document.getElementById('logoutButton');
-        const pendingTransactionsDiv = document.getElementById('pendingTransactions');
-        const pendingRentalsDiv = document.getElementById('pendingRentals');
-        const userListDiv = document.getElementById('userList');
-        const statsDisplay = document.getElementById('statsDisplay');
+        const adminSection = document.getElementById('adminSection');
+        const notificationArea = document.getElementById('notificationArea');
+        const trumboxPlan = document.getElementById('trumboxPlan');
+        const premiumPlan = document.getElementById('premiumPlan');
 
+        // Lock Mechanism for Multi-Device Sync
+        function acquireLock() {
+            const lock = localStorage.getItem('dataLock');
+            if (lock && Date.now() - parseInt(lock) < 10000) {
+                return false; // Lock đang được giữ
+            }
+            localStorage.setItem('dataLock', Date.now());
+            return true;
+        }
+
+        function releaseLock() {
+            localStorage.removeItem('dataLock');
+        }
+
+        // Show Loading Spinner
+        function showSpinner(spinnerId) {
+            const spinner = document.getElementById(spinnerId);
+            if (spinner) {
+                spinner.style.display = 'block';
+            } else {
+                console.warn(`Spinner ${spinnerId} không tìm thấy.`);
+            }
+        }
+
+        // Hide Loading Spinner
+        function hideSpinner(spinnerId) {
+            const spinner = document.getElementById(spinnerId);
+            if (spinner) {
+                spinner.style.display = 'none';
+            } else {
+                console.warn(`Spinner ${spinnerId} không tìm thấy.`);
+            }
+        }
+
+        // Save Data to LocalStorage
         function saveData() {
-            database.ref('users').set(users);
-            database.ref('pendingTransactions').set(pendingTransactions);
-            database.ref('pendingRentals').set(pendingRentals);
-            database.ref('approvedRentals').set(approvedRentals);
-            database.ref('stats').set(stats);
-            localStorage.setItem('userData', JSON.stringify(userData));
-            localStorage.setItem('isLoggedIn', isLoggedIn.toString());
-            localStorage.setItem('isAdmin', isAdmin.toString());
+            try {
+                if (!acquireLock()) {
+                    throw new Error('Dữ liệu đang được chỉnh sửa bởi thiết bị khác, vui lòng thử lại.');
+                }
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('plans', JSON.stringify(plans));
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+                localStorage.setItem('transactions', JSON.stringify(transactions));
+                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('isLoggedIn', isLoggedIn.toString());
+                releaseLock();
+            } catch (error) {
+                console.error('Lỗi khi lưu dữ liệu:', error);
+                alert('Có lỗi khi lưu dữ liệu, vui lòng thử lại.');
+                releaseLock();
+                throw error;
+            }
         }
 
+        // Load Data from LocalStorage
         function loadData() {
-            return Promise.all([
-                database.ref('users').once('value').then(snapshot => { users = snapshot.val() || defaultUsers; }),
-                database.ref('pendingTransactions').once('value').then(snapshot => { pendingTransactions = snapshot.val() || []; }),
-                database.ref('pendingRentals').once('value').then(snapshot => { pendingRentals = snapshot.val() || []; }),
-                database.ref('approvedRentals').once('value').then(snapshot => { approvedRentals = snapshot.val() || []; }),
-                database.ref('stats').once('value').then(snapshot => { stats = snapshot.val() || defaultStats; })
-            ]);
+            try {
+                users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
+                plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
+                notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+                transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                return { users, plans, notifications, transactions };
+            } catch (error) {
+                console.error('Lỗi khi tải dữ liệu:', error);
+                users = defaultUsers;
+                plans = defaultPlans;
+                notifications = [];
+                transactions = [];
+                alert('Có lỗi khi tải dữ liệu, sử dụng dữ liệu mặc định.');
+                return { users, plans, notifications, transactions };
+            }
         }
 
-        function refreshData() {
-            loadData().then(() => {
-                updateUserInterface();
-                alert('Dữ liệu đã được làm mới.');
+        // Update UI Based on Login State
+        function updateUserInterface() {
+            if (authLinks && userInfo && userDetails && balanceDisplay && adminSection) {
+                if (isLoggedIn && userData.playerId) {
+                    authLinks.style.display = 'none';
+                    userInfo.style.display = 'flex';
+                    userDetails.textContent = `${userData.username} (${userData.playerId})`;
+                    balanceDisplay.textContent = `Số dư: ${userData.balance} VNĐ`;
+                    if (userData.username === 'tominh14' && userData.email === 'tominh14@gmail.com') {
+                        adminSection.style.display = 'block';
+                        loadUsers();
+                        loadTransactions();
+                    } else {
+                        adminSection.style.display = 'none';
+                    }
+                } else {
+                    authLinks.style.display = 'flex';
+                    userInfo.style.display = 'none';
+                    userDetails.textContent = '';
+                    balanceDisplay.textContent = 'Số dư: 0 VNĐ';
+                    adminSection.style.display = 'none';
+                }
+                updatePlansUI();
+                loadNotifications();
+            } else {
+                console.error('Một số DOM elements không tìm thấy trong updateUserInterface.');
+            }
+        }
+
+        // Update Plans UI
+        function updatePlansUI() {
+            if (trumboxPlan && premiumPlan) {
+                trumboxPlan.querySelector('.price').textContent = `${plans.trumbox.price} VNĐ/giờ`;
+                const trumboxDesc = trumboxPlan.querySelectorAll('p:not(.price):not(.subscribers)');
+                const trumboxDescLines = plans.trumbox.description.split('. ').filter(d => d);
+                trumboxDesc.forEach((p, i) => p.textContent = trumboxDescLines[i] || '');
+
+                premiumPlan.querySelector('.price').textContent = `${plans.premium.price} VNĐ/Vĩnh Viễn`;
+                const premiumDesc = premiumPlan.querySelectorAll('p:not(.price):not(.subscribers)');
+                const premiumDescLines = plans.premium.description.split('. ').filter(d => d);
+                premiumDesc.forEach((p, i) => p.textContent = premiumDescLines[i] || '');
+            } else {
+                console.warn('Không tìm thấy trumboxPlan hoặc premiumPlan.');
+            }
+        }
+
+        // Gift Balance by Player ID
+        function giftBalanceById() {
+            const giftIdInput = document.getElementById('giftId');
+            const giftAmountInput = document.getElementById('giftAmount');
+            const giftSuccess = document.getElementById('giftSuccess');
+            const giftError = document.getElementById('giftError');
+
+            if (!giftIdInput || !giftAmountInput || !giftSuccess || !giftError) {
+                console.error('Không tìm thấy các element trong giftBalanceById.');
+                return;
+            }
+
+            const giftId = parseInt(giftIdInput.value);
+            const giftAmount = parseInt(giftAmountInput.value);
+
+            if (isNaN(giftId) || isNaN(giftAmount) || giftAmount <= 0) {
+                giftError.textContent = 'Vui lòng nhập ID và số tiền hợp lệ!';
+                giftError.style.display = 'block';
+                giftSuccess.style.display = 'none';
+                return;
+            }
+
+            try {
+                loadData();
+                const userIndex = users.findIndex(u => u.playerId === giftId);
+                if (userIndex === -1) {
+                    giftError.textContent = 'Không tìm thấy người dùng!';
+                    giftError.style.display = 'block';
+                    giftSuccess.style.display = 'none';
+                    return;
+                }
+
+                users[userIndex].balance += giftAmount;
+                saveData();
+                logTransaction(giftId, 'Gift', giftAmount);
+                giftSuccess.style.display = 'block';
+                giftError.style.display = 'none';
+                giftIdInput.value = '';
+                giftAmountInput.value = '';
+                loadUsers();
+                loadTransactions();
+                setTimeout(() => giftSuccess.style.display = 'none', 2000);
+            } catch (error) {
+                console.error('Lỗi khi tặng số dư:', error);
+                giftError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                giftError.style.display = 'block';
+                giftSuccess.style.display = 'none';
+            }
+        }
+
+        // Load Users for Admin
+        function loadUsers() {
+            const userTableBody = document.getElementById('userTableBody');
+            if (!userTableBody) {
+                console.error('Không tìm thấy userTableBody.');
+                return;
+            }
+
+            try {
+                loadData();
+                userTableBody.innerHTML = '';
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.playerId}</td>
+                        <td>${user.balance} VNĐ</td>
+                        <td>
+                            <button onclick="editUser(${user.playerId})">Chỉnh Sửa</button>
+                            <button onclick="deleteUser(${user.playerId})">Xóa</button>
+                        </td>
+                    `;
+                    userTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải danh sách người dùng:', error);
+                alert('Có lỗi khi tải danh sách người dùng.');
+            }
+        }
+
+        // Edit User
+        function editUser(playerId) {
+            const user = users.find(u => u.playerId === playerId);
+            if (!user) return;
+
+            const editUserModal = document.getElementById('editUserModal');
+            const editUsername = document.getElementById('editUsername');
+            const editEmail = document.getElementById('editEmail');
+            const editBalance = document.getElementById('editBalance');
+            const editPlayerId = document.getElementById('editPlayerId');
+
+            if (editUserModal && editUsername && editEmail && editBalance && editPlayerId) {
+                editUsername.value = user.username;
+                editEmail.value = user.email;
+                editBalance.value = user.balance;
+                editPlayerId.value = playerId;
+                editUserModal.style.display = 'flex';
+            } else {
+                console.error('Không tìm thấy các element trong editUser.');
+            }
+        }
+
+        // Save Edited User
+        const editUserForm = document.getElementById('editUserForm');
+        if (editUserForm) {
+            editUserForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showSpinner('editUserSpinner');
+                const editUsername = document.getElementById('editUsername');
+                const editEmail = document.getElementById('editEmail');
+                const editBalance = document.getElementById('editBalance');
+                const editPlayerId = document.getElementById('editPlayerId');
+                const editUserError = document.getElementById('editUserError');
+                const editUserSuccess = document.getElementById('editUserSuccess');
+
+                if (!editUsername || !editEmail || !editBalance || !editPlayerId || !editUserError || !editUserSuccess) {
+                    console.error('Không tìm thấy các element trong editUserForm.');
+                    hideSpinner('editUserSpinner');
+                    return;
+                }
+
+                const playerId = parseInt(editPlayerId.value);
+                const username = editUsername.value.trim();
+                const email = editEmail.value.trim();
+                const balance = parseInt(editBalance.value);
+
+                if (username.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || isNaN(balance) || balance < 0) {
+                    editUserError.textContent = 'Vui lòng nhập thông tin hợp lệ!';
+                    editUserError.style.display = 'block';
+                    editUserSuccess.style.display = 'none';
+                    hideSpinner('editUserSpinner');
+                    return;
+                }
+
+                try {
+                    loadData();
+                    const userIndex = users.findIndex(u => u.playerId === playerId);
+                    if (userIndex === -1) {
+                        editUserError.textContent = 'Không tìm thấy người dùng!';
+                        editUserError.style.display = 'block';
+                        editUserSuccess.style.display = 'none';
+                        hideSpinner('editUserSpinner');
+                        return;
+                    }
+
+                    const oldBalance = users[userIndex].balance;
+                    users[userIndex] = { ...users[userIndex], username, email, balance };
+                    if (userData.playerId === playerId) {
+                        userData = { ...userData, username, email, balance };
+                    }
+                    saveData();
+                    logTransaction(playerId, 'Edit Balance', balance - oldBalance);
+                    editUserSuccess.style.display = 'block';
+                    editUserError.style.display = 'none';
+                    document.getElementById('editUserModal').style.display = 'none';
+                    loadUsers();
+                    updateUserInterface();
+                    setTimeout(() => editUserSuccess.style.display = 'none', 2000);
+                } catch (error) {
+                    console.error('Lỗi khi chỉnh sửa người dùng:', error);
+                    editUserError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                    editUserError.style.display = 'block';
+                    editUserSuccess.style.display = 'none';
+                }
+                hideSpinner('editUserSpinner');
             });
         }
 
-        function updateUserInterface() {
-            if (isLoggedIn && userData.playerId) {
-                authLinks.style.display = 'none';
-                userInfo.style.display = 'flex';
-                userDetails.textContent = `${userData.username} (${userData.playerId})`;
-                balanceDisplay.textContent = `Số dư: ${userData.balance} VNĐ`;
-            } else {
-                authLinks.style.display = 'flex';
-                userInfo.style.display = 'none';
-            }
+        // Delete User
+        function deleteUser(playerId) {
+            if (!confirm('Bạn có chắc muốn xóa người dùng này?')) return;
 
-            if (isAdmin) {
-                adminLink.style.display = 'inline';
-                adminSection.style.display = 'block';
-                displayPendingTransactions();
-                displayPendingRentals();
-                displayUserList();
-                displayStats();
-            } else {
-                adminLink.style.display = 'none';
-                adminSection.style.display = 'none';
+            try {
+                loadData();
+                users = users.filter(u => u.playerId !== playerId);
+                if (userData.playerId === playerId) {
+                    logout();
+                }
+                saveData();
+                loadUsers();
+                updateUserInterface();
+            } catch (error) {
+                console.error('Lỗi khi xóa người dùng:', error);
+                alert('Có lỗi khi xóa người dùng.');
             }
         }
 
-        function rentTrumbox() {
+        // Update Plans
+        function updatePlans() {
+            const trumboxPriceInput = document.getElementById('trumboxPrice');
+            const trumboxDescInput = document.getElementById('trumboxDesc');
+            const premiumPriceInput = document.getElementById('premiumPrice');
+            const premiumDescInput = document.getElementById('premiumDesc');
+            const planSuccess = document.getElementById('planSuccess');
+            const planError = document.getElementById('planError');
+
+            if (!trumboxPriceInput || !trumboxDescInput || !premiumPriceInput || !premiumDescInput || !planSuccess || !planError) {
+                console.error('Không tìm thấy các element trong updatePlans.');
+                return;
+            }
+
+            const trumboxPrice = parseInt(trumboxPriceInput.value);
+            const trumboxDesc = trumboxDescInput.value.trim();
+            const premiumPrice = parseInt(premiumPriceInput.value);
+            const premiumDesc = premiumDescInput.value.trim();
+
+            if (isNaN(trumboxPrice) || trumboxPrice <= 0 || !trumboxDesc || isNaN(premiumPrice) || premiumPrice <= 0 || !premiumDesc) {
+                planError.textContent = 'Vui lòng nhập thông tin hợp lệ!';
+                planError.style.display = 'block';
+                planSuccess.style.display = 'none';
+                return;
+            }
+
+            try {
+                loadData();
+                plans = {
+                    trumbox: { price: trumboxPrice, description: trumboxDesc },
+                    premium: { price: premiumPrice, description: premiumDesc }
+                };
+                saveData();
+                planSuccess.style.display = 'block';
+                planError.style.display = 'none';
+                trumboxPriceInput.value = '';
+                trumboxDescInput.value = '';
+                premiumPriceInput.value = '';
+                premiumDescInput.value = '';
+                updatePlansUI();
+                setTimeout(() => planSuccess.style.display = 'none', 2000);
+            } catch (error) {
+                console.error('Lỗi khi cập nhật gói:', error);
+                planError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                planError.style.display = 'block';
+                planSuccess.style.display = 'none';
+            }
+        }
+
+        // Send Notification
+        function sendNotification() {
+            const notificationMessageInput = document.getElementById('notificationMessage');
+            const notificationSuccess = document.getElementById('notificationSuccess');
+            const notificationError = document.getElementById('notificationError');
+
+            if (!notificationMessageInput || !notificationSuccess || !notificationError) {
+                console.error('Không tìm thấy các element trong sendNotification.');
+                return;
+            }
+
+            const message = notificationMessageInput.value.trim();
+
+            if (!message) {
+                notificationError.textContent = 'Vui lòng nhập nội dung thông báo!';
+                notificationError.style.display = 'block';
+                notificationSuccess.style.display = 'none';
+                return;
+            }
+
+            try {
+                loadData();
+                notifications.push({
+                    message,
+                    timestamp: new Date().toISOString()
+                });
+                saveData();
+                notificationSuccess.style.display = 'block';
+                notificationError.style.display = 'none';
+                notificationMessageInput.value = '';
+                loadNotifications();
+                setTimeout(() => notificationSuccess.style.display = 'none', 2000);
+            } catch (error) {
+                console.error('Lỗi khi gửi thông báo:', error);
+                notificationError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                notificationError.style.display = 'block';
+                notificationSuccess.style.display = 'none';
+            }
+        }
+
+        // Load Notifications
+        function loadNotifications() {
+            if (!notificationArea) {
+                console.error('Không tìm thấy notificationArea.');
+                return;
+            }
+
+            try {
+                loadData();
+                notificationArea.innerHTML = '';
+                notifications.forEach(notification => {
+                    const div = document.createElement('div');
+                    div.className = 'notification';
+                    div.textContent = `${notification.message} (${new Date(notification.timestamp).toLocaleString('vi-VN')})`;
+                    notificationArea.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải thông báo:', error);
+            }
+        }
+
+        // Log Transaction
+        function logTransaction(userId, type, amount) {
+            try {
+                loadData();
+                transactions.push({
+                    userId,
+                    type,
+                    amount,
+                    timestamp: new Date().toISOString()
+                });
+                saveData();
+            } catch (error) {
+                console.error('Lỗi khi ghi giao dịch:', error);
+            }
+        }
+
+        // Load Transactions
+        function loadTransactions() {
+            const transactionTableBody = document.getElementById('transactionTableBody');
+            if (!transactionTableBody) {
+                console.error('Không tìm thấy transactionTableBody.');
+                return;
+            }
+
+            try {
+                loadData();
+                transactionTableBody.innerHTML = '';
+                transactions.forEach(t => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${t.userId}</td>
+                        <td>${t.type}</td>
+                        <td>${t.amount} VNĐ</td>
+                        <td>${new Date(t.timestamp).toLocaleString('vi-VN')}</td>
+                    `;
+                    transactionTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải giao dịch:', error);
+            }
+        }
+
+        // Rent Trumbox Machine
+        function rentTrumbox(event) {
             if (!isLoggedIn) {
                 alert('Vui lòng đăng nhập trước khi thuê máy!');
                 return;
             }
 
-            const isApproved = approvedRentals.some(rental => rental.playerId === userData.playerId);
-            if (isApproved) {
-                if (userData.balance < 3000) {
-                    alert('Số dư không đủ (cần ít nhất 3.000 VNĐ)!');
-                    return;
-                }
-
-                const button = event.target;
+            showSpinner('trumboxSpinner');
+            let button = event?.target;
+            if (button) {
                 button.disabled = true;
                 button.textContent = 'Đang xử lý...';
+            }
 
-                setTimeout(() => {
-                    userData.balance -= 3000;
-                    stats.revenue += 3000;
-                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex !== -1) {
-                        users[userIndex].balance = userData.balance;
+            try {
+                loadData();
+                if (userData.balance < plans.trumbox.price) {
+                    alert(`Số dư không đủ (cần ít nhất ${plans.trumbox.price} VNĐ)!`);
+                    if (button) {
+                        button.disabled = false;
+                        button.textContent = 'Thuê Ngay';
                     }
-                    approvedRentals = approvedRentals.filter(rental => rental.playerId !== userData.playerId);
-                    saveData();
-                    alert('Thuê máy thành công! Đang chuyển đến Trumbox...');
-                    button.disabled = false;
-                    button.textContent = 'Thuê Ngay';
-                    window.open('https://trumbox.net/cloud-gaming/play/', '_blank');
-                    updateUserInterface();
-                }, 2000);
-                return;
-            }
-
-            const hasPendingRequest = pendingRentals.some(rental => rental.playerId === userData.playerId);
-            if (hasPendingRequest) {
-                alert('Bạn đã có yêu cầu thuê máy đang chờ duyệt!');
-                return;
-            }
-
-            if (userData.balance < 3000) {
-                alert('Số dư không đủ (cần ít nhất 3.000 VNĐ)!');
-                return;
-            }
-
-            const username = userData.username;
-            const playerId = userData.playerId;
-            const timestamp = new Date().toISOString();
-            pendingRentals.push({ username, playerId, timestamp });
-            saveData();
-            alert('Yêu cầu thuê máy đã được gửi, chờ admin duyệt!');
-            updateUserInterface();
-        }
-
-        function displayPendingRentals() {
-            pendingRentalsDiv.innerHTML = '<p>Đang tải...</p>';
-            if (pendingRentals.length === 0) {
-                pendingRentalsDiv.innerHTML = '<p>Không có yêu cầu nào.</p>';
-                return;
-            }
-            pendingRentalsDiv.innerHTML = '';
-            pendingRentals.forEach((rental, index) => {
-                const rentalItem = document.createElement('div');
-                rentalItem.className = 'item';
-                rentalItem.innerHTML = `
-                    Người dùng: ${rental.username} (ID: ${rental.playerId})<br>
-                    Thời gian: ${rental.timestamp}
-                    <button onclick="approveRental(${index})">Phê Duyệt</button>
-                    <button class="reject" onclick="rejectRental(${index})">Từ Chối</button>
-                `;
-                pendingRentalsDiv.appendChild(rentalItem);
-            });
-        }
-
-        function approveRental(index) {
-            const rental = pendingRentals[index];
-            approvedRentals.push({ playerId: rental.playerId });
-            pendingRentals.splice(index, 1);
-            saveData();
-            alert('Yêu cầu đã được phê duyệt.');
-            updateUserInterface();
-        }
-
-        function rejectRental(index) {
-            pendingRentals.splice(index, 1);
-            saveData();
-            alert('Yêu cầu đã bị từ chối.');
-            updateUserInterface();
-        }
-
-        function changePassword(username) {
-            const changePasswordModal = document.getElementById('changePasswordModal');
-            const changePasswordForm = document.getElementById('changePasswordForm');
-            const changePasswordError = document.getElementById('changePasswordError');
-            const changePasswordSuccess = document.getElementById('changePasswordSuccess');
-
-            changePasswordModal.style.display = 'flex';
-            changePasswordError.style.display = 'none';
-            changePasswordSuccess.style.display = 'none';
-            changePasswordForm.reset();
-
-            changePasswordForm.onsubmit = (e) => {
-                e.preventDefault();
-                const newPassword = document.getElementById('newPassword').value;
-                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
-
-                if (newPassword.length < 6) {
-                    changePasswordError.textContent = 'Mật khẩu phải có ít nhất 6 ký tự.';
-                    changePasswordError.style.display = 'block';
-                    return;
-                }
-                if (newPassword !== confirmNewPassword) {
-                    changePasswordError.textContent = 'Mật khẩu xác nhận không khớp.';
-                    changePasswordError.style.display = 'block';
+                    hideSpinner('trumboxSpinner');
                     return;
                 }
 
-                const userIndex = users.findIndex(u => u.username === username);
+                userData.balance -= plans.trumbox.price;
+                const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                 if (userIndex !== -1) {
-                    users[userIndex].password = newPassword;
-                    saveData();
-                    changePasswordError.style.display = 'none';
-                    changePasswordSuccess.style.display = 'block';
-                    setTimeout(() => {
-                        changePasswordModal.style.display = 'none';
-                    }, 2000);
-                }
-            };
-        }
-
-        document.getElementById('closeChangePasswordModal').addEventListener('click', () => {
-            document.getElementById('changePasswordModal').style.display = 'none';
-        });
-
-        function giftBalanceToPlayers() {
-            const playerIdsInput = document.getElementById('playerIds').value.trim();
-            const giftAmount = parseInt(document.getElementById('giftAmount').value);
-            if (!playerIdsInput || isNaN(giftAmount) || giftAmount < 1000) {
-                alert('Nhập ID và số tiền (tối thiểu 1.000 VNĐ)!');
-                return;
-            }
-
-            const playerIds = playerIdsInput.split(',').map(id => id.trim());
-            let successful = 0;
-            let failed = 0;
-
-            playerIds.forEach(playerId => {
-                const userIndex = users.findIndex(u => u.playerId === playerId);
-                if (userIndex !== -1 && !users[userIndex].isAdmin) {
-                    users[userIndex].balance += giftAmount;
-                    if (users[userIndex].playerId === userData.playerId) {
-                        userData.balance = users[userIndex].balance;
-                    }
-                    successful++;
-                } else {
-                    failed++;
-                }
-            });
-
-            saveData();
-            alert(`Đã tặng ${giftAmount} VNĐ cho ${successful} người. ${failed} ID không hợp lệ.`);
-            updateUserInterface();
-            document.getElementById('playerIds').value = '';
-            document.getElementById('giftAmount').value = '';
-        }
-
-        function displayPendingTransactions() {
-            pendingTransactionsDiv.innerHTML = '<p>Đang tải...</p>';
-            if (pendingTransactions.length === 0) {
-                pendingTransactionsDiv.innerHTML = '<p>Không có giao dịch nào.</p>';
-                return;
-            }
-            pendingTransactionsDiv.innerHTML = '';
-            pendingTransactions.forEach((tx, index) => {
-                const txItem = document.createElement('div');
-                txItem.className = 'item';
-                txItem.innerHTML = `
-                    Người dùng: ${tx.username} (ID: ${tx.playerId})<br>
-                    Số tiền: ${tx.amount} VNĐ<br>
-                    Thời gian: ${tx.timestamp}
-                    <button onclick="approveTransaction(${index})">Phê Duyệt</button>
-                    <button class="reject" onclick="rejectTransaction(${index})">Từ Chối</button>
-                `;
-                pendingTransactionsDiv.appendChild(txItem);
-            });
-        }
-
-        function displayUserList() {
-            userListDiv.innerHTML = '<p>Đang tải...</p>';
-            if (users.length === 0) {
-                userListDiv.innerHTML = '<p>Không có người dùng nào.</p>';
-                return;
-            }
-            userListDiv.innerHTML = '';
-            users.forEach(user => {
-                if (user.username !== userData.username && !user.isAdmin) {
-                    const userItem = document.createElement('div');
-                    userItem.className = 'item';
-                    userItem.innerHTML = `
-                        ${user.username} (ID: ${user.playerId})<br>
-                        Số dư: ${user.balance} VNĐ
-                        <button onclick="changePassword('${user.username}')">Đổi Mật Khẩu</button>
-                        <button class="delete" onclick="deleteUser('${user.username}')">Xóa</button>
-                    `;
-                    userListDiv.appendChild(userItem);
-                }
-            });
-        }
-
-        function displayStats() {
-            statsDisplay.innerHTML = `
-                <p>Tổng người dùng: ${stats.totalUsers}</p>
-                <p>Doanh thu: ${stats.revenue} VNĐ</p>
-                <p>Người dùng hoạt động: ${stats.activeUsers}</p>
-            `;
-        }
-
-        function approveTransaction(index) {
-            const tx = pendingTransactions[index];
-            const userIndex = users.findIndex(u => u.playerId === tx.playerId);
-            if (userIndex !== -1) {
-                users[userIndex].balance += parseInt(tx.amount);
-                stats.revenue += parseInt(tx.amount);
-                pendingTransactions.splice(index, 1);
-                if (users[userIndex].playerId === userData.playerId) {
-                    userData.balance = users[userIndex].balance;
+                    users[userIndex].balance = userData.balance;
                 }
                 saveData();
-                alert('Giao dịch đã được phê duyệt.');
-                updateUserInterface();
+                logTransaction(userData.playerId, 'Rent Trumbox', -plans.trumbox.price);
+                alert('Thuê máy thành công! Đang chuyển đến Trumbox...');
+                window.open('https://trumbox.net/cloud-gaming/play/', '_blank');
+            } catch (error) {
+                console.error('Lỗi khi thuê máy:', error);
+                alert('Có lỗi xảy ra, vui lòng thử lại.');
             }
-        }
 
-        function rejectTransaction(index) {
-            pendingTransactions.splice(index, 1);
-            saveData();
-            alert('Giao dịch đã bị từ chối.');
+            if (button) {
+                button.disabled = false;
+                button.textContent = 'Thuê Ngay';
+            }
+            hideSpinner('trumboxSpinner');
             updateUserInterface();
         }
 
-        function deleteUser(username) {
-            const userIndex = users.findIndex(u => u.username === username);
-            if (userIndex !== -1) {
-                const user = users[userIndex];
-                pendingRentals = pendingRentals.filter(rental => rental.playerId !== user.playerId);
-                approvedRentals = approvedRentals.filter(rental => rental.playerId !== user.playerId);
-                users.splice(userIndex, 1);
-                stats.totalUsers = users.length;
-                stats.activeUsers = Math.max(0, stats.activeUsers - 1);
-                saveData();
-                alert(`Đã xóa người dùng ${username}.`);
-                updateUserInterface();
-            }
-        }
-
-        function refreshStats() {
-            stats.totalUsers = users.length;
-            stats.activeUsers = Math.floor(Math.random() * stats.totalUsers);
-            saveData();
-            alert('Thống kê đã được làm mới.');
-            updateUserInterface();
-        }
-
-        function purchasePlan(planName, price) {
+        // Purchase Plan
+        function purchasePlan(planName, price, event) {
             if (!isLoggedIn) {
                 alert('Vui lòng đăng nhập trước khi mua gói!');
                 return;
@@ -1123,258 +1387,364 @@
                 alert('Số dư không đủ để mua gói này!');
                 return;
             }
-            const button = event.target;
-            button.disabled = true;
-            button.textContent = 'Đang xử lý...';
-            setTimeout(() => {
+
+            showSpinner('premiumSpinner');
+            let button = event?.target;
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'Đang xử lý...';
+            }
+
+            try {
+                loadData();
                 userData.balance -= price;
                 const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                 if (userIndex !== -1) {
                     users[userIndex].balance = userData.balance;
                 }
                 saveData();
+                logTransaction(userData.playerId, 'Purchase Premium', -price);
                 alert(`Đã mua ${planName} thành công!`);
+            } catch (error) {
+                console.error('Lỗi khi mua gói:', error);
+                alert('Có lỗi xảy ra, vui lòng thử lại.');
+            }
+
+            if (button) {
                 button.disabled = false;
                 button.textContent = 'Mua Gói';
+            }
+            hideSpinner('premiumSpinner');
+            updateUserInterface();
+        }
+
+        // Logout
+        function logout() {
+            isLoggedIn = false;
+            userData = { username: "", email: "", playerId: 0, balance: 0 };
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userData');
+            updateUserInterface();
+        }
+
+        // Initialize
+        function initialize() {
+            try {
+                loadData();
+                isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0 };
                 updateUserInterface();
-            }, 2000);
+            } catch (error) {
+                console.error('Lỗi khi khởi tạo:', error);
+                alert('Có lỗi khi khởi tạo ứng dụng, vui lòng thử lại.');
+            }
         }
 
-        loadData().then(() => {
-            updateUserInterface();
-        });
+        initialize();
 
-        logoutButton.addEventListener('click', () => {
-            isLoggedIn = false;
-            isAdmin = false;
-            userData = { username: "", playerId: "", balance: 0 };
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('isAdmin');
-            localStorage.removeItem('userData');
-            updateUserInterface();
-        });
-
-        function logoutAdmin() {
-            isLoggedIn = false;
-            isAdmin = false;
-            userData = { username: "", playerId: "", balance: 0 };
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('isAdmin');
-            localStorage.removeItem('userData');
-            updateUserInterface();
+        // Event Listeners
+        if (logoutButton) {
+            logoutButton.addEventListener('click', logout);
         }
 
+        // Topup Modal (giữ nguyên logic gốc, chỉ thêm kiểm tra null và xử lý lỗi cơ bản)
         const topupModal = document.getElementById('topupModal');
         const topupLink = document.getElementById('topupLink');
         const closeTopupModal = document.getElementById('closeTopupModal');
         const topupForm = document.getElementById('topupForm');
         const topupSuccess = document.getElementById('topupSuccess');
+        const topupError = document.getElementById('topupError');
+        const paymentMethodSelect = document.getElementById('paymentMethod');
 
-        topupLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            topupModal.style.display = 'flex';
-            topupSuccess.style.display = 'none';
-        });
-
-        closeTopupModal.addEventListener('click', () => {
-            topupModal.style.display = 'none';
-        });
-
-        topupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!isLoggedIn) {
-                alert('Vui lòng đăng nhập trước khi nạp tiền!');
-                return;
+        function toggleForm() {
+            const paymentMethod = paymentMethodSelect?.value;
+            const bankForm = document.getElementById('bankForm');
+            const cardForm = document.getElementById('cardForm');
+            if (bankForm && cardForm) {
+                bankForm.style.display = paymentMethod === 'bank' ? 'block' : 'none';
+                cardForm.style.display = paymentMethod === 'card' ? 'block' : 'none';
+            } else {
+                console.warn('Không tìm thấy bankForm hoặc cardForm.');
             }
-            const amount = parseInt(document.getElementById('qrAmount')?.value || document.getElementById('cardAmount')?.value || 0);
-            if (amount < 10000) {
-                alert('Số tiền nạp phải lớn hơn hoặc bằng 10.000 VNĐ!');
-                return;
-            }
-            const username = userData.username;
-            const playerId = userData.playerId;
-            const timestamp = new Date().toISOString();
-            pendingTransactions.push({ username, playerId, amount, timestamp });
-            saveData();
-            topupSuccess.textContent = 'Yêu cầu nạp tiền đã được gửi!';
-            topupSuccess.style.display = 'block';
-            topupForm.reset();
-            setTimeout(() => {
-                topupModal.style.display = 'none';
-            }, 2000);
-        });
+        }
 
+        if (topupLink) {
+            topupLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (topupModal && topupSuccess && topupError && topupForm) {
+                    topupModal.style.display = 'flex';
+                    topupSuccess.style.display = 'none';
+                    topupError.style.display = 'none';
+                    topupForm.reset();
+                    toggleForm();
+                } else {
+                    console.error('Không tìm thấy các element trong topupLink.');
+                }
+            });
+        }
+
+        if (closeTopupModal) {
+            closeTopupModal.addEventListener('click', () => {
+                if (topupModal) topupModal.style.display = 'none';
+            });
+        }
+
+        if (topupForm) {
+            topupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!isLoggedIn) {
+                    if (topupError) {
+                        topupError.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
+                        topupError.style.display = 'block';
+                        if (topupSuccess) topupSuccess.style.display = 'none';
+                    }
+                    return;
+                }
+
+                showSpinner('topupSpinner');
+                try {
+                    if (topupSuccess && topupError) {
+                        topupSuccess.style.display = 'block';
+                        topupError.style.display = 'none';
+                    }
+                    topupForm.reset();
+                    toggleForm();
+                    setTimeout(() => {
+                        if (topupModal) topupModal.style.display = 'none';
+                        if (topupSuccess) topupSuccess.style.display = 'none';
+                    }, 2000);
+                } catch (error) {
+                    console.error('Lỗi khi gửi yêu cầu nạp tiền:', error);
+                    if (topupError) {
+                        topupError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        topupError.style.display = 'block';
+                        if (topupSuccess) topupSuccess.style.display = 'none';
+                    }
+                }
+                hideSpinner('topupSpinner');
+            });
+        }
+
+        // Login Modal
         const loginModal = document.getElementById('loginModal');
         const loginLink = document.getElementById('loginLink');
         const closeLoginModal = document.getElementById('closeLoginModal');
         const loginForm = document.getElementById('loginForm');
         const loginError = document.getElementById('loginError');
 
-        loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'flex';
-            topupModal.style.display = 'none';
-            registerModal.style.display = 'none';
-            loginError.style.display = 'none';
-        });
+        if (loginLink) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (loginModal && topupModal && registerModal && loginError && loginForm) {
+                    loginModal.style.display = 'flex';
+                    topupModal.style.display = 'none';
+                    registerModal.style.display = 'none';
+                    loginError.style.display = 'none';
+                    loginForm.reset();
+                } else {
+                    console.error('Không tìm thấy các element trong loginLink.');
+                }
+            });
+        }
 
-        closeLoginModal.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener('click', () => {
+                if (loginModal) loginModal.style.display = 'none';
+            });
+        }
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value.trim();
-            const user = users.find(u => u.email === email && u.password === password);
-            if (!user) {
-                loginError.textContent = 'Email hoặc mật khẩu không đúng!';
-                loginError.style.display = 'block';
-                return;
-            }
-            isLoggedIn = true;
-            userData = { username: user.username, playerId: user.playerId, balance: user.balance };
-            isAdmin = user.isAdmin;
-            saveData();
-            updateUserInterface();
-            loginModal.style.display = 'none';
-        });
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                showSpinner('loginSpinner');
+                const loginEmail = document.getElementById('loginEmail');
+                const loginPassword = document.getElementById('loginPassword');
 
+                if (!loginEmail || !loginPassword) {
+                    console.error('Không tìm thấy loginEmail hoặc loginPassword.');
+                    hideSpinner('loginSpinner');
+                    return;
+                }
+
+                const email = loginEmail.value.trim();
+                const password = loginPassword.value.trim();
+
+                try {
+                    loadData();
+                    const hashedPassword = await hashPassword(password);
+                    const user = users.find(u => u.email === email && u.password === hashedPassword);
+
+                    if (!user) {
+                        if (loginError) {
+                            loginError.textContent = 'Email hoặc mật khẩu không đúng!';
+                            loginError.style.display = 'block';
+                        }
+                        hideSpinner('loginSpinner');
+                        return;
+                    }
+
+                    isLoggedIn = true;
+                    userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
+                    saveData();
+                    updateUserInterface();
+                    if (loginModal) loginModal.style.display = 'none';
+                    loginForm.reset();
+                } catch (error) {
+                    console.error('Lỗi khi đăng nhập:', error);
+                    if (loginError) {
+                        loginError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        loginError.style.display = 'block';
+                    }
+                }
+                hideSpinner('loginSpinner');
+            });
+        }
+
+        // Register Modal
         const registerModal = document.getElementById('registerModal');
         const registerLink = document.getElementById('registerLink');
         const closeRegisterModal = document.getElementById('closeRegisterModal');
         const registerForm = document.getElementById('registerForm');
         const registerError = document.getElementById('registerError');
         const registerSuccess = document.getElementById('registerSuccess');
-        const registerButton = document.getElementById('registerButton');
-
-        registerLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'flex';
-            topupModal.style.display = 'none';
-            loginModal.style.display = 'none';
-            registerError.style.display = 'none';
-            registerSuccess.style.display = 'none';
-            registerButton.style.display = 'block';
-            registerForm.reset();
-        });
-
-        closeRegisterModal.addEventListener('click', () => {
-            registerModal.style.display = 'none';
-        });
-
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('registerUsername').value.trim();
-            const email = document.getElementById('registerEmail').value.trim();
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            let errorMessage = '';
-            if (username.length < 3) {
-                errorMessage = 'Tên người dùng phải có ít nhất 3 ký tự.';
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                errorMessage = 'Email không hợp lệ.';
-            } else if (password.length < 6) {
-                errorMessage = 'Mật khẩu phải có ít nhất 6 ký tự.';
-            } else if (password !== confirmPassword) {
-                errorMessage = 'Mật khẩu xác nhận không khớp.';
-            } else if (users.some(u => u.email === email)) {
-                errorMessage = 'Email đã được sử dụng!';
-            } else if (users.some(u => u.username === username)) {
-                errorMessage = 'Tên người dùng đã tồn tại!';
-            }
-
-            if (errorMessage) {
-                registerError.textContent = errorMessage;
-                registerError.style.display = 'block';
-                registerSuccess.style.display = 'none';
-                return;
-            }
-
-            const playerId = `ID${Math.floor(Math.random() * 1000000)}`;
-            const newUser = {
-                username,
-                email,
-                password,
-                playerId,
-                balance: 0,
-                isAdmin: false
-            };
-            users.push(newUser);
-            stats.totalUsers = users.length;
-            stats.activeUsers = Math.floor(Math.random() * stats.totalUsers);
-            userData = { username, playerId, balance: 0 };
-            isLoggedIn = true;
-            isAdmin = newUser.isAdmin;
-            saveData();
-            registerError.style.display = 'none';
-            registerSuccess.style.display = 'block';
-            registerButton.style.display = 'none';
-            setTimeout(() => {
-                registerModal.style.display = 'none';
-                loginModal.style.display = 'flex';
-                registerSuccess.style.display = 'none';
-                registerButton.style.display = 'block';
-                registerForm.reset();
-                updateUserInterface();
-            }, 2000);
-        });
-
-        const showRegister = document.getElementById('showRegister');
         const showLogin = document.getElementById('showLogin');
+        const showRegister = document.getElementById('showRegister');
 
-        showRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'none';
-            registerModal.style.display = 'flex';
-            registerError.style.display = 'none';
-            registerSuccess.style.display = 'none';
-            registerButton.style.display = 'block';
-            registerForm.reset();
-        });
-
-        showLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'none';
-            loginModal.style.display = 'flex';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === topupModal) {
-                topupModal.style.display = 'none';
-            }
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
-            }
-            if (e.target === registerModal) {
-                registerModal.style.display = 'none';
-            }
-            if (e.target === document.getElementById('changePasswordModal')) {
-                document.getElementById('changePasswordModal').style.display = 'none';
-            }
-        });
-
-        function toggleForm() {
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            const bankForm = document.getElementById('bankForm');
-            const cardForm = document.getElementById('cardForm');
-
-            if (paymentMethod === 'bank') {
-                bankForm.style.display = 'block';
-                cardForm.style.display = 'none';
-            } else {
-                bankForm.style.display = 'none';
-                cardForm.style.display = 'block';
-            }
+        if (registerLink) {
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (registerModal && topupModal && loginModal && registerError && registerSuccess && registerForm) {
+                    registerModal.style.display = 'flex';
+                    topupModal.style.display = 'none';
+                    loginModal.style.display = 'none';
+                    registerError.style.display = 'none';
+                    registerSuccess.style.display = 'none';
+                    registerForm.reset();
+                } else {
+                    console.error('Không tìm thấy các element trong registerLink.');
+                }
+            });
         }
 
-        // Hamburger Menu Toggle
+        if (closeRegisterModal) {
+            closeRegisterModal.addEventListener('click', () => {
+                if (registerModal) registerModal.style.display = 'none';
+            });
+        }
+
+        if (showLogin) {
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (loginModal && registerModal) {
+                    loginModal.style.display = 'flex';
+                    registerModal.style.display = 'none';
+                }
+            });
+        }
+
+        if (showRegister) {
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (registerModal && loginModal) {
+                    registerModal.style.display = 'flex';
+                    loginModal.style.display = 'none';
+                }
+            });
+        }
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                showSpinner('registerSpinner');
+                const registerUsername = document.getElementById('registerUsername');
+                const registerEmail = document.getElementById('registerEmail');
+                const registerPassword = document.getElementById('registerPassword');
+                const confirmPassword = document.getElementById('confirmPassword');
+
+                if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) {
+                    console.error('Không tìm thấy các element trong registerForm.');
+                    hideSpinner('registerSpinner');
+                    return;
+                }
+
+                const username = registerUsername.value.trim();
+                const email = registerEmail.value.trim();
+                const password = registerPassword.value;
+                const confirmPasswordValue = confirmPassword.value;
+
+                let errorMessage = '';
+                if (username.length < 3) {
+                    errorMessage = 'Tên người dùng phải có ít nhất 3 ký tự.';
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    errorMessage = 'Email không hợp lệ.';
+                } else if (password.length < 6 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+                    errorMessage = 'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa và số.';
+                } else if (password !== confirmPasswordValue) {
+                    errorMessage = 'Mật khẩu xác nhận không khớp.';
+                } else if (users.some(u => u.email === email)) {
+                    errorMessage = 'Email đã được sử dụng!';
+                } else if (users.some(u => u.username === username)) {
+                    errorMessage = 'Tên người dùng đã được sử dụng!';
+                }
+
+                if (errorMessage) {
+                    if (registerError) {
+                        registerError.textContent = errorMessage;
+                        registerError.style.display = 'block';
+                        registerSuccess.style.display = 'none';
+                    }
+                    hideSpinner('registerSpinner');
+                    return;
+                }
+
+                try {
+                    loadData();
+                    const hashedPassword = await hashPassword(password);
+                    let playerId;
+                    do {
+                        playerId = generatePlayerId();
+                    } while (users.some(u => u.playerId === playerId));
+                    const newUser = {
+                        username,
+                        email,
+                        password: hashedPassword,
+                        playerId,
+                        balance: 0
+                    };
+                    users.push(newUser);
+                    isLoggedIn = true;
+                    userData = { username, email, playerId, balance: 0 };
+                    saveData();
+                    if (registerSuccess && registerError) {
+                        registerSuccess.style.display = 'block';
+                        registerError.style.display = 'none';
+                    }
+                    updateUserInterface();
+                    setTimeout(() => {
+                        if (registerModal) registerModal.style.display = 'none';
+                        if (registerSuccess) registerSuccess.style.display = 'none';
+                    }, 2000);
+                    registerForm.reset();
+                } catch (error) {
+                    console.error('Lỗi khi đăng ký:', error);
+                    if (registerError) {
+                        registerError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        registerError.style.display = 'block';
+                        registerSuccess.style.display = 'none';
+                    }
+                }
+                hideSpinner('registerSpinner');
+            });
+        }
+
+        // Hamburger Menu
         const hamburger = document.querySelector('.hamburger');
         const menu = document.querySelector('.menu');
-        hamburger.addEventListener('click', () => {
-            menu.classList.toggle('active');
-        });
+        if (hamburger && menu) {
+            hamburger.addEventListener('click', () => {
+                menu.classList.toggle('active');
+            });
+        }
     </script>
 </body>
 </html>
