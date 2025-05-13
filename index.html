@@ -78,6 +78,7 @@
             font-size: 1rem;
             font-weight: 500;
             transition: color 0.3s ease, text-shadow 0.3s ease;
+            touch-action: manipulation;
         }
         .menu a:hover {
             color: #fff;
@@ -93,6 +94,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
+            touch-action: manipulation;
         }
         .wallet a:hover {
             color: #fff;
@@ -116,6 +118,7 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: background 0.3s ease;
+            touch-action: manipulation;
         }
         .wallet .logout:hover {
             background: #FF6347;
@@ -140,26 +143,13 @@
             font-weight: 700;
             margin-bottom: 0.8rem;
         }
-        .admin-section {
-            background: rgba(40, 40, 40, 0.9);
-            padding: 1.5rem;
-            margin-top: 1rem;
-            border-radius: 10px;
-            border: 1px solid #FFD700;
-        }
-        .admin-section h3 {
-            color: #FFD700;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-        .admin-section label {
+        .section label {
             display: block;
             margin: 0.5rem 0 0.2rem;
             color: #FFD700;
             font-size: 0.9rem;
         }
-        .admin-section input,
-        .admin-section textarea {
+        .section input {
             width: 100%;
             padding: 0.8rem;
             margin-bottom: 0.8rem;
@@ -168,8 +158,9 @@
             background: #2c2c2c;
             color: #e0e0e0;
             font-size: 1rem;
+            touch-action: manipulation;
         }
-        .admin-section button {
+        .section button {
             background: #FFD700;
             color: #1a1a1a;
             border: none;
@@ -179,30 +170,25 @@
             font-size: 1rem;
             margin: 0.5rem 0;
             transition: background 0.3s ease;
+            touch-action: manipulation;
         }
-        .admin-section button:hover {
+        .section button:hover {
             background: #e6c200;
         }
-        .admin-section table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+        .section a.support-link {
+            display: inline-block;
+            background: #0088cc;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            transition: background 0.3s ease;
+            touch-action: manipulation;
         }
-        .admin-section th,
-        .admin-section td {
-            border: 1px solid #FFD700;
-            padding: 0.8rem;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-        .admin-section th {
-            background: #FFD700;
-            color: #1a1a1a;
-            font-weight: 600;
-        }
-        .admin-section td button {
-            padding: 0.5rem 1rem;
-            margin: 0 0.2rem;
+        .section a.support-link:hover {
+            background: #00aaff;
         }
         .pricing {
             display: flex;
@@ -277,6 +263,7 @@
             width: 100%;
             max-width: 200px;
             transition: background 0.3s ease, transform 0.2s ease;
+            touch-action: manipulation;
         }
         .plan.recommended button {
             background: #1a1a1a;
@@ -309,6 +296,7 @@
             max-width: 400px;
             text-align: center;
             border: 1px solid #FFD700;
+            position: relative;
         }
         .modal-content h3 {
             font-family: 'Montserrat', sans-serif;
@@ -324,6 +312,7 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: #FFD700;
+            touch-action: manipulation;
         }
         .modal-content .close:hover {
             color: #FF4500;
@@ -346,6 +335,7 @@
             font-size: 1rem;
             background: #2c2c2c;
             color: #e0e0e0;
+            touch-action: manipulation;
         }
         .modal-content button {
             background: #FFD700;
@@ -359,6 +349,7 @@
             font-weight: 500;
             width: 100%;
             transition: background 0.3s ease;
+            touch-action: manipulation;
         }
         .modal-content button:hover {
             background: #e6c200;
@@ -386,6 +377,7 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
+            touch-action: manipulation;
         }
         .modal-content a:hover {
             color: #e6c200;
@@ -417,7 +409,7 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 0.5rem auto;
         }
         .notification {
             background: rgba(255, 215, 0, 0.2);
@@ -483,22 +475,6 @@
                 margin-bottom: 0.5rem;
             }
             .section p {
-                font-size: 0.9rem;
-            }
-            .admin-section {
-                padding: 1rem;
-            }
-            .admin-section h3 {
-                font-size: 1.1rem;
-            }
-            .admin-section table {
-                font-size: 0.8rem;
-            }
-            .admin-section th, .admin-section td {
-                padding: 0.5rem;
-            }
-            .admin-section button {
-                padding: 0.6rem 1rem;
                 font-size: 0.9rem;
             }
             .plan {
@@ -569,6 +545,8 @@
             <div class="menu">
                 <a href="#home">Trang Chủ</a>
                 <a href="#pricing">Gói Dịch Vụ</a>
+                <a href="#code">Nhập Code</a>
+                <a href="#support">Hỗ Trợ</a>
                 <a href="#about">Về Chúng Tôi</a>
                 <a href="#contact">Liên Hệ</a>
             </div>
@@ -591,70 +569,6 @@
         <div class="section" id="home">
             <h2>Chào Mừng</h2>
             <p>Chơi game PC yêu thích trên điện thoại với kết nối internet. Không cần cấu hình mạnh!</p>
-            <div class="admin-section" id="adminSection" style="display: none;">
-                <h3>Quản Lý Admin</h3>
-                <div>
-                    <h4>Tặng Số Dư</h4>
-                    <label for="giftId">ID Người Dùng</label>
-                    <input type="number" id="giftId" placeholder="VD: 123456">
-                    <label for="giftAmount">Số Tiền (VNĐ)</label>
-                    <input type="number" id="giftAmount" placeholder="VD: 10000">
-                    <button onclick="giftBalanceById()">Tặng</button>
-                    <p class="success" id="giftSuccess" style="display: none;">Tặng thành công!</p>
-                    <p class="error" id="giftError" style="display: none;"></p>
-                </div>
-                <div>
-                    <h4>Quản Lý Người Dùng</h4>
-                    <table id="userTable">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Player ID</th>
-                                <th>Số Dư</th>
-                                <th>Hành Động</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTableBody"></tbody>
-                    </table>
-                </div>
-                <div>
-                    <h4>Chỉnh Gói Dịch Vụ</h4>
-                    <label for="trumboxPrice">Giá Thuê Trumbox (VNĐ/giờ)</label>
-                    <input type="number" id="trumboxPrice" placeholder="VD: 3000">
-                    <label for="trumboxDesc">Mô Tả Trumbox</label>
-                    <textarea id="trumboxDesc" placeholder="Mô tả gói Trumbox"></textarea>
-                    <label for="premiumPrice">Giá Gói Nâng Cao (VNĐ)</label>
-                    <input type="number" id="premiumPrice" placeholder="VD: 350000">
-                    <label for="premiumDesc">Mô Tả Gói Nâng Cao</label>
-                    <textarea id="premiumDesc" placeholder="Mô tả gói Nâng Cao"></textarea>
-                    <button onclick="updatePlans()">Cập Nhật Gói</button>
-                    <p class="success" id="planSuccess" style="display: none;">Cập nhật thành công!</p>
-                    <p class="error" id="planError" style="display: none;"></p>
-                </div>
-                <div>
-                    <h4>Thông Báo Hệ Thống</h4>
-                    <label for="notificationMessage">Nội Dung Thông Báo</label>
-                    <textarea id="notificationMessage" placeholder="VD: Server bảo trì 22h-23h"></textarea>
-                    <button onclick="sendNotification()">Gửi</button>
-                    <p class="success" id="notificationSuccess" style="display: none;">Gửi thành công!</p>
-                    <p class="error" id="notificationError" style="display: none;"></p>
-                </div>
-                <div>
-                    <h4>Lịch Sử Giao Dịch</h4>
-                    <table id="transactionTable">
-                        <thead>
-                            <tr>
-                                <th>Player ID</th>
-                                <th>Loại</th>
-                                <th>Số Tiền</th>
-                                <th>Thời Gian</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactionTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
         <div class="section" id="pricing">
             <h2>Gói Dịch Vụ</h2>
@@ -681,14 +595,27 @@
                 </div>
             </div>
         </div>
+        <div class="section" id="code">
+            <h2>Nhập Code</h2>
+            <p>Nhập mã code để nhận thưởng từ 5.000 VNĐ đến 500.000 VNĐ!</p>
+            <label for="redeemCode">Mã Code</label>
+            <input type="text" id="redeemCode" placeholder="VD: CODE15K01">
+            <button onclick="redeemCode()">Nhập Code</button>
+            <div class="loading-spinner" id="codeSpinner"></div>
+            <p class="success" id="codeSuccess" style="display: none;">Nhập code thành công!</p>
+            <p class="error" id="codeError" style="display: none;"></p>
+        </div>
+        <div class="section" id="support">
+            <h2>Hỗ Trợ</h2>
+            <p>Liên hệ với chúng tôi qua Telegram để được hỗ trợ nhanh chóng!</p>
+            <a href="https://t.me/limorecloudgame" class="support-link" target="_blank">Chat với @limorecloudgame</a>
+        </div>
         <div class="section" id="about">
             <h2>Về Chúng Tôi</h2>
             <p>Dịch vụ Cloud Gaming hàng đầu tại Việt Nam, chơi game mọi lúc, mọi nơi.</p>
         </div>
         <div class="section" id="contact">
             <h2>Liên Hệ</h2>
-            <p>Email: support@cloudgame.vn</p>
-            <p>Hotline: 1900 1234</p>
         </div>
     </div>
     <!-- Modals -->
@@ -773,25 +700,6 @@
             </form>
         </div>
     </div>
-    <div class="modal" id="editUserModal">
-        <div class="modal-content">
-            <span class="close" id="closeEditUserModal">×</span>
-            <h3>Chỉnh Sửa Người Dùng</h3>
-            <form id="editUserForm">
-                <p class="error" id="editUserError" style="display: none;"></p>
-                <p class="success" id="editUserSuccess" style="display: none;">Cập nhật thành công!</p>
-                <label for="editUsername">Tên Người Dùng</label>
-                <input type="text" id="editUsername" name="editUsername" required>
-                <label for="editEmail">Email</label>
-                <input type="email" id="editEmail" name="editEmail" required>
-                <label for="editBalance">Số Dư (VNĐ)</label>
-                <input type="number" id="editBalance" name="editBalance" required>
-                <input type="hidden" id="editPlayerId">
-                <button type="submit">Lưu</button>
-                <div class="loading-spinner" id="editUserSpinner"></div>
-            </form>
-        </div>
-    </div>
     <footer>
         <p>© 2025 Cloud Game PC.</p>
     </footer>
@@ -812,7 +720,7 @@
                     },
                     interactivity: {
                         detect_on: 'canvas',
-                        events: { onhover: { enable: !isMobile, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                        events: { onhover: { enable: !isMobile, mode: 'repulse' }, onclick: { enable: !isMobile, mode: 'push' }, resize: true },
                         modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
                     },
                     retina_detect: true
@@ -832,13 +740,20 @@
                 return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
             } catch (error) {
                 console.error('Lỗi khi mã hóa mật khẩu:', error);
-                throw error;
+                throw new Error('Không thể mã hóa mật khẩu.');
             }
         }
 
         // Utility: Generate Numeric Player ID
         function generatePlayerId() {
             return Math.floor(100000 + Math.random() * 900000); // Sinh số 6 chữ số
+        }
+
+        // Utility: Sanitize Input to Prevent XSS
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML.replace(/</g, '<').replace(/>/g, '>');
         }
 
         // Default Data
@@ -849,10 +764,68 @@
             trumbox: { price: 3000, description: "Chơi không giới hạn game. Hỗ trợ trên mọi thiết bị. Băng thông ổn định, độ trễ thấp." },
             premium: { price: 350000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." }
         };
+        const defaultCodes = [
+            // 15.000 VNĐ Codes (Reward: 15.000 VNĐ)
+            { code: "CODE15K01", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K02", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K03", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K04", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K05", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K06", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K07", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K08", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K09", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K10", uses: 0, maxUses: 1, reward: 15000 },
+            // 50.000 VNĐ Codes (Reward: 5.000 VNĐ)
+            { code: "CODE50K01", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K02", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K03", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K04", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K05", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K06", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K07", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K08", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K09", uses: 0, maxUses: 1, reward: 5000 },
+            { code: "CODE50K10", uses: 0, maxUses: 1, reward: 5000 },
+            // 100.000 VNĐ Codes (Reward: 100.000 VNĐ)
+            { code: "CODE100K01", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K02", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K03", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K04", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K05", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K06", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K07", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K08", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K09", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K10", uses: 0, maxUses: 1, reward: 100000 },
+            // 200.000 VNĐ Codes (Reward: 200.000 VNĐ)
+            { code: "CODE200K01", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K02", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K03", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K04", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K05", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K06", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K07", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K08", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K09", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K10", uses: 0, maxUses: 1, reward: 200000 },
+            // 500.000 VNĐ Codes (Reward: 500.000 VNĐ)
+            { code: "CODE500K01", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K02", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K03", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K04", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K05", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K06", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K07", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K08", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K09", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K10", uses: 0, maxUses: 1, reward: 500000 }
+        ];
 
         // Global State
         let users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
         let plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
+        let codes = JSON.parse(localStorage.getItem('codes')) || defaultCodes;
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
         let isLoggedIn = false;
@@ -864,18 +837,20 @@
         const userDetails = document.getElementById('userDetails');
         const balanceDisplay = document.querySelector('.balance');
         const logoutButton = document.getElementById('logoutButton');
-        const adminSection = document.getElementById('adminSection');
         const notificationArea = document.getElementById('notificationArea');
         const trumboxPlan = document.getElementById('trumboxPlan');
         const premiumPlan = document.getElementById('premiumPlan');
 
-        // Lock Mechanism for Multi-Device Sync
+        // Lock Mechanism with Timeout
         function acquireLock() {
-            const lock = localStorage.getItem('dataLock');
-            if (lock && Date.now() - parseInt(lock) < 10000) {
-                return false; // Lock đang được giữ
+            const lockKey = 'dataLock';
+            const lockTimeout = 10000; // 10 seconds
+            const currentLock = localStorage.getItem(lockKey);
+            const now = Date.now();
+            if (currentLock && now - parseInt(currentLock) < lockTimeout) {
+                return false;
             }
-            localStorage.setItem('dataLock', Date.now());
+            localStorage.setItem(lockKey, now.toString());
             return true;
         }
 
@@ -886,21 +861,13 @@
         // Show Loading Spinner
         function showSpinner(spinnerId) {
             const spinner = document.getElementById(spinnerId);
-            if (spinner) {
-                spinner.style.display = 'block';
-            } else {
-                console.warn(`Spinner ${spinnerId} không tìm thấy.`);
-            }
+            if (spinner) spinner.style.display = 'block';
         }
 
         // Hide Loading Spinner
         function hideSpinner(spinnerId) {
             const spinner = document.getElementById(spinnerId);
-            if (spinner) {
-                spinner.style.display = 'none';
-            } else {
-                console.warn(`Spinner ${spinnerId} không tìm thấy.`);
-            }
+            if (spinner) spinner.style.display = 'none';
         }
 
         // Save Data to LocalStorage
@@ -911,6 +878,7 @@
                 }
                 localStorage.setItem('users', JSON.stringify(users));
                 localStorage.setItem('plans', JSON.stringify(plans));
+                localStorage.setItem('codes', JSON.stringify(codes));
                 localStorage.setItem('notifications', JSON.stringify(notifications));
                 localStorage.setItem('transactions', JSON.stringify(transactions));
                 localStorage.setItem('userData', JSON.stringify(userData));
@@ -929,341 +897,141 @@
             try {
                 users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
                 plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
+                codes = JSON.parse(localStorage.getItem('codes')) || defaultCodes;
                 notifications = JSON.parse(localStorage.getItem('notifications')) || [];
                 transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-                return { users, plans, notifications, transactions };
+                return { users, plans, codes, notifications, transactions };
             } catch (error) {
                 console.error('Lỗi khi tải dữ liệu:', error);
                 users = defaultUsers;
                 plans = defaultPlans;
+                codes = defaultCodes;
                 notifications = [];
                 transactions = [];
                 alert('Có lỗi khi tải dữ liệu, sử dụng dữ liệu mặc định.');
-                return { users, plans, notifications, transactions };
+                return { users, plans, codes, notifications, transactions };
             }
         }
 
         // Update UI Based on Login State
         function updateUserInterface() {
-            if (authLinks && userInfo && userDetails && balanceDisplay && adminSection) {
-                if (isLoggedIn && userData.playerId) {
-                    authLinks.style.display = 'none';
-                    userInfo.style.display = 'flex';
-                    userDetails.textContent = `${userData.username} (${userData.playerId})`;
-                    balanceDisplay.textContent = `Số dư: ${userData.balance} VNĐ`;
-                    if (userData.username === 'tominh14' && userData.email === 'tominh14@gmail.com') {
-                        adminSection.style.display = 'block';
-                        loadUsers();
-                        loadTransactions();
-                    } else {
-                        adminSection.style.display = 'none';
-                    }
-                } else {
-                    authLinks.style.display = 'flex';
-                    userInfo.style.display = 'none';
-                    userDetails.textContent = '';
-                    balanceDisplay.textContent = 'Số dư: 0 VNĐ';
-                    adminSection.style.display = 'none';
-                }
-                updatePlansUI();
-                loadNotifications();
-            } else {
-                console.error('Một số DOM elements không tìm thấy trong updateUserInterface.');
+            if (!authLinks || !userInfo || !userDetails || !balanceDisplay) {
+                console.error('Thiếu các phần tử DOM trong updateUserInterface.');
+                return;
             }
+            if (isLoggedIn && userData.playerId) {
+                authLinks.style.display = 'none';
+                userInfo.style.display = 'flex';
+                userDetails.textContent = `${sanitizeInput(userData.username)} (${userData.playerId})`;
+                balanceDisplay.textContent = `Số dư: ${userData.balance.toLocaleString('vi-VN')} VNĐ`;
+            } else {
+                authLinks.style.display = 'flex';
+                userInfo.style.display = 'none';
+                userDetails.textContent = '';
+                balanceDisplay.textContent = 'Số dư: 0 VNĐ';
+            }
+            updatePlansUI();
+            loadNotifications();
         }
 
         // Update Plans UI
         function updatePlansUI() {
-            if (trumboxPlan && premiumPlan) {
-                trumboxPlan.querySelector('.price').textContent = `${plans.trumbox.price} VNĐ/giờ`;
-                const trumboxDesc = trumboxPlan.querySelectorAll('p:not(.price):not(.subscribers)');
-                const trumboxDescLines = plans.trumbox.description.split('. ').filter(d => d);
-                trumboxDesc.forEach((p, i) => p.textContent = trumboxDescLines[i] || '');
-
-                premiumPlan.querySelector('.price').textContent = `${plans.premium.price} VNĐ/Vĩnh Viễn`;
-                const premiumDesc = premiumPlan.querySelectorAll('p:not(.price):not(.subscribers)');
-                const premiumDescLines = plans.premium.description.split('. ').filter(d => d);
-                premiumDesc.forEach((p, i) => p.textContent = premiumDescLines[i] || '');
-            } else {
+            if (!trumboxPlan || !premiumPlan) {
                 console.warn('Không tìm thấy trumboxPlan hoặc premiumPlan.');
-            }
-        }
-
-        // Gift Balance by Player ID
-        function giftBalanceById() {
-            const giftIdInput = document.getElementById('giftId');
-            const giftAmountInput = document.getElementById('giftAmount');
-            const giftSuccess = document.getElementById('giftSuccess');
-            const giftError = document.getElementById('giftError');
-
-            if (!giftIdInput || !giftAmountInput || !giftSuccess || !giftError) {
-                console.error('Không tìm thấy các element trong giftBalanceById.');
                 return;
             }
+            trumboxPlan.querySelector('.price').textContent = `${plans.trumbox.price.toLocaleString('vi-VN')} VNĐ/giờ`;
+            const trumboxDesc = trumboxPlan.querySelectorAll('p:not(.price):not(.subscribers)');
+            const trumboxDescLines = plans.trumbox.description.split('. ').filter(d => d);
+            trumboxDesc.forEach((p, i) => p.textContent = trumboxDescLines[i] || '');
 
-            const giftId = parseInt(giftIdInput.value);
-            const giftAmount = parseInt(giftAmountInput.value);
+            premiumPlan.querySelector('.price').textContent = `${plans.premium.price.toLocaleString('vi-VN')} VNĐ/Vĩnh Viễn`;
+            const premiumDesc = premiumPlan.querySelectorAll('p:not(.price):not(.subscribers)');
+            const premiumDescLines = plans.premium.description.split('. ').filter(d => d);
+            premiumDesc.forEach((p, i) => p.textContent = premiumDescLines[i] || '');
+        }
 
-            if (isNaN(giftId) || isNaN(giftAmount) || giftAmount <= 0) {
-                giftError.textContent = 'Vui lòng nhập ID và số tiền hợp lệ!';
-                giftError.style.display = 'block';
-                giftSuccess.style.display = 'none';
+        // Redeem Code
+        function redeemCode() {
+            if (!isLoggedIn) {
+                alert('Vui lòng đăng nhập để nhập code!');
                 return;
             }
-
-            try {
-                loadData();
-                const userIndex = users.findIndex(u => u.playerId === giftId);
-                if (userIndex === -1) {
-                    giftError.textContent = 'Không tìm thấy người dùng!';
-                    giftError.style.display = 'block';
-                    giftSuccess.style.display = 'none';
-                    return;
-                }
-
-                users[userIndex].balance += giftAmount;
-                saveData();
-                logTransaction(giftId, 'Gift', giftAmount);
-                giftSuccess.style.display = 'block';
-                giftError.style.display = 'none';
-                giftIdInput.value = '';
-                giftAmountInput.value = '';
-                loadUsers();
-                loadTransactions();
-                setTimeout(() => giftSuccess.style.display = 'none', 2000);
-            } catch (error) {
-                console.error('Lỗi khi tặng số dư:', error);
-                giftError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
-                giftError.style.display = 'block';
-                giftSuccess.style.display = 'none';
-            }
-        }
-
-        // Load Users for Admin
-        function loadUsers() {
-            const userTableBody = document.getElementById('userTableBody');
-            if (!userTableBody) {
-                console.error('Không tìm thấy userTableBody.');
+            const redeemCodeInput = document.getElementById('redeemCode');
+            const codeSuccess = document.getElementById('codeSuccess');
+            const codeError = document.getElementById('codeError');
+            const codeSpinner = document.getElementById('codeSpinner');
+            const redeemButton = document.querySelector('#code button');
+            if (!redeemCodeInput || !codeSuccess || !codeError || !codeSpinner || !redeemButton) {
+                console.error('Thiếu các phần tử DOM trong redeemCode.');
                 return;
             }
-
-            try {
-                loadData();
-                userTableBody.innerHTML = '';
-                users.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${user.username}</td>
-                        <td>${user.email}</td>
-                        <td>${user.playerId}</td>
-                        <td>${user.balance} VNĐ</td>
-                        <td>
-                            <button onclick="editUser(${user.playerId})">Chỉnh Sửa</button>
-                            <button onclick="deleteUser(${user.playerId})">Xóa</button>
-                        </td>
-                    `;
-                    userTableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Lỗi khi tải danh sách người dùng:', error);
-                alert('Có lỗi khi tải danh sách người dùng.');
+            const code = redeemCodeInput.value.trim().toUpperCase();
+            if (!code) {
+                codeError.textContent = 'Vui lòng nhập mã code!';
+                codeError.style.display = 'block';
+                codeSuccess.style.display = 'none';
+                codeSpinner.style.display = 'none';
+                setTimeout(() => codeError.style.display = 'none', 3000);
+                return;
             }
-        }
-
-        // Edit User
-        function editUser(playerId) {
-            const user = users.find(u => u.playerId === playerId);
-            if (!user) return;
-
-            const editUserModal = document.getElementById('editUserModal');
-            const editUsername = document.getElementById('editUsername');
-            const editEmail = document.getElementById('editEmail');
-            const editBalance = document.getElementById('editBalance');
-            const editPlayerId = document.getElementById('editPlayerId');
-
-            if (editUserModal && editUsername && editEmail && editBalance && editPlayerId) {
-                editUsername.value = user.username;
-                editEmail.value = user.email;
-                editBalance.value = user.balance;
-                editPlayerId.value = playerId;
-                editUserModal.style.display = 'flex';
-            } else {
-                console.error('Không tìm thấy các element trong editUser.');
-            }
-        }
-
-        // Save Edited User
-        const editUserForm = document.getElementById('editUserForm');
-        if (editUserForm) {
-            editUserForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                showSpinner('editUserSpinner');
-                const editUsername = document.getElementById('editUsername');
-                const editEmail = document.getElementById('editEmail');
-                const editBalance = document.getElementById('editBalance');
-                const editPlayerId = document.getElementById('editPlayerId');
-                const editUserError = document.getElementById('editUserError');
-                const editUserSuccess = document.getElementById('editUserSuccess');
-
-                if (!editUsername || !editEmail || !editBalance || !editPlayerId || !editUserError || !editUserSuccess) {
-                    console.error('Không tìm thấy các element trong editUserForm.');
-                    hideSpinner('editUserSpinner');
-                    return;
-                }
-
-                const playerId = parseInt(editPlayerId.value);
-                const username = editUsername.value.trim();
-                const email = editEmail.value.trim();
-                const balance = parseInt(editBalance.value);
-
-                if (username.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || isNaN(balance) || balance < 0) {
-                    editUserError.textContent = 'Vui lòng nhập thông tin hợp lệ!';
-                    editUserError.style.display = 'block';
-                    editUserSuccess.style.display = 'none';
-                    hideSpinner('editUserSpinner');
-                    return;
-                }
-
+            showSpinner('codeSpinner');
+            redeemButton.disabled = true;
+            redeemButton.textContent = 'Đang xử lý...';
+            setTimeout(() => {
                 try {
                     loadData();
-                    const userIndex = users.findIndex(u => u.playerId === playerId);
-                    if (userIndex === -1) {
-                        editUserError.textContent = 'Không tìm thấy người dùng!';
-                        editUserError.style.display = 'block';
-                        editUserSuccess.style.display = 'none';
-                        hideSpinner('editUserSpinner');
+                    const codeObj = codes.find(c => c.code === code);
+                    if (!codeObj) {
+                        codeError.textContent = 'Mã code không hợp lệ!';
+                        codeError.style.display = 'block';
+                        codeSuccess.style.display = 'none';
+                        setTimeout(() => codeError.style.display = 'none', 3000);
+                        hideSpinner('codeSpinner');
+                        redeemButton.disabled = false;
+                        redeemButton.textContent = 'Nhập Code';
                         return;
                     }
-
-                    const oldBalance = users[userIndex].balance;
-                    users[userIndex] = { ...users[userIndex], username, email, balance };
-                    if (userData.playerId === playerId) {
-                        userData = { ...userData, username, email, balance };
+                    if (codeObj.uses >= codeObj.maxUses) {
+                        codeError.textContent = 'Mã code đã được sử dụng!';
+                        codeError.style.display = 'block';
+                        codeSuccess.style.display = 'none';
+                        setTimeout(() => codeError.style.display = 'none', 3000);
+                        hideSpinner('codeSpinner');
+                        redeemButton.disabled = false;
+                        redeemButton.textContent = 'Nhập Code';
+                        return;
+                    }
+                    const balanceReward = codeObj.reward;
+                    userData.balance += balanceReward;
+                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
+                    if (userIndex !== -1) {
+                        users[userIndex].balance = userData.balance;
+                    }
+                    codeObj.uses += 1;
+                    if (codeObj.uses >= codeObj.maxUses) {
+                        codes = codes.filter(c => c.code !== code);
                     }
                     saveData();
-                    logTransaction(playerId, 'Edit Balance', balance - oldBalance);
-                    editUserSuccess.style.display = 'block';
-                    editUserError.style.display = 'none';
-                    document.getElementById('editUserModal').style.display = 'none';
-                    loadUsers();
+                    logTransaction(userData.playerId, 'Redeem Code', balanceReward);
+                    codeSuccess.textContent = `Nhập code thành công! Bạn nhận được ${balanceReward.toLocaleString('vi-VN')} VNĐ.`;
+                    codeSuccess.style.display = 'block';
+                    codeError.style.display = 'none';
+                    redeemCodeInput.value = '';
                     updateUserInterface();
-                    setTimeout(() => editUserSuccess.style.display = 'none', 2000);
+                    setTimeout(() => codeSuccess.style.display = 'none', 3000);
                 } catch (error) {
-                    console.error('Lỗi khi chỉnh sửa người dùng:', error);
-                    editUserError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
-                    editUserError.style.display = 'block';
-                    editUserSuccess.style.display = 'none';
+                    console.error('Lỗi khi nhập code:', error);
+                    codeError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                    codeError.style.display = 'block';
+                    codeSuccess.style.display = 'none';
+                    setTimeout(() => codeError.style.display = 'none', 3000);
+                } finally {
+                    hideSpinner('codeSpinner');
+                    redeemButton.disabled = false;
+                    redeemButton.textContent = 'Nhập Code';
                 }
-                hideSpinner('editUserSpinner');
-            });
-        }
-
-        // Delete User
-        function deleteUser(playerId) {
-            if (!confirm('Bạn có chắc muốn xóa người dùng này?')) return;
-
-            try {
-                loadData();
-                users = users.filter(u => u.playerId !== playerId);
-                if (userData.playerId === playerId) {
-                    logout();
-                }
-                saveData();
-                loadUsers();
-                updateUserInterface();
-            } catch (error) {
-                console.error('Lỗi khi xóa người dùng:', error);
-                alert('Có lỗi khi xóa người dùng.');
-            }
-        }
-
-        // Update Plans
-        function updatePlans() {
-            const trumboxPriceInput = document.getElementById('trumboxPrice');
-            const trumboxDescInput = document.getElementById('trumboxDesc');
-            const premiumPriceInput = document.getElementById('premiumPrice');
-            const premiumDescInput = document.getElementById('premiumDesc');
-            const planSuccess = document.getElementById('planSuccess');
-            const planError = document.getElementById('planError');
-
-            if (!trumboxPriceInput || !trumboxDescInput || !premiumPriceInput || !premiumDescInput || !planSuccess || !planError) {
-                console.error('Không tìm thấy các element trong updatePlans.');
-                return;
-            }
-
-            const trumboxPrice = parseInt(trumboxPriceInput.value);
-            const trumboxDesc = trumboxDescInput.value.trim();
-            const premiumPrice = parseInt(premiumPriceInput.value);
-            const premiumDesc = premiumDescInput.value.trim();
-
-            if (isNaN(trumboxPrice) || trumboxPrice <= 0 || !trumboxDesc || isNaN(premiumPrice) || premiumPrice <= 0 || !premiumDesc) {
-                planError.textContent = 'Vui lòng nhập thông tin hợp lệ!';
-                planError.style.display = 'block';
-                planSuccess.style.display = 'none';
-                return;
-            }
-
-            try {
-                loadData();
-                plans = {
-                    trumbox: { price: trumboxPrice, description: trumboxDesc },
-                    premium: { price: premiumPrice, description: premiumDesc }
-                };
-                saveData();
-                planSuccess.style.display = 'block';
-                planError.style.display = 'none';
-                trumboxPriceInput.value = '';
-                trumboxDescInput.value = '';
-                premiumPriceInput.value = '';
-                premiumDescInput.value = '';
-                updatePlansUI();
-                setTimeout(() => planSuccess.style.display = 'none', 2000);
-            } catch (error) {
-                console.error('Lỗi khi cập nhật gói:', error);
-                planError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
-                planError.style.display = 'block';
-                planSuccess.style.display = 'none';
-            }
-        }
-
-        // Send Notification
-        function sendNotification() {
-            const notificationMessageInput = document.getElementById('notificationMessage');
-            const notificationSuccess = document.getElementById('notificationSuccess');
-            const notificationError = document.getElementById('notificationError');
-
-            if (!notificationMessageInput || !notificationSuccess || !notificationError) {
-                console.error('Không tìm thấy các element trong sendNotification.');
-                return;
-            }
-
-            const message = notificationMessageInput.value.trim();
-
-            if (!message) {
-                notificationError.textContent = 'Vui lòng nhập nội dung thông báo!';
-                notificationError.style.display = 'block';
-                notificationSuccess.style.display = 'none';
-                return;
-            }
-
-            try {
-                loadData();
-                notifications.push({
-                    message,
-                    timestamp: new Date().toISOString()
-                });
-                saveData();
-                notificationSuccess.style.display = 'block';
-                notificationError.style.display = 'none';
-                notificationMessageInput.value = '';
-                loadNotifications();
-                setTimeout(() => notificationSuccess.style.display = 'none', 2000);
-            } catch (error) {
-                console.error('Lỗi khi gửi thông báo:', error);
-                notificationError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
-                notificationError.style.display = 'block';
-                notificationSuccess.style.display = 'none';
-            }
+            }, 1000); // Simulate processing delay
         }
 
         // Load Notifications
@@ -1272,14 +1040,13 @@
                 console.error('Không tìm thấy notificationArea.');
                 return;
             }
-
             try {
                 loadData();
                 notificationArea.innerHTML = '';
                 notifications.forEach(notification => {
                     const div = document.createElement('div');
                     div.className = 'notification';
-                    div.textContent = `${notification.message} (${new Date(notification.timestamp).toLocaleString('vi-VN')})`;
+                    div.textContent = `${sanitizeInput(notification.message)} (${new Date(notification.timestamp).toLocaleString('vi-VN')})`;
                     notificationArea.appendChild(div);
                 });
             } catch (error) {
@@ -1303,50 +1070,22 @@
             }
         }
 
-        // Load Transactions
-        function loadTransactions() {
-            const transactionTableBody = document.getElementById('transactionTableBody');
-            if (!transactionTableBody) {
-                console.error('Không tìm thấy transactionTableBody.');
-                return;
-            }
-
-            try {
-                loadData();
-                transactionTableBody.innerHTML = '';
-                transactions.forEach(t => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${t.userId}</td>
-                        <td>${t.type}</td>
-                        <td>${t.amount} VNĐ</td>
-                        <td>${new Date(t.timestamp).toLocaleString('vi-VN')}</td>
-                    `;
-                    transactionTableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Lỗi khi tải giao dịch:', error);
-            }
-        }
-
         // Rent Trumbox Machine
         function rentTrumbox(event) {
             if (!isLoggedIn) {
                 alert('Vui lòng đăng nhập trước khi thuê máy!');
                 return;
             }
-
             showSpinner('trumboxSpinner');
-            let button = event?.target;
+            const button = event?.target;
             if (button) {
                 button.disabled = true;
                 button.textContent = 'Đang xử lý...';
             }
-
             try {
                 loadData();
                 if (userData.balance < plans.trumbox.price) {
-                    alert(`Số dư không đủ (cần ít nhất ${plans.trumbox.price} VNĐ)!`);
+                    alert(`Số dư không đủ (cần ít nhất ${plans.trumbox.price.toLocaleString('vi-VN')} VNĐ)!`);
                     if (button) {
                         button.disabled = false;
                         button.textContent = 'Thuê Ngay';
@@ -1354,11 +1093,12 @@
                     hideSpinner('trumboxSpinner');
                     return;
                 }
-
                 userData.balance -= plans.trumbox.price;
                 const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                 if (userIndex !== -1) {
                     users[userIndex].balance = userData.balance;
+                } else {
+                    throw new Error('Không tìm thấy người dùng trong danh sách.');
                 }
                 saveData();
                 logTransaction(userData.playerId, 'Rent Trumbox', -plans.trumbox.price);
@@ -1367,13 +1107,13 @@
             } catch (error) {
                 console.error('Lỗi khi thuê máy:', error);
                 alert('Có lỗi xảy ra, vui lòng thử lại.');
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = 'Thuê Ngay';
+                }
+                hideSpinner('trumboxSpinner');
             }
-
-            if (button) {
-                button.disabled = false;
-                button.textContent = 'Thuê Ngay';
-            }
-            hideSpinner('trumboxSpinner');
             updateUserInterface();
         }
 
@@ -1384,47 +1124,52 @@
                 return;
             }
             if (userData.balance < price) {
-                alert('Số dư không đủ để mua gói này!');
+                alert(`Số dư không đủ để mua gói này! Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ.`);
                 return;
             }
-
             showSpinner('premiumSpinner');
-            let button = event?.target;
+            const button = event?.target;
             if (button) {
                 button.disabled = true;
                 button.textContent = 'Đang xử lý...';
             }
-
             try {
                 loadData();
                 userData.balance -= price;
                 const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                 if (userIndex !== -1) {
                     users[userIndex].balance = userData.balance;
+                } else {
+                    throw new Error('Không tìm thấy người dùng trong danh sách.');
                 }
                 saveData();
-                logTransaction(userData.playerId, 'Purchase Premium', -price);
+                logTransaction(userData.playerId, `Purchase ${planName}`, -price);
                 alert(`Đã mua ${planName} thành công!`);
             } catch (error) {
                 console.error('Lỗi khi mua gói:', error);
                 alert('Có lỗi xảy ra, vui lòng thử lại.');
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.textContent = 'Mua Gói';
+                }
+                hideSpinner('premiumSpinner');
             }
-
-            if (button) {
-                button.disabled = false;
-                button.textContent = 'Mua Gói';
-            }
-            hideSpinner('premiumSpinner');
             updateUserInterface();
         }
 
         // Logout
         function logout() {
-            isLoggedIn = false;
-            userData = { username: "", email: "", playerId: 0, balance: 0 };
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('userData');
-            updateUserInterface();
+            try {
+                isLoggedIn = false;
+                userData = { username: "", email: "", playerId: 0, balance: 0 };
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userData');
+                updateUserInterface();
+            } catch (error) {
+                console.error('Lỗi khi đăng xuất:', error);
+                alert('Có lỗi khi đăng xuất, vui lòng thử lại.');
+            }
         }
 
         // Initialize
@@ -1447,11 +1192,12 @@
             logoutButton.addEventListener('click', logout);
         }
 
-        // Topup Modal (giữ nguyên logic gốc, chỉ thêm kiểm tra null và xử lý lỗi cơ bản)
+        // Topup Modal
         const topupModal = document.getElementById('topupModal');
         const topupLink = document.getElementById('topupLink');
         const closeTopupModal = document.getElementById('closeTopupModal');
         const topupForm = document.getElementById('topupForm');
+        const topupSpinner = document.getElementById('topupSpinner');
         const topupSuccess = document.getElementById('topupSuccess');
         const topupError = document.getElementById('topupError');
         const paymentMethodSelect = document.getElementById('paymentMethod');
@@ -1463,8 +1209,6 @@
             if (bankForm && cardForm) {
                 bankForm.style.display = paymentMethod === 'bank' ? 'block' : 'none';
                 cardForm.style.display = paymentMethod === 'card' ? 'block' : 'none';
-            } else {
-                console.warn('Không tìm thấy bankForm hoặc cardForm.');
             }
         }
 
@@ -1477,8 +1221,6 @@
                     topupError.style.display = 'none';
                     topupForm.reset();
                     toggleForm();
-                } else {
-                    console.error('Không tìm thấy các element trong topupLink.');
                 }
             });
         }
@@ -1497,10 +1239,10 @@
                         topupError.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
                         topupError.style.display = 'block';
                         if (topupSuccess) topupSuccess.style.display = 'none';
+                        setTimeout(() => topupError.style.display = 'none', 3000);
                     }
                     return;
                 }
-
                 showSpinner('topupSpinner');
                 try {
                     if (topupSuccess && topupError) {
@@ -1519,9 +1261,11 @@
                         topupError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
                         topupError.style.display = 'block';
                         if (topupSuccess) topupSuccess.style.display = 'none';
+                        setTimeout(() => topupError.style.display = 'none', 3000);
                     }
+                } finally {
+                    hideSpinner('topupSpinner');
                 }
-                hideSpinner('topupSpinner');
             });
         }
 
@@ -1541,8 +1285,6 @@
                     registerModal.style.display = 'none';
                     loginError.style.display = 'none';
                     loginForm.reset();
-                } else {
-                    console.error('Không tìm thấy các element trong loginLink.');
                 }
             });
         }
@@ -1559,30 +1301,35 @@
                 showSpinner('loginSpinner');
                 const loginEmail = document.getElementById('loginEmail');
                 const loginPassword = document.getElementById('loginPassword');
-
                 if (!loginEmail || !loginPassword) {
-                    console.error('Không tìm thấy loginEmail hoặc loginPassword.');
+                    console.error('Thiếu loginEmail hoặc loginPassword.');
                     hideSpinner('loginSpinner');
                     return;
                 }
-
                 const email = loginEmail.value.trim();
                 const password = loginPassword.value.trim();
-
+                if (!email || !password) {
+                    if (loginError) {
+                        loginError.textContent = 'Vui lòng nhập email và mật khẩu!';
+                        loginError.style.display = 'block';
+                        setTimeout(() => loginError.style.display = 'none', 3000);
+                    }
+                    hideSpinner('loginSpinner');
+                    return;
+                }
                 try {
                     loadData();
                     const hashedPassword = await hashPassword(password);
                     const user = users.find(u => u.email === email && u.password === hashedPassword);
-
                     if (!user) {
                         if (loginError) {
                             loginError.textContent = 'Email hoặc mật khẩu không đúng!';
                             loginError.style.display = 'block';
+                            setTimeout(() => loginError.style.display = 'none', 3000);
                         }
                         hideSpinner('loginSpinner');
                         return;
                     }
-
                     isLoggedIn = true;
                     userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
                     saveData();
@@ -1594,9 +1341,11 @@
                     if (loginError) {
                         loginError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
                         loginError.style.display = 'block';
+                        setTimeout(() => loginError.style.display = 'none', 3000);
                     }
+                } finally {
+                    hideSpinner('loginSpinner');
                 }
-                hideSpinner('loginSpinner');
             });
         }
 
@@ -1620,8 +1369,6 @@
                     registerError.style.display = 'none';
                     registerSuccess.style.display = 'none';
                     registerForm.reset();
-                } else {
-                    console.error('Không tìm thấy các element trong registerLink.');
                 }
             });
         }
@@ -1660,18 +1407,15 @@
                 const registerEmail = document.getElementById('registerEmail');
                 const registerPassword = document.getElementById('registerPassword');
                 const confirmPassword = document.getElementById('confirmPassword');
-
                 if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) {
-                    console.error('Không tìm thấy các element trong registerForm.');
+                    console.error('Thiếu các phần tử trong registerForm.');
                     hideSpinner('registerSpinner');
                     return;
                 }
-
-                const username = registerUsername.value.trim();
+                const username = sanitizeInput(registerUsername.value.trim());
                 const email = registerEmail.value.trim();
                 const password = registerPassword.value;
                 const confirmPasswordValue = confirmPassword.value;
-
                 let errorMessage = '';
                 if (username.length < 3) {
                     errorMessage = 'Tên người dùng phải có ít nhất 3 ký tự.';
@@ -1686,17 +1430,16 @@
                 } else if (users.some(u => u.username === username)) {
                     errorMessage = 'Tên người dùng đã được sử dụng!';
                 }
-
                 if (errorMessage) {
                     if (registerError) {
                         registerError.textContent = errorMessage;
                         registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
+                        setTimeout(() => registerError.style.display = 'none', 3000);
                     }
                     hideSpinner('registerSpinner');
                     return;
                 }
-
                 try {
                     loadData();
                     const hashedPassword = await hashPassword(password);
@@ -1731,18 +1474,25 @@
                         registerError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
                         registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
+                        setTimeout(() => registerError.style.display = 'none', 3000);
                     }
+                } finally {
+                    hideSpinner('registerSpinner');
                 }
-                hideSpinner('registerSpinner');
             });
         }
 
-        // Hamburger Menu
+        // Hamburger Menu with Outside Click Close
         const hamburger = document.querySelector('.hamburger');
         const menu = document.querySelector('.menu');
         if (hamburger && menu) {
             hamburger.addEventListener('click', () => {
                 menu.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (!menu.contains(e.target) && !hamburger.contains(e.target) && menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                }
             });
         }
     </script>
