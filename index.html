@@ -201,6 +201,13 @@
             border-radius: 10px;
             text-align: center;
             border: 1px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
         }
         .plan.recommended {
             background: linear-gradient(135deg, #FFD700 0%, #1a1a1a 100%);
@@ -424,6 +431,10 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         @media (max-width: 768px) {
             header {
                 padding: 1.5rem 0.5rem;
@@ -599,10 +610,10 @@
             <h2>Nhập Code</h2>
             <p>Nhập mã code để nhận thưởng từ 5.000 VNĐ đến 500.000 VNĐ!</p>
             <label for="redeemCode">Mã Code</label>
-            <input type="text" id="redeemCode" placeholder="VD: CODE15K01">
+            <input type="text" id="redeemCode" placeholder="VD: CODEABC">
             <button onclick="redeemCode()">Nhập Code</button>
             <div class="loading-spinner" id="codeSpinner"></div>
-            <p class="success" id="codeSuccess" style="display: none;">Nhập code thành công!</p>
+            <p class="success" id="codeSuccess" style="display: none;"></p>
             <p class="error" id="codeError" style="display: none;"></p>
         </div>
         <div class="section" id="support">
@@ -616,6 +627,7 @@
         </div>
         <div class="section" id="contact">
             <h2>Liên Hệ</h2>
+            <p>Liên hệ qua Telegram: <a href="https://t.me/limorecloudgame" target="_blank">@limorecloudgame</a></p>
         </div>
     </div>
     <!-- Modals -->
@@ -710,7 +722,7 @@
             try {
                 particlesJS('particles-js', {
                     particles: {
-                        number: { value: isMobile ? 20 : 50, density: { enable: true, value_area: 800 } },
+                        number: { value: isMobile ? 15 : 30, density: { enable: true, value_area: 800 } },
                         color: { value: '#FFD700' },
                         shape: { type: 'circle' },
                         opacity: { value: 0.5, random: true },
@@ -726,22 +738,56 @@
                     retina_detect: true
                 });
             } catch (error) {
-                console.error('Lỗi khi khởi tạo Particles.js:', error);
+                console.warn('Lỗi khi khởi tạo Particles.js:', error);
             }
         } else {
             console.warn('Particles.js không tải được, bỏ qua hiệu ứng hạt.');
         }
 
-        // Utility: Hash Password (SHA-256)
-        async function hashPassword(password) {
+        // Utility: Generate Random Salt
+        function generateSalt(length = 16) {
+            const array = new Uint8Array(length);
+            crypto.getRandomValues(array);
+            return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Utility: Hash Password with Salt (SHA-256)
+        async function hashPassword(password, salt) {
             try {
-                const msgBuffer = new TextEncoder().encode(password);
+                const saltedPassword = password + salt;
+                const msgBuffer = new TextEncoder().encode(saltedPassword);
                 const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
                 return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
             } catch (error) {
                 console.error('Lỗi khi mã hóa mật khẩu:', error);
                 throw new Error('Không thể mã hóa mật khẩu.');
             }
+        }
+
+        // Utility: Generate HMAC for Data Integrity
+        async function generateHMAC(data, secret = 'cloudgame-secret') {
+            try {
+                const encoder = new TextEncoder();
+                const key = await crypto.subtle.importKey(
+                    'raw',
+                    encoder.encode(secret),
+                    { name: 'HMAC', hash: 'SHA-256' },
+                    false,
+                    ['sign']
+                );
+                const dataBuffer = encoder.encode(JSON.stringify(data));
+                const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
+                return Array.from(new Uint8Array(signature)).map(b => b.toString(16).padStart(2, '0')).join('');
+            } catch (error) {
+                console.error('Lỗi khi tạo HMAC:', error);
+                return '';
+            }
+        }
+
+        // Utility: Verify Data Integrity
+        async function verifyData(data, storedHmac) {
+            const computedHmac = await generateHMAC(data);
+            return computedHmac === storedHmac;
         }
 
         // Utility: Generate Numeric Player ID
@@ -751,83 +797,91 @@
 
         // Utility: Sanitize Input to Prevent XSS
         function sanitizeInput(input) {
+            if (typeof input !== 'string') return '';
             const div = document.createElement('div');
             div.textContent = input;
-            return div.innerHTML.replace(/</g, '<').replace(/>/g, '>');
+            return div.innerHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
         // Default Data
         const defaultUsers = [
-            { username: "Người Chơi 1", email: "player1@example.com", password: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", playerId: 123456, balance: 0 }
+            {
+                username: "Người Chơi 1",
+                email: "player1@example.com",
+                password: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                salt: "1234567890abcdef",
+                playerId: 123456,
+                balance: 0
+            }
         ];
         const defaultPlans = {
             trumbox: { price: 3000, description: "Chơi không giới hạn game. Hỗ trợ trên mọi thiết bị. Băng thông ổn định, độ trễ thấp." },
             premium: { price: 350000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." }
         };
         const defaultCodes = [
-            // 15.000 VNĐ Codes (Reward: 15.000 VNĐ)
-            { code: "CODE15K01", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K02", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K03", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K04", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K05", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K06", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K07", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K08", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K09", uses: 0, maxUses: 1, reward: 15000 },
-            { code: "CODE15K10", uses: 0, maxUses: 1, reward: 15000 },
-            // 50.000 VNĐ Codes (Reward: 5.000 VNĐ)
-            { code: "CODE50K01", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K02", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K03", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K04", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K05", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K06", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K07", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K08", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K09", uses: 0, maxUses: 1, reward: 5000 },
-            { code: "CODE50K10", uses: 0, maxUses: 1, reward: 5000 },
-            // 100.000 VNĐ Codes (Reward: 100.000 VNĐ)
-            { code: "CODE100K01", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K02", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K03", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K04", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K05", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K06", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K07", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K08", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K09", uses: 0, maxUses: 1, reward: 100000 },
-            { code: "CODE100K10", uses: 0, maxUses: 1, reward: 100000 },
-            // 200.000 VNĐ Codes (Reward: 200.000 VNĐ)
-            { code: "CODE200K01", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K02", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K03", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K04", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K05", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K06", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K07", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K08", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K09", uses: 0, maxUses: 1, reward: 200000 },
-            { code: "CODE200K10", uses: 0, maxUses: 1, reward: 200000 },
-            // 500.000 VNĐ Codes (Reward: 500.000 VNĐ)
-            { code: "CODE500K01", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K02", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K03", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K04", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K05", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K06", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K07", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K08", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K09", uses: 0, maxUses: 1, reward: 500000 },
-            { code: "CODE500K10", uses: 0, maxUses: 1, reward: 500000 }
+            // 15.000 VNĐ Codes
+            { code: "CODE15K_A1Z8X", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_K9W2Q", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_T3N5B", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_R7C1L", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_J2D6M", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_F4H7V", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_U1P3S", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_M6Q2Z", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_L8Y9E", uses: 0, maxUses: 1, reward: 15000 },
+            { code: "CODE15K_N0X7C", uses: 0, maxUses: 1, reward: 15000 },
+            // 50.000 VNĐ Codes
+            { code: "CODE50K_A3B8T", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_D7W2K", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_P1R6V", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_X5C0Z", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_E9N3L", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_H0Q4M", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_J6Y2S", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_K2T9X", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_L4F7N", uses: 0, maxUses: 1, reward: 50000 },
+            { code: "CODE50K_M8Z5B", uses: 0, maxUses: 1, reward: 50000 },
+            // 100.000 VNĐ Codes
+            { code: "CODE100K_R3W8D", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_V6L2K", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_Q1X5N", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_B7H4C", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_A0T9Z", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_F8Y3P", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_J2S6L", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_K9V7X", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_N4C1M", uses: 0, maxUses: 1, reward: 100000 },
+            { code: "CODE100K_M5Z8B", uses: 0, maxUses: 1, reward: 100000 },
+            // 200.000 VNĐ Codes
+            { code: "CODE200K_G8X4T", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_D1L7W", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_T6N3K", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_B2Q0Z", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_J7Y9L", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_E4V5M", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_F3P6X", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_L0C1N", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_A9Z8B", uses: 0, maxUses: 1, reward: 200000 },
+            { code: "CODE200K_M5W2T", uses: 0, maxUses: 1, reward: 200000 },
+            // 500.000 VNĐ Codes
+            { code: "CODE500K_X9Y2V", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_P0R6K", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_T7C4L", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_W1Z5N", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_J2Q9M", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_D4F3X", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_A3L8B", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_B6V7T", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_E9N1K", uses: 0, maxUses: 1, reward: 500000 },
+            { code: "CODE500K_M0X6C", uses: 0, maxUses: 1, reward: 500000 }
         ];
 
         // Global State
-        let users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
-        let plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
-        let codes = JSON.parse(localStorage.getItem('codes')) || defaultCodes;
-        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        let users = defaultUsers;
+        let plans = defaultPlans;
+        let codes = defaultCodes;
+        let notifications = [];
+        let transactions = [];
         let isLoggedIn = false;
         let userData = { username: "", email: "", playerId: 0, balance: 0 };
 
@@ -841,17 +895,20 @@
         const trumboxPlan = document.getElementById('trumboxPlan');
         const premiumPlan = document.getElementById('premiumPlan');
 
-        // Lock Mechanism with Timeout
-        function acquireLock() {
+        // Lock Mechanism with Retry
+        async function acquireLock(maxRetries = 3, retryDelay = 500) {
             const lockKey = 'dataLock';
-            const lockTimeout = 10000; // 10 seconds
-            const currentLock = localStorage.getItem(lockKey);
-            const now = Date.now();
-            if (currentLock && now - parseInt(currentLock) < lockTimeout) {
-                return false;
+            const lockTimeout = 2000; // 2 seconds
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                const currentLock = localStorage.getItem(lockKey);
+                const now = Date.now();
+                if (!currentLock || now - parseInt(currentLock) >= lockTimeout) {
+                    localStorage.setItem(lockKey, now.toString());
+                    return true;
+                }
+                await new Promise(resolve => setTimeout(resolve, retryDelay));
             }
-            localStorage.setItem(lockKey, now.toString());
-            return true;
+            return false;
         }
 
         function releaseLock() {
@@ -871,35 +928,53 @@
         }
 
         // Save Data to LocalStorage
-        function saveData() {
+        async function saveData() {
             try {
-                if (!acquireLock()) {
-                    throw new Error('Dữ liệu đang được chỉnh sửa bởi thiết bị khác, vui lòng thử lại.');
+                if (!await acquireLock()) {
+                    throw new Error('Dữ liệu đang được chỉnh sửa, vui lòng thử lại sau.');
                 }
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('plans', JSON.stringify(plans));
-                localStorage.setItem('codes', JSON.stringify(codes));
-                localStorage.setItem('notifications', JSON.stringify(notifications));
-                localStorage.setItem('transactions', JSON.stringify(transactions));
+                const data = { users, plans, codes, notifications, transactions, userData, isLoggedIn };
+                const hmac = await generateHMAC(data);
+                localStorage.setItem('appData', JSON.stringify(data));
+                localStorage.setItem('appDataHmac', hmac);
                 localStorage.setItem('userData', JSON.stringify(userData));
                 localStorage.setItem('isLoggedIn', isLoggedIn.toString());
-                releaseLock();
             } catch (error) {
                 console.error('Lỗi khi lưu dữ liệu:', error);
-                alert('Có lỗi khi lưu dữ liệu, vui lòng thử lại.');
+                alert('Có lỗi khi lưu dữ liệu: ' + error.message);
+            } finally {
                 releaseLock();
-                throw error;
             }
         }
 
         // Load Data from LocalStorage
-        function loadData() {
+        async function loadData() {
             try {
-                users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
-                plans = JSON.parse(localStorage.getItem('plans')) || defaultPlans;
-                codes = JSON.parse(localStorage.getItem('codes')) || defaultCodes;
-                notifications = JSON.parse(localStorage.getItem('notifications')) || [];
-                transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                const storedData = localStorage.getItem('appData');
+                const storedHmac = localStorage.getItem('appDataHmac');
+                if (!storedData || !storedHmac) {
+                    users = defaultUsers;
+                    plans = defaultPlans;
+                    codes = defaultCodes;
+                    notifications = [];
+                    transactions = [];
+                    return { users, plans, codes, notifications, transactions };
+                }
+                const data = JSON.parse(storedData);
+                if (!await verifyData(data, storedHmac)) {
+                    alert('Dữ liệu đã bị chỉnh sửa trái phép, sử dụng dữ liệu mặc định.');
+                    users = defaultUsers;
+                    plans = defaultPlans;
+                    codes = defaultCodes;
+                    notifications = [];
+                    transactions = [];
+                    return { users, plans, codes, notifications, transactions };
+                }
+                users = data.users || defaultUsers;
+                plans = data.plans || defaultPlans;
+                codes = data.codes || defaultCodes;
+                notifications = data.notifications || [];
+                transactions = data.transactions || [];
                 return { users, plans, codes, notifications, transactions };
             } catch (error) {
                 console.error('Lỗi khi tải dữ liệu:', error);
@@ -964,74 +1039,61 @@
             const redeemButton = document.querySelector('#code button');
             if (!redeemCodeInput || !codeSuccess || !codeError || !codeSpinner || !redeemButton) {
                 console.error('Thiếu các phần tử DOM trong redeemCode.');
+                alert('Lỗi giao diện, vui lòng thử lại.');
                 return;
             }
-            const code = redeemCodeInput.value.trim().toUpperCase();
-            if (!code) {
-                codeError.textContent = 'Vui lòng nhập mã code!';
+            const code = sanitizeInput(redeemCodeInput.value.trim().toUpperCase());
+            if (!code || !/^[A-Z0-9_]+$/.test(code)) {
+                codeError.textContent = 'Mã code không hợp lệ hoặc trống!';
                 codeError.style.display = 'block';
                 codeSuccess.style.display = 'none';
-                codeSpinner.style.display = 'none';
-                setTimeout(() => codeError.style.display = 'none', 3000);
+                setTimeout(() => codeError.style.display = 'none', 5000);
                 return;
             }
             showSpinner('codeSpinner');
             redeemButton.disabled = true;
             redeemButton.textContent = 'Đang xử lý...';
-            setTimeout(() => {
+            setTimeout(async () => {
                 try {
-                    loadData();
+                    await loadData();
                     const codeObj = codes.find(c => c.code === code);
                     if (!codeObj) {
-                        codeError.textContent = 'Mã code không hợp lệ!';
-                        codeError.style.display = 'block';
-                        codeSuccess.style.display = 'none';
-                        setTimeout(() => codeError.style.display = 'none', 3000);
-                        hideSpinner('codeSpinner');
-                        redeemButton.disabled = false;
-                        redeemButton.textContent = 'Nhập Code';
-                        return;
+                        throw new Error('Mã code không hợp lệ!');
                     }
                     if (codeObj.uses >= codeObj.maxUses) {
-                        codeError.textContent = 'Mã code đã được sử dụng!';
-                        codeError.style.display = 'block';
-                        codeSuccess.style.display = 'none';
-                        setTimeout(() => codeError.style.display = 'none', 3000);
-                        hideSpinner('codeSpinner');
-                        redeemButton.disabled = false;
-                        redeemButton.textContent = 'Nhập Code';
-                        return;
+                        throw new Error('Mã code đã được sử dụng!');
                     }
                     const balanceReward = codeObj.reward;
                     userData.balance += balanceReward;
                     const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex !== -1) {
-                        users[userIndex].balance = userData.balance;
+                    if (userIndex === -1) {
+                        throw new Error('Không tìm thấy người dùng!');
                     }
+                    users[userIndex].balance = userData.balance;
                     codeObj.uses += 1;
                     if (codeObj.uses >= codeObj.maxUses) {
                         codes = codes.filter(c => c.code !== code);
                     }
-                    saveData();
+                    await saveData();
                     logTransaction(userData.playerId, 'Redeem Code', balanceReward);
                     codeSuccess.textContent = `Nhập code thành công! Bạn nhận được ${balanceReward.toLocaleString('vi-VN')} VNĐ.`;
                     codeSuccess.style.display = 'block';
                     codeError.style.display = 'none';
                     redeemCodeInput.value = '';
                     updateUserInterface();
-                    setTimeout(() => codeSuccess.style.display = 'none', 3000);
+                    setTimeout(() => codeSuccess.style.display = 'none', 5000);
                 } catch (error) {
                     console.error('Lỗi khi nhập code:', error);
-                    codeError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                    codeError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
                     codeError.style.display = 'block';
                     codeSuccess.style.display = 'none';
-                    setTimeout(() => codeError.style.display = 'none', 3000);
+                    setTimeout(() => codeError.style.display = 'none', 5000);
                 } finally {
                     hideSpinner('codeSpinner');
                     redeemButton.disabled = false;
                     redeemButton.textContent = 'Nhập Code';
                 }
-            }, 1000); // Simulate processing delay
+            }, 1000);
         }
 
         // Load Notifications
@@ -1051,6 +1113,7 @@
                 });
             } catch (error) {
                 console.error('Lỗi khi tải thông báo:', error);
+                alert('Có lỗi khi tải thông báo.');
             }
         }
 
@@ -1062,6 +1125,10 @@
                     userId,
                     type,
                     amount,
+                    timestamp: new Date().toISOString()
+                });
+                notifications.push({
+                    message: `Giao dịch: ${type} (${amount > 0 ? '+' : ''}${amount.toLocaleString('vi-VN')} VNĐ)`,
                     timestamp: new Date().toISOString()
                 });
                 saveData();
@@ -1076,45 +1143,42 @@
                 alert('Vui lòng đăng nhập trước khi thuê máy!');
                 return;
             }
-            showSpinner('trumboxSpinner');
             const button = event?.target;
-            if (button) {
-                button.disabled = true;
-                button.textContent = 'Đang xử lý...';
+            const spinner = document.getElementById('trumboxSpinner');
+            if (!button || !spinner) {
+                console.error('Thiếu button hoặc spinner trong rentTrumbox.');
+                alert('Lỗi giao diện, vui lòng thử lại.');
+                return;
             }
-            try {
-                loadData();
-                if (userData.balance < plans.trumbox.price) {
-                    alert(`Số dư không đủ (cần ít nhất ${plans.trumbox.price.toLocaleString('vi-VN')} VNĐ)!`);
-                    if (button) {
-                        button.disabled = false;
-                        button.textContent = 'Thuê Ngay';
+            showSpinner('trumboxSpinner');
+            button.disabled = true;
+            button.textContent = 'Đang xử lý...';
+            setTimeout(async () => {
+                try {
+                    await loadData();
+                    if (userData.balance < plans.trumbox.price) {
+                        throw new Error(`Số dư không đủ (cần ít nhất ${plans.trumbox.price.toLocaleString('vi-VN')} VNĐ)!`);
                     }
-                    hideSpinner('trumboxSpinner');
-                    return;
-                }
-                userData.balance -= plans.trumbox.price;
-                const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                if (userIndex !== -1) {
+                    userData.balance -= plans.trumbox.price;
+                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
+                    if (userIndex === -1) {
+                        throw new Error('Không tìm thấy người dùng!');
+                    }
                     users[userIndex].balance = userData.balance;
-                } else {
-                    throw new Error('Không tìm thấy người dùng trong danh sách.');
-                }
-                saveData();
-                logTransaction(userData.playerId, 'Rent Trumbox', -plans.trumbox.price);
-                alert('Thuê máy thành công! Đang chuyển đến Trumbox...');
-                window.open('https://trumbox.net/cloud-gaming/play/', '_blank');
-            } catch (error) {
-                console.error('Lỗi khi thuê máy:', error);
-                alert('Có lỗi xảy ra, vui lòng thử lại.');
-            } finally {
-                if (button) {
+                    await saveData();
+                    logTransaction(userData.playerId, 'Rent Trumbox', -plans.trumbox.price);
+                    alert('Thuê máy thành công! Đang chuyển đến Trumbox...');
+                    window.open('https://trumbox.net/cloud-gaming/play/', '_blank');
+                } catch (error) {
+                    console.error('Lỗi khi thuê máy:', error);
+                    alert(error.message || 'Có lỗi xảy ra, vui lòng thử lại.');
+                } finally {
                     button.disabled = false;
                     button.textContent = 'Thuê Ngay';
+                    hideSpinner('trumboxSpinner');
                 }
-                hideSpinner('trumboxSpinner');
-            }
-            updateUserInterface();
+                updateUserInterface();
+            }, 1000);
         }
 
         // Purchase Plan
@@ -1123,39 +1187,42 @@
                 alert('Vui lòng đăng nhập trước khi mua gói!');
                 return;
             }
+            const button = event?.target;
+            const spinner = document.getElementById('premiumSpinner');
+            if (!button || !spinner) {
+                console.error('Thiếu button hoặc spinner trong purchasePlan.');
+                alert('Lỗi giao diện, vui lòng thử lại.');
+                return;
+            }
             if (userData.balance < price) {
                 alert(`Số dư không đủ để mua gói này! Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ.`);
                 return;
             }
             showSpinner('premiumSpinner');
-            const button = event?.target;
-            if (button) {
-                button.disabled = true;
-                button.textContent = 'Đang xử lý...';
-            }
-            try {
-                loadData();
-                userData.balance -= price;
-                const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                if (userIndex !== -1) {
+            button.disabled = true;
+            button.textContent = 'Đang xử lý...';
+            setTimeout(async () => {
+                try {
+                    await loadData();
+                    userData.balance -= price;
+                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
+                    if (userIndex === -1) {
+                        throw new Error('Không tìm thấy người dùng!');
+                    }
                     users[userIndex].balance = userData.balance;
-                } else {
-                    throw new Error('Không tìm thấy người dùng trong danh sách.');
-                }
-                saveData();
-                logTransaction(userData.playerId, `Purchase ${planName}`, -price);
-                alert(`Đã mua ${planName} thành công!`);
-            } catch (error) {
-                console.error('Lỗi khi mua gói:', error);
-                alert('Có lỗi xảy ra, vui lòng thử lại.');
-            } finally {
-                if (button) {
+                    await saveData();
+                    logTransaction(userData.playerId, `Purchase ${planName}`, -price);
+                    alert(`Đã mua ${planName} thành công!`);
+                } catch (error) {
+                    console.error('Lỗi khi mua gói:', error);
+                    alert(error.message || 'Có lỗi xảy ra, vui lòng thử lại.');
+                } finally {
                     button.disabled = false;
                     button.textContent = 'Mua Gói';
+                    hideSpinner('premiumSpinner');
                 }
-                hideSpinner('premiumSpinner');
-            }
-            updateUserInterface();
+                updateUserInterface();
+            }, 1000);
         }
 
         // Logout
@@ -1165,7 +1232,9 @@
                 userData = { username: "", email: "", playerId: 0, balance: 0 };
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('userData');
+                saveData();
                 updateUserInterface();
+                alert('Đăng xuất thành công!');
             } catch (error) {
                 console.error('Lỗi khi đăng xuất:', error);
                 alert('Có lỗi khi đăng xuất, vui lòng thử lại.');
@@ -1173,11 +1242,17 @@
         }
 
         // Initialize
-        function initialize() {
+        async function initialize() {
             try {
-                loadData();
+                await loadData();
                 isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
                 userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0 };
+                if (isLoggedIn && !users.some(u => u.playerId === userData.playerId)) {
+                    isLoggedIn = false;
+                    userData = { username: "", email: "", playerId: 0, balance: 0 };
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userData');
+                }
                 updateUserInterface();
             } catch (error) {
                 console.error('Lỗi khi khởi tạo:', error);
@@ -1221,6 +1296,8 @@
                     topupError.style.display = 'none';
                     topupForm.reset();
                     toggleForm();
+                } else {
+                    console.error('Thiếu các phần tử DOM trong topupLink.');
                 }
             });
         }
@@ -1231,21 +1308,54 @@
             });
         }
 
+        if (topupModal) {
+            topupModal.addEventListener('click', (e) => {
+                if (e.target === topupModal) {
+                    topupModal.style.display = 'none';
+                }
+            });
+        }
+
         if (topupForm) {
-            topupForm.addEventListener('submit', (e) => {
+            topupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!isLoggedIn) {
                     if (topupError) {
                         topupError.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
                         topupError.style.display = 'block';
                         if (topupSuccess) topupSuccess.style.display = 'none';
-                        setTimeout(() => topupError.style.display = 'none', 3000);
+                        setTimeout(() => topupError.style.display = 'none', 5000);
                     }
                     return;
                 }
                 showSpinner('topupSpinner');
+                const paymentMethod = paymentMethodSelect?.value;
+                let errorMessage = '';
+                if (paymentMethod === 'card') {
+                    const cardCode = document.getElementById('cardCode')?.value.trim();
+                    const cardSerial = document.getElementById('cardSerial')?.value.trim();
+                    const cardAmount = parseInt(document.getElementById('cardAmount')?.value || '0');
+                    if (!cardCode || !cardSerial) {
+                        errorMessage = 'Vui lòng nhập đầy đủ mã thẻ và số serial!';
+                    } else if (cardAmount < 10000) {
+                        errorMessage = 'Mệnh giá thẻ phải ít nhất 10.000 VNĐ!';
+                    }
+                }
+                if (errorMessage) {
+                    if (topupError) {
+                        topupError.textContent = errorMessage;
+                        topupError.style.display = 'block';
+                        if (topupSuccess) topupSuccess.style.display = 'none';
+                        setTimeout(() => topupError.style.display = 'none', 5000);
+                    }
+                    hideSpinner('topupSpinner');
+                    return;
+                }
                 try {
+                    // Ghi chú: Nên tích hợp API backend để xác thực nạp tiền
+                    // Ví dụ: fetch('https://api.example.com/topup', { method: 'POST', body: JSON.stringify({ userId: userData.playerId, amount }) })
                     if (topupSuccess && topupError) {
+                        topupSuccess.textContent = 'Yêu cầu nạp tiền đã được gửi! Vui lòng chờ xác nhận.';
                         topupSuccess.style.display = 'block';
                         topupError.style.display = 'none';
                     }
@@ -1254,14 +1364,14 @@
                     setTimeout(() => {
                         if (topupModal) topupModal.style.display = 'none';
                         if (topupSuccess) topupSuccess.style.display = 'none';
-                    }, 2000);
+                    }, 5000);
                 } catch (error) {
                     console.error('Lỗi khi gửi yêu cầu nạp tiền:', error);
                     if (topupError) {
-                        topupError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        topupError.textContent = 'Có lỗi xảy ra khi gửi yêu cầu nạp tiền. Vui lòng thử lại.';
                         topupError.style.display = 'block';
                         if (topupSuccess) topupSuccess.style.display = 'none';
-                        setTimeout(() => topupError.style.display = 'none', 3000);
+                        setTimeout(() => topupError.style.display = 'none', 5000);
                     }
                 } finally {
                     hideSpinner('topupSpinner');
@@ -1285,6 +1395,8 @@
                     registerModal.style.display = 'none';
                     loginError.style.display = 'none';
                     loginForm.reset();
+                } else {
+                    console.error('Thiếu các phần tử DOM trong loginLink.');
                 }
             });
         }
@@ -1292,6 +1404,14 @@
         if (closeLoginModal) {
             closeLoginModal.addEventListener('click', () => {
                 if (loginModal) loginModal.style.display = 'none';
+            });
+        }
+
+        if (loginModal) {
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
             });
         }
 
@@ -1303,45 +1423,48 @@
                 const loginPassword = document.getElementById('loginPassword');
                 if (!loginEmail || !loginPassword) {
                     console.error('Thiếu loginEmail hoặc loginPassword.');
+                    if (loginError) {
+                        loginError.textContent = 'Lỗi giao diện, vui lòng thử lại.';
+                        loginError.style.display = 'block';
+                        setTimeout(() => loginError.style.display = 'none', 5000);
+                    }
                     hideSpinner('loginSpinner');
                     return;
                 }
-                const email = loginEmail.value.trim();
+                const email = sanitizeInput(loginEmail.value.trim());
                 const password = loginPassword.value.trim();
                 if (!email || !password) {
                     if (loginError) {
                         loginError.textContent = 'Vui lòng nhập email và mật khẩu!';
                         loginError.style.display = 'block';
-                        setTimeout(() => loginError.style.display = 'none', 3000);
+                        setTimeout(() => loginError.style.display = 'none', 5000);
                     }
                     hideSpinner('loginSpinner');
                     return;
                 }
                 try {
-                    loadData();
-                    const hashedPassword = await hashPassword(password);
-                    const user = users.find(u => u.email === email && u.password === hashedPassword);
+                    await loadData();
+                    const user = users.find(u => u.email === email);
                     if (!user) {
-                        if (loginError) {
-                            loginError.textContent = 'Email hoặc mật khẩu không đúng!';
-                            loginError.style.display = 'block';
-                            setTimeout(() => loginError.style.display = 'none', 3000);
-                        }
-                        hideSpinner('loginSpinner');
-                        return;
+                        throw new Error('Email không tồn tại!');
+                    }
+                    const hashedPassword = await hashPassword(password, user.salt);
+                    if (hashedPassword !== user.password) {
+                        throw new Error('Mật khẩu không đúng!');
                     }
                     isLoggedIn = true;
                     userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
-                    saveData();
+                    await saveData();
                     updateUserInterface();
                     if (loginModal) loginModal.style.display = 'none';
                     loginForm.reset();
+                    alert('Đăng nhập thành công!');
                 } catch (error) {
                     console.error('Lỗi khi đăng nhập:', error);
                     if (loginError) {
-                        loginError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        loginError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
                         loginError.style.display = 'block';
-                        setTimeout(() => loginError.style.display = 'none', 3000);
+                        setTimeout(() => loginError.style.display = 'none', 5000);
                     }
                 } finally {
                     hideSpinner('loginSpinner');
@@ -1369,6 +1492,8 @@
                     registerError.style.display = 'none';
                     registerSuccess.style.display = 'none';
                     registerForm.reset();
+                } else {
+                    console.error('Thiếu các phần tử DOM trong registerLink.');
                 }
             });
         }
@@ -1376,6 +1501,14 @@
         if (closeRegisterModal) {
             closeRegisterModal.addEventListener('click', () => {
                 if (registerModal) registerModal.style.display = 'none';
+            });
+        }
+
+        if (registerModal) {
+            registerModal.addEventListener('click', (e) => {
+                if (e.target === registerModal) {
+                    registerModal.style.display = 'none';
+                }
             });
         }
 
@@ -1409,11 +1542,16 @@
                 const confirmPassword = document.getElementById('confirmPassword');
                 if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) {
                     console.error('Thiếu các phần tử trong registerForm.');
+                    if (registerError) {
+                        registerError.textContent = 'Lỗi giao diện, vui lòng thử lại.';
+                        registerError.style.display = 'block';
+                        setTimeout(() => registerError.style.display = 'none', 5000);
+                    }
                     hideSpinner('registerSpinner');
                     return;
                 }
                 const username = sanitizeInput(registerUsername.value.trim());
-                const email = registerEmail.value.trim();
+                const email = sanitizeInput(registerEmail.value.trim());
                 const password = registerPassword.value;
                 const confirmPasswordValue = confirmPassword.value;
                 let errorMessage = '';
@@ -1435,14 +1573,15 @@
                         registerError.textContent = errorMessage;
                         registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
-                        setTimeout(() => registerError.style.display = 'none', 3000);
+                        setTimeout(() => registerError.style.display = 'none', 5000);
                     }
                     hideSpinner('registerSpinner');
                     return;
                 }
                 try {
-                    loadData();
-                    const hashedPassword = await hashPassword(password);
+                    await loadData();
+                    const salt = generateSalt();
+                    const hashedPassword = await hashPassword(password, salt);
                     let playerId;
                     do {
                         playerId = generatePlayerId();
@@ -1451,30 +1590,32 @@
                         username,
                         email,
                         password: hashedPassword,
+                        salt,
                         playerId,
                         balance: 0
                     };
                     users.push(newUser);
                     isLoggedIn = true;
                     userData = { username, email, playerId, balance: 0 };
-                    saveData();
+                    await saveData();
                     if (registerSuccess && registerError) {
+                        registerSuccess.textContent = 'Đăng ký thành công! Đang đăng nhập...';
                         registerSuccess.style.display = 'block';
                         registerError.style.display = 'none';
                     }
                     updateUserInterface();
+                    registerForm.reset();
                     setTimeout(() => {
                         if (registerModal) registerModal.style.display = 'none';
                         if (registerSuccess) registerSuccess.style.display = 'none';
-                    }, 2000);
-                    registerForm.reset();
+                    }, 5000);
                 } catch (error) {
                     console.error('Lỗi khi đăng ký:', error);
                     if (registerError) {
-                        registerError.textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+                        registerError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
                         registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
-                        setTimeout(() => registerError.style.display = 'none', 3000);
+                        setTimeout(() => registerError.style.display = 'none', 5000);
                     }
                 } finally {
                     hideSpinner('registerSpinner');
@@ -1482,17 +1623,12 @@
             });
         }
 
-        // Hamburger Menu with Outside Click Close
+        // Hamburger Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const menu = document.querySelector('.menu');
         if (hamburger && menu) {
             hamburger.addEventListener('click', () => {
                 menu.classList.toggle('active');
-            });
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target) && !hamburger.contains(e.target) && menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                }
             });
         }
     </script>
