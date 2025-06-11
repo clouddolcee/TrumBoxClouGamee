@@ -201,7 +201,8 @@
             flex-direction: column;
             gap: 1rem;
         }
-        .plan {
+       order-top: 4px solid transparent;
+            border-radius: 5 .plan {
             background: rgba(40, 40, 40, 0.9);
             padding: 1.2rem;
             border-radius: 10px;
@@ -417,8 +418,7 @@
         .loading-spinner {
             display: none;
             border: 4px solid #FFD700;
-            border-top: 4px solid transparent;
-            border-radius: 50%;
+            b0%;
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
@@ -515,130 +515,51 @@
             .section p {
                 font-size: 0.9rem;
             }
-            .plan {
-                padding: 1rem;
-            }
-            .plan h3 {
-                font-size: 1.1rem;
-            }
-            .plan .price {
-                font-size: 1.3rem;
-            }
-            .plan .subscribers {
-                font-size: 0.7rem;
-            }
-            .plan p {
-                font-size: 0.8rem;
-            }
-            .plan button {
-                padding: 0.7rem;
-                font-size: 0.9rem;
-                max-width: 180px;
-            }
-            .modal-content {
-                padding: 1rem;
-                max-width: 90%;
-            }
-            .modal-content h3 {
-                font-size: 1.3rem;
-            }
-            .modal-content label {
-                font-size: 0.8rem;
-            }
-            .modal-content input,
-            .modal-content select {
-                padding: 0.6rem;
-                font-size: 0.9rem;
-            }
-            .modal-content button {
-                padding: 0.7rem;
-                font-size: 0.9rem;
-            }
-            .modal-content img.qr-code {
-                max-width: 120px;
-            }
-            .modal-content p.note {
-                font-size: 0.8rem;
-            }
-            footer {
-                padding: 0.8rem;
-                font-size: 0.8rem;
-            }
-            .notification {
-                padding: 0.8rem;
-                font-size: 0.8rem;
-            }
-        }
-    
-.modal-content button {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #000;
-    font-weight: 700;
-    padding: 1rem;
-    font-size: 1.05rem;
-    border-radius: 30px;
-    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
-    transition: all 0.3s ease;
+      /* Beautified Plan Cards - DARK THEME */
+.plan {
+  background: #1e1e1e;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.05);
+  border: 1px solid #444;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.modal-content button:hover {
-    background: #e6c200;
-    transform: scale(1.05);
+.plan:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(255, 215, 0, 0.15);
 }
-.modal-content input,
-.modal-content select {
-    border: 1px solid #FFD700;
-    border-radius: 12px;
-    padding: 0.9rem;
-    font-size: 1rem;
-    background: #2e2e2e;
-    color: #fff;
-    box-shadow: inset 0 0 5px rgba(255, 215, 0, 0.2);
+.plan h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #FFD700;
 }
-.modal-content h3 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #FFD700;
-    text-shadow: 0 1px 3px rgba(255, 215, 0, 0.6);
+.plan .price {
+  font-size: 1.8rem;
+  color: #FFA500;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.plan p {
+  color: #ccc;
+  margin: 0.4rem 0;
+}
+.plan button {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.plan button:hover {
+  background: #e6c200;
+  transform: scale(1.05);
 }
 
-body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%) !important;
-    color: #e0e0e0 !important;
-}
-.section, .modal-content {
-    transition: all 0.4s ease;
-    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.08);
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    background: rgba(25, 25, 25, 0.98);
-}
-.section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.15);
-}
-.modal-content {
-    background: #121212;
-}
-button {
-    transition: all 0.3s ease-in-out !important;
-}
-button:hover {
-    transform: scale(1.05);
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: radial-gradient(circle at center, rgba(255,215,0,0.05) 0%, transparent 70%);
-    animation: pulseGlow 5s ease-in-out infinite;
-    z-index: -2;
-}
-@keyframes pulseGlow {
-    0%, 100% { opacity: 0.05; }
-    50% { opacity: 0.15; }
-}
 </style>
 </head>
 <body>
@@ -1752,5 +1673,44 @@ body::before {
             });
         }
     </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modals = {
+      loginLink: 'loginModal',
+      registerLink: 'registerModal',
+      topupLink: 'topupModal'
+    };
+    Object.keys(modals).forEach(linkId => {
+      const link = document.getElementById(linkId);
+      const modalId = modals[linkId];
+      if (link && document.getElementById(modalId)) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById(modalId).style.display = "flex";
+        });
+      }
+    });
+
+    // Optional: close modal on outside click
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", function (e) {
+        if (e.target.classList.contains("modal")) {
+          modal.style.display = "none";
+        }
+      });
+    });
+
+    // Optional: add ESC key to close modals
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal").forEach(modal => {
+          modal.style.display = "none";
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
