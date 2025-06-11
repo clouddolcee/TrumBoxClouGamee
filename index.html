@@ -99,11 +99,17 @@
         .wallet a:hover {
             color: #fff;
         }
-        .wallet .balance {
-            color: #FFD700;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+        
+.wallet .balance {
+    background: #FFD700;
+    color: #1a1a1a;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
         .wallet .user-info {
             color: #FFD700;
             font-size: 0.9rem;
@@ -436,6 +442,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @media (max-width: 768px) {
+    body {
+        font-size: 1rem;
+    }
+    .section {
+        margin-bottom: 2rem;
+        padding: 1.2rem 1rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        background: #202020;
+    }
+    button {
+        padding: 1rem;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        transition: transform 0.2s ease;
+    }
+    button:hover {
+        transform: scale(1.05);
+    }
+    
             header {
                 padding: 1.5rem 0.5rem;
             }
@@ -542,7 +569,77 @@
                 font-size: 0.8rem;
             }
         }
-    </style>
+    
+.modal-content button {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000;
+    font-weight: 700;
+    padding: 1rem;
+    font-size: 1.05rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+    transition: all 0.3s ease;
+}
+.modal-content button:hover {
+    background: #e6c200;
+    transform: scale(1.05);
+}
+.modal-content input,
+.modal-content select {
+    border: 1px solid #FFD700;
+    border-radius: 12px;
+    padding: 0.9rem;
+    font-size: 1rem;
+    background: #2e2e2e;
+    color: #fff;
+    box-shadow: inset 0 0 5px rgba(255, 215, 0, 0.2);
+}
+.modal-content h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 1px 3px rgba(255, 215, 0, 0.6);
+}
+
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%) !important;
+    color: #e0e0e0 !important;
+}
+.section, .modal-content {
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    background: rgba(25, 25, 25, 0.98);
+}
+.section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.15);
+}
+.modal-content {
+    background: #121212;
+}
+button {
+    transition: all 0.3s ease-in-out !important;
+}
+button:hover {
+    transform: scale(1.05);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, rgba(255,215,0,0.05) 0%, transparent 70%);
+    animation: pulseGlow 5s ease-in-out infinite;
+    z-index: -2;
+}
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: 0.15; }
+}
+</style>
 </head>
 <body>
     <div id="particles-js"></div>
@@ -584,26 +681,28 @@
         <div class="section" id="pricing">
             <h2>Gói Dịch Vụ</h2>
             <div class="pricing">
-                <div class="plan recommended" id="trumboxPlan">
-                    <h3>Thuê Máy Trumbox</h3>
-                    <p class="price">3.000 VNĐ/giờ</p>
-                    <p class="subscribers">1,234 người thuê</p>
-                    <p>Chơi không giới hạn game.</p>
-                    <p>Hỗ trợ trên mọi thiết bị.</p>
-                    <p>Băng thông ổn định, độ trễ thấp.</p>
-                    <button onclick="rentTrumbox(event)">Thuê Ngay</button>
-                    <div class="loading-spinner" id="trumboxSpinner"></div>
-                </div>
+                
                 <div class="plan" id="premiumPlan">
                     <h3>Gói Nâng Cao</h3>
-                    <p class="price">350.000 VNĐ/Vĩnh Viễn</p>
+                    <p class="price">400.000 VNĐ/Vĩnh Viễn</p>
                     <p class="subscribers">567 người thuê</p>
                     <p>Truy cập toàn bộ game.</p>
                     <p>Hỗ trợ độ phân giải 4K.</p>
                     <p>Máy chủ VIP.</p>
-                    <button onclick="purchasePlan('Gói Nâng Cao', 350000, event)">Mua Gói</button>
+                    <button onclick="purchasePlan('Gói Nâng Cao', 400000, event)">Mua Gói</button>
                     <div class="loading-spinner" id="premiumSpinner"></div>
-                </div>
+                
+<div class="plan" id="basicPlan">
+    <h3>Gói Cơ Bản</h3>
+    <p class="price">99.000 VNĐ/Tháng</p>
+    <p class="subscribers">432 người đăng ký</p>
+    <p>Chơi mượt game phổ biến.</p>
+    <p>Hỗ trợ thiết bị di động và PC.</p>
+    <p>Băng thông ổn định.</p>
+    <button onclick="purchasePlan('Gói Cơ Bản', 99000, event)">Mua Gói</button>
+    <div class="loading-spinner" id="basicSpinner"></div>
+</div>
+</div>
             </div>
         </div>
         <div class="section" id="code">
@@ -721,23 +820,44 @@
         if (typeof particlesJS !== 'undefined') {
             try {
                 particlesJS('particles-js', {
-                    particles: {
-                        number: { value: isMobile ? 15 : 30, density: { enable: true, value_area: 800 } },
-                        color: { value: '#FFD700' },
-                        shape: { type: 'circle' },
-                        opacity: { value: 0.5, random: true },
-                        size: { value: 3, random: true },
-                        line_linked: { enable: true, distance: 150, color: '#FFD700', opacity: 0.4, width: 1 },
-                        move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: { onhover: { enable: !isMobile, mode: 'repulse' }, onclick: { enable: !isMobile, mode: 'push' }, resize: true },
-                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-                    },
-                    retina_detect: true
-                });
-            } catch (error) {
+    particles: {
+        number: { value: isMobile ? 20 : 50, density: { enable: true, value_area: 800 } },
+        color: { value: ['#FFD700', '#FFA500', '#ffffff'] },
+        shape: { type: 'circle' },
+        opacity: { value: 0.6, random: true },
+        size: { value: 3.5, random: true },
+        line_linked: {
+            enable: true,
+            distance: 140,
+            color: '#FFD700',
+            opacity: 0.5,
+            width: 1
+        },
+        move: {
+            enable: true,
+            speed: 1.5,
+            direction: 'none',
+            random: true,
+            straight: false,
+            out_mode: 'out',
+            bounce: false
+        }
+    },
+    interactivity: {
+        detect_on: 'canvas',
+        events: {
+            onhover: { enable: !isMobile, mode: 'repulse' },
+            onclick: { enable: !isMobile, mode: 'push' },
+            resize: true
+        },
+        modes: {
+            repulse: { distance: 100, duration: 0.4 },
+            push: { particles_nb: 4 }
+        }
+    },
+    retina_detect: true
+});
+        catch (error) {
                 console.warn('Lỗi khi khởi tạo Particles.js:', error);
             }
         } else {
@@ -816,7 +936,7 @@
         ];
         const defaultPlans = {
             trumbox: { price: 3000, description: "Chơi không giới hạn game. Hỗ trợ trên mọi thiết bị. Băng thông ổn định, độ trễ thấp." },
-            premium: { price: 350000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." }
+            premium: { price: 400000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." }
         };
         const defaultCodes = [
             // 15.000 VNĐ Codes
@@ -1615,8 +1735,8 @@
                         registerError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
                         registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
-                        setTimeout(() => registerError.style.display = 'none', 5000);
-                    }
+                           setTimeout(() => registerError.style.display = 'none', 5000);
+                 }
                 } finally {
                     hideSpinner('registerSpinner');
                 }
@@ -1625,9 +1745,9 @@
 
         // Hamburger Menu Toggle
         const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
+         const menu = document.querySelector('.menu');
         if (hamburger && menu) {
-            hamburger.addEventListener('click', () => {
+           hamburger.addEventListener('click', () => {
                 menu.classList.toggle('active');
             });
         }
