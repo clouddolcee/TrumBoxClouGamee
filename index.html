@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Game PC - Chơi Game Mượt Mà</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,48 +13,28 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+            background: #1a1a1a;
             color: #e0e0e0;
             line-height: 1.6;
-            position: relative;
-            overflow-x: hidden;
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
         }
         header {
-            background: linear-gradient(90deg, #007BFF 0%, #1a1a1a 100%);
+            background: #007BFF;
             color: #fff;
             text-align: center;
-            padding: 2rem 1rem;
-            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.2);
-            position: relative;
-            z-index: 1;
+            padding: 1rem;
         }
         header h1 {
-            font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            font-weight: 500;
         }
         header p {
             font-size: 0.9rem;
-            font-weight: 300;
-            opacity: 0.9;
         }
         nav {
             background: #0f0f0f;
             padding: 0.5rem 1rem;
-            box-shadow: 0 2px 15px rgba(0, 123, 255, 0.1);
             position: sticky;
             top: 0;
-            z-index: 10;
         }
         .nav-container {
             display: flex;
@@ -77,12 +56,9 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
-            transition: color 0.3s ease;
-            touch-action: manipulation;
         }
         .menu a:hover {
             color: #fff;
-            text-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
         }
         .wallet {
             display: flex;
@@ -93,8 +69,6 @@
             color: #007BFF;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 500;
-            touch-action: manipulation;
         }
         .wallet a:hover {
             color: #fff;
@@ -102,16 +76,28 @@
         .wallet .balance {
             background: #007BFF;
             color: #1a1a1a;
-            padding: 0.3rem 0.7rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
-        }
-        .wallet .user-info {
-            color: #007BFF;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 500;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+            animation: pulse 2s infinite;
+        }
+        .wallet .topup-button {
+            background: #FF4500;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 0 8px rgba(255, 69, 0, 0.5);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .wallet .topup-button:hover {
+            background: #FF6347;
+            box-shadow: 0 0 12px rgba(255, 69, 0, 0.7);
         }
         .wallet .logout {
             background: #FF4500;
@@ -121,8 +107,6 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: background 0.3s ease;
-            touch-action: manipulation;
         }
         .wallet .logout:hover {
             background: #FF6347;
@@ -134,18 +118,14 @@
             padding: 0 1rem;
         }
         .section {
-            background: rgba(30, 30, 30, 0.9);
+            background: #2c2c2c;
             padding: 1.5rem;
             margin-bottom: 1rem;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
-            animation: fadeInUp 0.8s ease-out;
         }
         .section h2 {
-            font-family: 'Montserrat', sans-serif;
             color: #007BFF;
             font-size: 1.5rem;
-            font-weight: 700;
             margin-bottom: 0.8rem;
         }
         .section label {
@@ -162,8 +142,6 @@
             border-radius: 8px;
             background: #2c2c2c;
             color: #e0e0e0;
-            font-size: 1rem;
-            touch-action: manipulation;
         }
         .section button {
             background: #007BFF;
@@ -173,13 +151,9 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 1rem;
-            margin: 0.5rem 0;
-            transition: background 0.3s ease, transform 0.2s ease;
-            touch-action: manipulation;
         }
         .section button:hover {
             background: #0051a8;
-            transform: scale(1.05);
         }
         .section a.support-link {
             display: inline-block;
@@ -189,9 +163,6 @@
             border-radius: 20px;
             text-decoration: none;
             font-size: 1rem;
-            margin-top: 0.5rem;
-            transition: background 0.3s ease;
-            touch-action: manipulation;
         }
         .section a.support-link:hover {
             background: #00aaff;
@@ -202,63 +173,80 @@
             gap: 1rem;
         }
         .plan {
-            background: rgba(40, 40, 40, 0.9);
+            background: #2c2c2c;
             padding: 1.2rem;
             border-radius: 10px;
             text-align: center;
             border: 1px solid #007BFF;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: pulse 2s infinite ease-in-out; /* Added pulse animation */
-        }
-        .plan:hover {
-            transform: translateY(-10px) scale(1.02); /* Enhanced hover effect */
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
         }
         .plan h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: #e0e0e0;
             font-size: 1.2rem;
-            font-weight: 600;
+            color: #e0e0e0;
             margin-bottom: 0.5rem;
         }
         .plan .price {
-            font-family: 'Montserrat', sans-serif;
             font-size: 1.5rem;
             color: #007BFF;
-            font-weight: 700;
             margin: 0.5rem 0;
-        }
-        .plan .subscribers {
-            font-size: 0.8rem;
-            color: #b0b0b0;
-            margin: 0.3rem 0;
         }
         .plan p {
             font-size: 0.9rem;
             color: #d0d0d0;
-            margin: 0.3rem 0;
         }
         .plan button {
-            background: #007BFF;
-            color: #1a1a1a;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-top: 0.5rem;
             width: 100%;
             max-width: 200px;
-            transition: background 0.3s ease, transform 0.2s ease;
-            touch-action: manipulation;
         }
-        .plan button:hover {
-            background: #0051a8;
-            transform: scale(1.05);
+        .games {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: #007BFF #2c2c2c;
+        }
+        .games::-webkit-scrollbar {
+            height: 8px;
+        }
+        .games::-webkit-scrollbar-track {
+            background: #2c2c2c;
+        }
+        .games::-webkit-scrollbar-thumb {
+            background: #007BFF;
+            border-radius: 4px;
+        }
+        .game-card {
+            flex: 0 0 250px;
+            background: #2c2c2c;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #007BFF;
+            text-align: center;
+            position: relative;
+        }
+        .game-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            background: #3a3a3a;
+        }
+        .game-card img.error {
+            background: #3a3a3a;
+        }
+        .game-card h3 {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin: 0.5rem 0;
+        }
+        .game-card p {
+            font-size: 0.85rem;
+            color: #d0d0d0;
+            padding: 0 0.5rem;
+        }
+        .game-card button {
+            margin: 0.5rem 0;
+            width: 90%;
         }
         .modal {
             display: none;
@@ -270,7 +258,6 @@
             background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
         }
         .modal-content {
             background: #1e1e1e;
@@ -280,13 +267,10 @@
             max-width: 400px;
             text-align: center;
             border: 1px solid #007BFF;
-            position: relative;
         }
         .modal-content h3 {
-            font-family: 'Montserrat', sans-serif;
             color: #007BFF;
             font-size: 1.5rem;
-            font-weight: 600;
             margin-bottom: 1rem;
         }
         .modal-content .close {
@@ -296,7 +280,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: #007BFF;
-            touch-action: manipulation;
         }
         .modal-content .close:hover {
             color: #FF4500;
@@ -304,7 +287,6 @@
         .modal-content label {
             display: block;
             margin: 0.5rem 0 0.2rem;
-            font-weight: 500;
             color: #007BFF;
             text-align: left;
             font-size: 0.9rem;
@@ -316,66 +298,33 @@
             margin-bottom: 0.8rem;
             border: 1px solid #007BFF;
             border-radius: 8px;
-            font-size: 1rem;
             background: #2c2c2c;
             color: #e0e0e0;
-            touch-action: manipulation;
         }
         .modal-content button {
-            background: #007BFF;
-            color: #1a1a1a;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
             width: 100%;
-            transition: background 0.3s ease;
-            touch-action: manipulation;
-        }
-        .modal-content button:hover {
-            background: #0051a8;
         }
         .modal-content img.qr-code {
             max-width: 150px;
             margin: 0.5rem auto;
             display: block;
-            border-radius: 8px;
             border: 2px solid #007BFF;
-        }
-        .modal-content p {
-            font-size: 0.9rem;
-            color: #d0d0d0;
-            margin: 0.3rem 0;
         }
         .modal-content p.note {
             font-size: 0.85rem;
             color: #FF4500;
-            font-weight: 500;
             text-align: left;
         }
-        .modal-content a {
-            color: #007BFF;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            touch-action: manipulation;
-        }
-        .modal-content a:hover {
-            color: #0051a8;
-        }
-        .modal-content .error,
-        .modal-content .success {
+        .modal-content p.error,
+        .modal-content p.success {
             font-size: 0.9rem;
             margin: 0.5rem 0;
             display: none;
         }
-        .modal-content .error {
+        .modal-content p.error {
             color: #FF4500;
         }
-        .modal-content .success {
+        .modal-content p.success {
             color: #007BFF;
         }
         footer {
@@ -383,7 +332,6 @@
             color: #007BFF;
             text-align: center;
             padding: 1rem;
-            width: 100%;
         }
         .loading-spinner {
             display: none;
@@ -395,62 +343,16 @@
             animation: spin 1s linear infinite;
             margin: 0.5rem auto;
         }
-        .notification {
-            background: rgba(0, 123, 255, 0.2);
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            border: 1px solid #007BFF;
-            font-size: 0.9rem;
-            color: #007BFF;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-        .notification.error {
-            background: rgba(255, 69, 0, 0.2);
-            border: 1px solid #FF4500;
-            color: #FF4500;
-        }
-        .notification.fade-out {
-            opacity: 0;
-        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+            0% { box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); }
+            50% { box-shadow: 0 0 12px rgba(0, 123, 255, 0.8); }
+            100% { box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); }
         }
         @media (max-width: 768px) {
-            body {
-                font-size: 0.9rem;
-            }
-            .section {
-                margin-bottom: 1.5rem;
-                padding: 1rem;
-                border-radius: 12px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                background: #202020;
-            }
-            button {
-                padding: 0.8rem;
-                font-size: 1rem;
-                border-radius: 25px;
-                box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-                transition: transform 0.2s ease;
-            }
-            button:hover {
-                transform: scale(1.05);
-            }
-            header {
-                padding: 1.2rem 0.5rem;
-            }
             header h1 {
                 font-size: 1.5rem;
             }
@@ -469,70 +371,39 @@
                 background: #0f0f0f;
                 width: 100%;
                 padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0, 123, 255, 0.1);
             }
             .menu.active {
                 display: flex;
             }
             .menu a {
-                font-size: 1rem;
                 padding: 0.5rem 0;
-                display: block;
             }
-            .wallet {
-                gap: 0.3rem;
+            .wallet .balance {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
             }
-            .wallet a, .wallet .balance, .wallet .user-info {
-                font-size: 0.8rem;
+            .wallet .topup-button {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
             }
             .wallet .logout {
-                padding: 0.5rem 0.6rem;
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
             }
-            .plan {
-                background: #1e1e1e;
-                border-radius: 12px;
-                box-shadow: 0 6px 16px rgba(0, 123, 255, 0.05);
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
+            .games {
+                flex-direction: column;
+                align-items: center;
+                overflow-x: hidden;
             }
-            .plan:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 12px 24px rgba(255, 255, 255, 0.15);
-            }
-            .plan h3 {
-                font-size: 1.3rem;
-                margin-bottom: 2rem;
-                color: #007BFF;
-            }
-            .plan .price {
-                font-size: 1.6rem;
-                color: #0051a8;
-                font-weight: 700;
-                margin-bottom: 0.5rem;
-            }
-            .plan p {
-                color: #ccc;
-                margin-bottom: 0.3rem;
-            }
-            .plan button {
-                margin-bottom: 0.8rem;
-                background: linear-gradient(135deg, #007BFF, #0051a8);
-                color: #000;
-                font-weight: 600;
-                padding: 0.7rem 1.4rem;
-                border-radius: 5px;
-                border: none;
-                transition: all 0.3s ease;
-            }
-            .plan button:hover {
-                background: #0051a8;
-                transform: scale(1.05);
+            .game-card {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 300px;
             }
         }
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
     <header>
         <h1>Cloud Game PC</h1>
         <p>Chơi game mượt mà trên mọi thiết bị!</p>
@@ -542,15 +413,14 @@
             <div class="hamburger">☰</div>
             <div class="menu">
                 <a href="#home">Trang Chủ</a>
+                <a href="#games">Game</a>
                 <a href="#pricing">Gói Dịch Vụ</a>
                 <a href="#code">Nhập Code</a>
                 <a href="#support">Hỗ Trợ</a>
-                <a href="#about">Về Chúng Tôi</a>
-                <a href="#contact">Liên Hệ</a>
             </div>
             <div class="wallet">
                 <span class="balance">Số dư: 0 VNĐ</span>
-                <a href="#" id="topupLink">Nạp Tiền</a>
+                <button class="topup-button" id="topupButton">Nạp Tiền</button>
                 <div id="authLinks">
                     <a href="#" id="loginLink">Đăng Nhập</a>
                     <a href="#" id="registerLink">Đăng Ký</a>
@@ -563,10 +433,44 @@
         </div>
     </nav>
     <div class="container">
-        <div id="notificationArea"></div>
         <div class="section" id="home">
             <h2>Chào Mừng</h2>
-            <p>Chơi game PC yêu thích trên điện thoại với kết nối internet. Không cần cấu hình mạnh!</p>
+            <p>Chơi game PC yêu thích trên điện thoại với kết nối internet.</p>
+        </div>
+        <div class="section" id="games">
+            <h2>Thư Viện Game</h2>
+            <div class="games">
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/377160/header.jpg" alt="Fallout 4" loading="lazy" onerror="handleImageError(this)">
+                    <h3>Fallout 4</h3>
+                    <p>Khám phá thế giới hậu tận thế, xây dựng căn cứ và chiến đấu sinh tồn.</p>
+                    <button onclick="playGame('Fallout 4')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" alt="GTA 5" loading="lazy" onerror="handleImageError(this)">
+                    <h3>GTA 5</h3>
+                    <p>Thế giới mở đầy hành động, lái xe, và phiêu lưu tội phạm.</p>
+                    <button onclick="playGame('GTA 5')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg" alt="PUBG" loading="lazy" onerror="handleImageError(this)">
+                    <h3>PUBG</h3>
+                    <p>Chiến đấu sinh tồn trong trận chiến hoàng gia căng thẳng.</p>
+                    <button onclick="playGame('PUBG')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg" alt="Counter-Strike 2" loading="lazy" onerror="handleImageError(this)">
+                    <h3>Counter-Strike 2</h3>
+                    <p>Bắn súng chiến thuật với các trận đấu đội nghẹt thở.</p>
+                    <button onclick="playGame('Counter-Strike 2')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://i.imgur.com/4f6Z0Z6.jpg" alt="Minecraft" loading="lazy" onerror="handleImageError(this)">
+                    <h3>Minecraft</h3>
+                    <p>Xây dựng và khám phá thế giới sáng tạo không giới hạn.</p>
+                    <button onclick="playGame('Minecraft')">Chơi Ngay</button>
+                </div>
+            </div>
         </div>
         <div class="section" id="pricing">
             <h2>Gói Dịch Vụ</h2>
@@ -574,7 +478,6 @@
                 <div class="plan" id="premiumPlan">
                     <h3>Gói Nâng Cao</h3>
                     <p class="price">400.000 VNĐ/Vĩnh Viễn</p>
-                    <p class="subscribers">567 người thuê</p>
                     <p>Truy cập toàn bộ game.</p>
                     <p>Hỗ trợ độ phân giải 4K.</p>
                     <p>Máy chủ VIP.</p>
@@ -584,10 +487,8 @@
                 <div class="plan" id="basicPlan">
                     <h3>Gói Cơ Bản</h3>
                     <p class="price">99.000 VNĐ/Tháng</p>
-                    <p class="subscribers">432 người đăng ký</p>
                     <p>Chơi mượt game phổ biến.</p>
                     <p>Hỗ trợ thiết bị di động và PC.</p>
-                    <p>Băng thông ổn định.</p>
                     <button onclick="purchasePlan('Gói Cơ Bản', 99000, event)">Mua Gói</button>
                     <div class="loading-spinner" id="basicSpinner"></div>
                 </div>
@@ -595,7 +496,7 @@
         </div>
         <div class="section" id="code">
             <h2>Nhập Code</h2>
-            <p>Nhập mã code để nhận thưởng từ 5.000 VNĐ đến 500.000 VNĐ!</p>
+            <p>Nhập mã code để nhận thưởng!</p>
             <label for="redeemCode">Mã Code</label>
             <input type="text" id="redeemCode" placeholder="VD: CODEABC">
             <button onclick="redeemCode()">Nhập Code</button>
@@ -605,16 +506,8 @@
         </div>
         <div class="section" id="support">
             <h2>Hỗ Trợ</h2>
-            <p>Liên hệ với chúng tôi qua Zalo để được hỗ trợ nhanh chóng!</p>
-            <a href="https://zalo.me/0355761396" class="support-link" target="_blank">Chat với Zalo 0355761396</a>
-        </div>
-        <div class="section" id="about">
-            <h2>Về Chúng Tôi</h2>
-            <p>Dịch vụ Cloud Gaming hàng đầu tại Việt Nam, chơi game mọi lúc, mọi nơi.</p>
-        </div>
-        <div class="section" id="contact">
-            <h2>Liên Hệ</h2>
-            <p>Liên hệ qua Zalo: <a href="https://zalo.me/0355761396" target="_blank">0355761396</a></p>
+            <p>Liên hệ qua Zalo để được hỗ trợ!</p>
+            <a href="https://zalo.me/0355761396" class="support-link" target="_blank">Chat với Zalo</a>
         </div>
     </div>
     <div class="modal" id="topupModal">
@@ -630,12 +523,9 @@
                 <div id="bankForm">
                     <p>Quét mã QR để chuyển khoản.</p>
                     <img src="https://i.imgur.com/4mmpR89.png" alt="QR Code VietinBank" class="qr-code">
-                    <p class="note">Lưu ý: Số tiền nạp tối thiểu 15.000 VNĐ. Các giao dịch dưới 15.000 VNĐ sẽ không được cộng tiền.</p>
-                    <p class="note">Lưu ý: Phần ghi chú khi chuyển khoản phải ghi ID tài khoản của bạn trên website (VD: 123456).</p>
+                    <p class="note">Số tiền nạp tối thiểu 15.000 VNĐ.</p>
                 </div>
                 <div id="cardForm" style="display: none;">
-                    <p>Nhập mã thẻ và serial.</p>
-                    <p>Tối thiểu: 10.000đ</p>
                     <label for="cardProvider">Nhà Mạng</label>
                     <select id="cardProvider" name="cardProvider">
                         <option value="viettel">Viettel</option>
@@ -650,9 +540,9 @@
                         <option value="100000">100.000</option>
                     </select>
                     <label for="cardCode">Mã Thẻ</label>
-                    <input type="text" id="cardCode" name="cardCode" placeholder="Mã thẻ" required>
+                    <input type="text" id="cardCode" name="cardCode" placeholder="Mã thẻ">
                     <label for="cardSerial">Số Serial</label>
-                    <input type="text" id="cardSerial" name="cardSerial" placeholder="Số serial" required>
+                    <input type="text" id="cardSerial" name="cardSerial" placeholder="Số serial">
                 </div>
                 <button type="submit">Gửi Yêu Cầu</button>
                 <div class="loading-spinner" id="topupSpinner"></div>
@@ -668,9 +558,9 @@
             <form id="loginForm">
                 <p class="error" id="loginError" style="display: none;"></p>
                 <label for="loginEmail">Email</label>
-                <input type="email" id="loginEmail" name="loginEmail" placeholder="Email" required>
+                <input type="email" id="loginEmail" name="loginEmail" placeholder="Email">
                 <label for="loginPassword">Mật Khẩu</label>
-                <input type="password" id="loginPassword" name="loginPassword" placeholder="Mật khẩu" required>
+                <input type="password" id="loginPassword" name="loginPassword" placeholder="Mật khẩu">
                 <button type="submit">Đăng Nhập</button>
                 <div class="loading-spinner" id="loginSpinner"></div>
                 <p>Chưa có tài khoản? <a href="#" id="showRegister">Đăng Ký</a></p>
@@ -685,14 +575,14 @@
                 <p class="error" id="registerError" style="display: none;"></p>
                 <p class="success" id="registerSuccess" style="display: none;">Đăng ký thành công!</p>
                 <label for="registerUsername">Tên Người Dùng</label>
-                <input type="text" id="registerUsername" name="registerUsername" placeholder="Tên người dùng" required>
+                <input type="text" id="registerUsername" name="registerUsername" placeholder="Tên người dùng">
                 <label for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" name="registerEmail" placeholder="Email" required>
+                <input type="email" id="registerEmail" name="registerEmail" placeholder="Email">
                 <label for="registerPassword">Mật Khẩu</label>
-                <input type="password" id="registerPassword" name="registerPassword" placeholder="Mật khẩu" required>
+                <input type="password" id="registerPassword" name="registerPassword" placeholder="Mật khẩu">
                 <label for="confirmPassword">Xác Nhận Mật Khẩu</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
-                <button type="submit" id="registerButton">Đăng Ký</button>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu">
+                <button type="submit">Đăng Ký</button>
                 <div class="loading-spinner" id="registerSpinner"></div>
                 <p>Đã có tài khoản? <a href="#" id="showLogin">Đăng Nhập</a></p>
             </form>
@@ -702,109 +592,6 @@
         <p>© 2025 Cloud Game PC.</p>
     </footer>
     <script>
-        // Particles.js Configuration
-        const isMobile = window.innerWidth <= 768;
-        if (typeof particlesJS !== 'undefined') {
-            try {
-                particlesJS('particles-js', {
-                    particles: {
-                        number: { value: isMobile ? 20 : 50, density: { enable: true, value_area: 800 } },
-                        color: { value: ['#007BFF', '#0051a8', '#ffffff'] },
-                        shape: { type: 'circle' },
-                        opacity: { value: 0.6, random: true },
-                        size: { value: 3.5, random: true },
-                        line_linked: {
-                            enable: true,
-                            distance: 140,
-                            color: '#007BFF',
-                            opacity: 0.5,
-                            width: 1
-                        },
-                        move: {
-                            enable: true,
-                            speed: 1.5,
-                            direction: 'none',
-                            random: true,
-                            straight: false,
-                            out_mode: 'out',
-                            bounce: false
-                        }
-                    },
-                    interactivity: {
-                        detect_on: 'canvas',
-                        events: {
-                            onhover: { enable: !isMobile, mode: 'repulse' },
-                            onclick: { enable: !isMobile, mode: 'push' },
-                            resize: true
-                        },
-                        modes: {
-                            repulse: { distance: 100, duration: 0.4 },
-                            push: { particles_nb: 4 }
-                        }
-                    },
-                    retina_detect: true
-                });
-            } catch (error) {
-                console.warn('Lỗi khi khởi tạo Particles.js:', error);
-            }
-        } else {
-            console.warn('Particles.js không tải được, bỏ qua hiệu ứng hạt.');
-        }
-
-        // Utility Functions
-        function generateSalt(length = 16) {
-            const array = new Uint8Array(length);
-            crypto.getRandomValues(array);
-            return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-        }
-
-        async function hashPassword(password, salt) {
-            try {
-                const saltedPassword = password + salt;
-                const msgBuffer = new TextEncoder().encode(saltedPassword);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-            } catch (error) {
-                console.error('Lỗi khi mã hóa mật khẩu:', error);
-                throw new Error('Không thể mã hóa mật khẩu.');
-            }
-        }
-
-        async function generateHMAC(data, secret = 'cloudgame-secret') {
-            try {
-                const encoder = new TextEncoder();
-                const key = await crypto.subtle.importKey(
-                    'raw',
-                    encoder.encode(secret),
-                    { name: 'HMAC', hash: 'SHA-256' },
-                    false,
-                    ['sign']
-                );
-                const dataBuffer = encoder.encode(JSON.stringify(data));
-                const signature = await crypto.subtle.sign('HMAC', key, dataBuffer);
-                return Array.from(new Uint8Array(signature)).map(b => b.toString(16).padStart(2, '0')).join('');
-            } catch (error) {
-                console.error('Lỗi khi tạo HMAC:', error);
-                return '';
-            }
-        }
-
-        async function verifyData(data, storedHmac) {
-            const computedHmac = await generateHMAC(data);
-            return computedHmac === storedHmac;
-        }
-
-        function generatePlayerId() {
-            return Math.floor(100000 + Math.random() * 900000);
-        }
-
-        function sanitizeInput(input) {
-            if (typeof input !== 'string') return '';
-            const div = document.createElement('div');
-            div.textContent = input;
-            return div.innerHTML.replace(/</g, '<').replace(/>/g, '>');
-        }
-
         // Default Data
         const defaultUsers = [
             {
@@ -818,17 +605,14 @@
         ];
         const defaultPlans = {
             premium: { price: 400000, description: "Truy cập toàn bộ game. Hỗ trợ độ phân giải 4K. Máy chủ VIP." },
-            basic: { price: 99000, description: "Chơi mượt game phổ biến. Hỗ trợ thiết bị di động và PC. Băng thông ổn định." }
+            basic: { price: 99000, description: "Chơi mượt game phổ biến. Hỗ trợ thiết bị di động và PC." }
         };
+        const defaultCodes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
 
         // Global State
         let users = defaultUsers;
         let plans = defaultPlans;
-        let codes = [
-            { code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }
-        ];
-        let notifications = [];
-        let transactions = [];
+        let codes = defaultCodes;
         let isLoggedIn = false;
         let userData = { username: "", email: "", playerId: 0, balance: 0 };
 
@@ -838,26 +622,30 @@
         const userDetails = document.getElementById('userDetails');
         const balanceDisplay = document.querySelector('.balance');
         const logoutButton = document.getElementById('logoutButton');
-        const notificationArea = document.getElementById('notificationArea');
 
-        // Lock Mechanism
-        async function acquireLock(maxRetries = 3, retryDelay = 500) {
-            const lockKey = 'dataLock';
-            const lockTimeout = 2000;
-            for (let attempt = 0; attempt < maxRetries; attempt++) {
-                const currentLock = localStorage.getItem(lockKey);
-                const now = Date.now();
-                if (!currentLock || now - parseInt(currentLock) >= lockTimeout) {
-                    localStorage.setItem(lockKey, now.toString());
-                    return true;
-                }
-                await new Promise(resolve => setTimeout(resolve, retryDelay));
-            }
-            return false;
+        // Utility Functions
+        function generateSalt(length = 16) {
+            const array = new Uint8Array(length);
+            crypto.getRandomValues(array);
+            return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
         }
 
-        function releaseLock() {
-            localStorage.removeItem('dataLock');
+        async function hashPassword(password, salt) {
+            const saltedPassword = password + salt;
+            const msgBuffer = new TextEncoder().encode(saltedPassword);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function generatePlayerId() {
+            return Math.floor(100000 + Math.random() * 900000);
+        }
+
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML.replace(/</g, '<').replace(/>/g, '>');
         }
 
         // Spinner Functions
@@ -873,87 +661,61 @@
 
         // Notification Function
         function showNotification(message, type = 'success') {
-            if (!notificationArea) {
-                console.error('Không tìm thấy notificationArea.');
-                return;
-            }
             const div = document.createElement('div');
             div.className = `notification ${type}`;
-            div.innerHTML = `${sanitizeInput(message)} (${new Date().toLocaleString('vi-VN')})`;
-            notificationArea.appendChild(div);
-            setTimeout(() => {
-                div.classList.add('fade-out');
-                setTimeout(() => div.remove(), 500);
-            }, 5000);
+            div.textContent = message;
+            div.style.position = 'fixed';
+            div.style.top = '20px';
+            div.style.right = '20px';
+            div.style.padding = '10px';
+            div.style.background = type === 'success' ? '#007BFF' : '#FF4500';
+            div.style.color = '#fff';
+            div.style.borderRadius = '5px';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 3000);
+        }
+
+        // Image Error Handling
+        function handleImageError(img) {
+            console.warn(`Không thể tải hình ảnh: ${img.src}`);
+            const primaryPlaceholder = `https://placehold.co/250x150?text=${encodeURIComponent(img.alt)}`;
+            img.src = primaryPlaceholder;
+            img.classList.add('error');
+            img.onerror = () => {
+                console.warn(`Không thể tải placeholder chính: ${primaryPlaceholder}`);
+                img.src = 'https://via.placeholder.com/250x150?text=Image+Not+Found';
+                img.onerror = null; // Ngăn vòng lặp lỗi
+            };
         }
 
         // Data Management
         async function saveData() {
             try {
-                if (!await acquireLock()) {
-                    throw new Error('Dữ liệu đang được chỉnh sửa, vui lòng thử lại sau.');
-                }
-                const data = { users, plans, codes, notifications, transactions, userData, isLoggedIn };
-                const hmac = await generateHMAC(data);
+                const data = { users, plans, codes, userData, isLoggedIn };
                 localStorage.setItem('appData', JSON.stringify(data));
-                localStorage.setItem('appDataHmac', hmac);
                 localStorage.setItem('userData', JSON.stringify(userData));
                 localStorage.setItem('isLoggedIn', isLoggedIn.toString());
             } catch (error) {
-                console.error('Lỗi khi lưu dữ liệu:', error);
-                showNotification('Có lỗi khi lưu dữ liệu: ' + error.message, 'error');
-            } finally {
-                releaseLock();
+                showNotification('Lỗi khi lưu dữ liệu!', 'error');
             }
         }
 
         async function loadData() {
             try {
                 const storedData = localStorage.getItem('appData');
-                const storedHmac = localStorage.getItem('appDataHmac');
-                if (!storedData || !storedHmac) {
-                    users = defaultUsers;
-                    plans = defaultPlans;
-                    codes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
-                    notifications = [];
-                    transactions = [];
-                    return { users, plans, codes, notifications, transactions };
-                }
+                if (!storedData) return;
                 const data = JSON.parse(storedData);
-                if (!await verifyData(data, storedHmac)) {
-                    console.warn('Dữ liệu đã bị chỉnh sửa trái phép, sử dụng dữ liệu mặc định.');
-                    showNotification('Dữ liệu không hợp lệ, sử dụng dữ liệu mặc định.', 'error');
-                    users = defaultUsers;
-                    plans = defaultPlans;
-                    codes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
-                    notifications = [];
-                    transactions = [];
-                    return { users, plans, codes, notifications, transactions };
-                }
                 users = data.users || defaultUsers;
                 plans = data.plans || defaultPlans;
-                codes = data.codes || [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
-                notifications = data.notifications || [];
-                transactions = data.transactions || [];
-                return { users, plans, codes, notifications, transactions };
+                codes = data.codes || defaultCodes;
             } catch (error) {
-                console.error('Lỗi khi tải dữ liệu:', error);
-                showNotification('Có lỗi khi tải dữ liệu, sử dụng dữ liệu mặc định.', 'error');
-                users = defaultUsers;
-                plans = defaultPlans;
-                codes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
-                notifications = [];
-                transactions = [];
-                return { users, plans, codes, notifications, transactions };
+                showNotification('Lỗi khi tải dữ liệu!', 'error');
             }
         }
 
         // Update User Interface
         function updateUserInterface() {
-            if (!authLinks || !userInfo || !userDetails || !balanceDisplay) {
-                console.error('Thiếu các phần tử DOM trong updateUserInterface.');
-                return;
-            }
+            if (!authLinks || !userInfo || !userDetails || !balanceDisplay) return;
             if (isLoggedIn && userData.playerId) {
                 authLinks.style.display = 'none';
                 userInfo.style.display = 'flex';
@@ -962,36 +724,14 @@
             } else {
                 authLinks.style.display = 'flex';
                 userInfo.style.display = 'none';
-                userDetails.textContent = '';
                 balanceDisplay.textContent = 'Số dư: 0 VNĐ';
             }
-            updatePlansUI();
-            loadNotifications();
-        }
-
-        // Update Plans UI
-        function updatePlansUI() {
-            const premiumPlan = document.getElementById('premiumPlan');
-            const basicPlan = document.getElementById('basicPlan');
-            if (!premiumPlan || !basicPlan) {
-                console.warn('Không tìm thấy premiumPlan hoặc basicPlan.');
-                return;
-            }
-            premiumPlan.querySelector('.price').textContent = `${plans.premium.price.toLocaleString('vi-VN')} VNĐ/Vĩnh Viễn`;
-            const premiumDesc = premiumPlan.querySelectorAll('p:not(.price):not(.subscribers)');
-            const premiumDescLines = plans.premium.description.split('. ').filter(d => d);
-            premiumDesc.forEach((p, i) => p.textContent = premiumDescLines[i] || '');
-
-            basicPlan.querySelector('.price').textContent = `${plans.basic.price.toLocaleString('vi-VN')} VNĐ/Tháng`;
-            const basicDesc = basicPlan.querySelectorAll('p:not(.price):not(.subscribers)');
-            const basicDescLines = plans.basic.description.split('. ').filter(d => d);
-            basicDesc.forEach((p, i) => p.textContent = basicDescLines[i] || '');
         }
 
         // Redeem Code
         function redeemCode() {
             if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập để nhập code!', 'error');
+                showNotification('Vui lòng đăng nhập!', 'error');
                 return;
             }
             const redeemCodeInput = document.getElementById('redeemCode');
@@ -999,165 +739,97 @@
             const codeError = document.getElementById('codeError');
             const codeSpinner = document.getElementById('codeSpinner');
             const redeemButton = document.querySelector('#code button');
-            if (!redeemCodeInput || !codeSuccess || !codeError || !codeSpinner || !redeemButton) {
-                console.error('Thiếu các phần tử DOM trong redeemCode.');
-                showNotification('Lỗi giao diện, vui lòng thử lại.', 'error');
-                return;
-            }
+            if (!redeemCodeInput || !codeSuccess || !codeError || !codeSpinner || !redeemButton) return;
             const code = sanitizeInput(redeemCodeInput.value.trim().toUpperCase());
             if (!code || !/^[A-Z0-9_]+$/.test(code)) {
-                codeError.textContent = 'Mã code không hợp lệ hoặc trống!';
+                codeError.textContent = 'Mã code không hợp lệ!';
                 codeError.style.display = 'block';
-                codeSuccess.style.display = 'none';
-                setTimeout(() => codeError.style.display = 'none', 5000);
+                setTimeout(() => codeError.style.display = 'none', 3000);
                 return;
             }
             showSpinner('codeSpinner');
             redeemButton.disabled = true;
-            redeemButton.textContent = 'Đang xử lý...';
             setTimeout(async () => {
                 try {
                     await loadData();
                     const codeObj = codes.find(c => c.code === code);
-                    if (!codeObj) {
-                        throw new Error('Mã code không hợp lệ!');
-                    }
-                    if (codeObj.uses >= codeObj.maxUses) {
-                        throw new Error('Mã code đã hết lượt sử dụng!');
-                    }
-                    const balanceReward = codeObj.reward;
-                    userData.balance += balanceReward;
+                    if (!codeObj) throw new Error('Mã code không hợp lệ!');
+                    if (codeObj.uses >= codeObj.maxUses) throw new Error('Mã code đã hết lượt sử dụng!');
+                    userData.balance += codeObj.reward;
                     const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex === -1) {
-                        throw new Error('Không tìm thấy người dùng!');
-                    }
+                    if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
                     users[userIndex].balance = userData.balance;
                     codeObj.uses += 1;
-                    if (codeObj.uses >= codeObj.maxUses) {
-                        codes = codes.filter(c => c.code !== code);
-                    }
+                    if (codeObj.uses >= codeObj.maxUses) codes = codes.filter(c => c.code !== code);
                     await saveData();
-                    logTransaction(userData.playerId, 'Redeem Code', balanceReward);
-                    codeSuccess.textContent = `Nhập code thành công! Bạn nhận được ${balanceReward.toLocaleString('vi-VN')} VNĐ.`;
+                    codeSuccess.textContent = `Nhận ${codeObj.reward.toLocaleString('vi-VN')} VNĐ!`;
                     codeSuccess.style.display = 'block';
                     codeError.style.display = 'none';
                     redeemCodeInput.value = '';
                     updateUserInterface();
-                    setTimeout(() => codeSuccess.style.display = 'none', 5000);
+                    setTimeout(() => codeSuccess.style.display = 'none', 3000);
                 } catch (error) {
-                    console.error('Lỗi khi nhập code:', error);
-                    codeError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
+                    codeError.textContent = error.message;
                     codeError.style.display = 'block';
-                    codeSuccess.style.display = 'none';
-                    setTimeout(() => codeError.style.display = 'none', 5000);
+                    setTimeout(() => codeError.style.display = 'none', 3000);
                 } finally {
                     hideSpinner('codeSpinner');
                     redeemButton.disabled = false;
-                    redeemButton.textContent = 'Nhập Code';
                 }
             }, 1000);
-        }
-
-        // Load Notifications
-        function loadNotifications() {
-            if (!notificationArea) {
-                console.error('Không tìm thấy notificationArea.');
-                return;
-            }
-            try {
-                notificationArea.innerHTML = '';
-                notifications.forEach(notification => {
-                    const div = document.createElement('div');
-                    div.className = 'notification';
-                    div.textContent = `${sanitizeInput(notification.message)} (${new Date(notification.timestamp).toLocaleString('vi-VN')})`;
-                    notificationArea.appendChild(div);
-                });
-            } catch (error) {
-                console.error('Lỗi khi tải thông báo:', error);
-                showNotification('Có lỗi khi tải thông báo.', 'error');
-            }
-        }
-
-        // Log Transaction
-        function logTransaction(userId, type, amount) {
-            try {
-                transactions.push({
-                    userId,
-                    type,
-                    amount,
-                    timestamp: new Date().toISOString()
-                });
-                notifications.push({
-                    message: `Giao dịch: ${type} (${amount > 0 ? '+' : ''}${amount.toLocaleString('vi-VN')} VNĐ)`,
-                    timestamp: new Date().toISOString()
-                });
-                saveData();
-            } catch (error) {
-                console.error('Lỗi khi ghi giao dịch:', error);
-            }
         }
 
         // Purchase Plan
         function purchasePlan(planName, price, event) {
             if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập trước khi mua gói!', 'error');
+                showNotification('Vui lòng đăng nhập!', 'error');
                 return;
             }
-            const button = event?.target;
+            const button = event.target;
             const spinnerId = planName === 'Gói Nâng Cao' ? 'premiumSpinner' : 'basicSpinner';
             const spinner = document.getElementById(spinnerId);
-            if (!button || !spinner) {
-                console.error('Thiếu button hoặc spinner trong purchasePlan.');
-                showNotification('Lỗi giao diện, vui lòng thử lại.', 'error');
-                return;
-            }
+            if (!button || !spinner) return;
             showSpinner(spinnerId);
             button.disabled = true;
-            button.textContent = 'Đang xử lý...';
             setTimeout(async () => {
                 try {
                     await loadData();
-                    if (!userData || !userData.playerId) {
-                        throw new Error('Dữ liệu người dùng không hợp lệ!');
-                    }
-                    if (userData.balance < price) {
-                        throw new Error(`Không đủ số dư để mua gói này! Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ.`);
-                    }
+                    if (userData.balance < price) throw new Error(`Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ!`);
                     userData.balance -= price;
                     const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex === -1) {
-                        throw new Error('Không tìm thấy thông tin người dùng!');
-                    }
+                    if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
                     users[userIndex].balance = userData.balance;
                     await saveData();
-                    logTransaction(userData.playerId, `Mua ${planName}`, -price);
                     showNotification(`Đã mua ${planName} thành công!`, 'success');
                     updateUserInterface();
                 } catch (error) {
-                    console.error('Lỗi khi mua gói:', error);
-                    showNotification(error.message || 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
+                    showNotification(error.message, 'error');
                 } finally {
                     button.disabled = false;
-                    button.textContent = 'Mua Gói';
                     hideSpinner(spinnerId);
                 }
             }, 1000);
         }
 
+        // Play Game (Placeholder)
+        function playGame(gameName) {
+            if (!isLoggedIn) {
+                showNotification('Vui lòng đăng nhập để chơi game!', 'error');
+                return;
+            }
+            showNotification(`Bắt đầu chơi ${gameName}!`, 'success');
+            // Placeholder: Thêm logic để khởi chạy game nếu có backend
+        }
+
         // Logout
         function logout() {
-            try {
-                isLoggedIn = false;
-                userData = { username: "", email: "", playerId: 0, balance: 0 };
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('userData');
-                saveData();
-                updateUserInterface();
-                showNotification('Đăng xuất thành công!', 'success');
-            } catch (error) {
-                console.error('Lỗi khi đăng xuất:', error);
-                showNotification('Có lỗi khi đăng xuất, vui lòng thử lại.', 'error');
-            }
+            isLoggedIn = false;
+            userData = { username: "", email: "", playerId: 0, balance: 0 };
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userData');
+            saveData();
+            updateUserInterface();
+            showNotification('Đăng xuất thành công!', 'success');
         }
 
         // Initialize
@@ -1166,34 +838,32 @@
                 await loadData();
                 isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
                 userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0 };
-                if (isLoggedIn && !users.some(u => u.playerId === userData.playerId)) {
-                    isLoggedIn = false;
-                    userData = { username: "", email: "", playerId: 0, balance: 0 };
-                    localStorage.removeItem('isLoggedIn');
-                    localStorage.removeItem('userData');
-                }
                 updateUserInterface();
+
+                // Kiểm tra tải hình ảnh game
+                const gameImages = document.querySelectorAll('.game-card img');
+                gameImages.forEach(img => {
+                    img.addEventListener('load', () => {
+                        console.log(`Hình ảnh đã tải thành công: ${img.src}`);
+                        img.classList.remove('error');
+                    });
+                });
             } catch (error) {
-                console.error('Lỗi khi khởi tạo:', error);
-                showNotification('Có lỗi khi khởi tạo ứng dụng, vui lòng thử lại.', 'error');
+                console.error('Lỗi khởi tạo:', error);
+                showNotification('Đã xảy ra lỗi khi khởi tạo trang!', 'error');
             }
         }
 
         initialize();
 
         // Event Listeners
-        if (logoutButton) {
-            logoutButton.addEventListener('click', logout);
-        }
+        logoutButton?.addEventListener('click', logout);
 
         // Topup Modal
         const topupModal = document.getElementById('topupModal');
-        const topupLink = document.getElementById('topupLink');
+        const topupButton = document.getElementById('topupButton');
         const closeTopupModal = document.getElementById('closeTopupModal');
         const topupForm = document.getElementById('topupForm');
-        const topupSpinner = document.getElementById('topupSpinner');
-        const topupSuccess = document.getElementById('topupSuccess');
-        const topupError = document.getElementById('topupError');
         const paymentMethodSelect = document.getElementById('paymentMethod');
 
         function toggleForm() {
@@ -1206,344 +876,199 @@
             }
         }
 
-        if (topupLink) {
-            topupLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (topupModal && topupSuccess && topupError && topupForm) {
-                    topupModal.style.display = 'flex';
+        topupButton?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (topupModal) topupModal.style.display = 'flex';
+        });
+
+        closeTopupModal?.addEventListener('click', () => {
+            if (topupModal) topupModal.style.display = 'none';
+        });
+
+        topupModal?.addEventListener('click', (e) => {
+            if (e.target === topupModal) topupModal.style.display = 'none';
+        });
+
+        topupForm?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!isLoggedIn) {
+                showNotification('Vui lòng đăng nhập!', 'error');
+                return;
+            }
+            const paymentMethod = paymentMethodSelect?.value;
+            const topupSuccess = document.getElementById('topupSuccess');
+            const topupError = document.getElementById('topupError');
+            if (paymentMethod === 'card') {
+                const cardCode = document.getElementById('cardCode')?.value.trim();
+                const cardSerial = document.getElementById('cardSerial')?.value.trim();
+                const cardAmount = parseInt(document.getElementById('cardAmount')?.value || '0');
+                if (!cardCode || !cardSerial || cardAmount < 10000) {
+                    if (topupError) {
+                        topupError.textContent = 'Vui lòng nhập đầy đủ thông tin thẻ!';
+                        topupError.style.display = 'block';
+                        setTimeout(() => topupError.style.display = 'none', 3000);
+                    }
+                    return;
+                }
+            }
+            if (topupSuccess) {
+                topupSuccess.style.display = 'block';
+                setTimeout(() => {
                     topupSuccess.style.display = 'none';
-                    topupError.style.display = 'none';
-                    topupForm.reset();
-                    toggleForm();
-                }
-            });
-        }
-
-        if (closeTopupModal) {
-            closeTopupModal.addEventListener('click', () => {
-                if (topupModal) topupModal.style.display = 'none';
-            });
-        }
-
-        if (topupModal) {
-            topupModal.addEventListener('click', (e) => {
-                if (e.target === topupModal) {
-                    topupModal.style.display = 'none';
-                }
-            });
-        }
-
-        if (topupForm) {
-            topupForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!isLoggedIn) {
-                    if (topupError) {
-                        topupError.textContent = 'Vui lòng đăng nhập trước khi nạp tiền!';
-                        topupError.style.display = 'block';
-                        topupSuccess.style.display = 'none';
-                        setTimeout(() => topupError.style.display = 'none', 5000);
-                    }
-                    showNotification('Vui lòng đăng nhập trước khi nạp tiền!', 'error');
-                    return;
-                }
-                showSpinner('topupSpinner');
-                const paymentMethod = paymentMethodSelect?.value;
-                let errorMessage = '';
-                if (paymentMethod === 'card') {
-                    const cardCode = document.getElementById('cardCode')?.value.trim();
-                    const cardSerial = document.getElementById('cardSerial')?.value.trim();
-                    const cardAmount = parseInt(document.getElementById('cardAmount')?.value || '0');
-                    if (!cardCode || !cardSerial) {
-                        errorMessage = 'Vui lòng nhập đầy đủ mã thẻ và số serial!';
-                    } else if (cardAmount < 10000) {
-                        errorMessage = 'Mệnh giá thẻ phải ít nhất 10.000 VNĐ!';
-                    }
-                }
-                if (errorMessage) {
-                    if (topupError) {
-                        topupError.textContent = errorMessage;
-                        topupError.style.display = 'block';
-                        topupSuccess.style.display = 'none';
-                        setTimeout(() => topupError.style.display = 'none', 5000);
-                    }
-                    hideSpinner('topupSpinner');
-                    return;
-                }
-                try {
-                    if (topupSuccess && topupError) {
-                        topupSuccess.textContent = 'Yêu cầu nạp tiền đã được gửi! Vui lòng chờ xác nhận.';
-                        topupSuccess.style.display = 'block';
-                        topupError.style.display = 'none';
-                    }
-                    topupForm.reset();
-                    toggleForm();
-                    setTimeout(() => {
-                        if (topupModal) topupModal.style.display = 'none';
-                        if (topupSuccess) topupSuccess.style.display = 'none';
-                    }, 1000);
-                } catch (error) {
-                    console.error('Lỗi khi gửi yêu cầu nạp tiền:', error);
-                    if (topupError) {
-                        topupError.textContent = error.message || 'Có lỗi xảy ra khi gửi yêu cầu nạp tiền.';
-                        topupError.style.display = 'block';
-                        topupSuccess.style.display = 'none';
-                        setTimeout(() => topupError.style.display = 'none', 5000);
-                    }
-                } finally {
-                    hideSpinner('topupSpinner');
-                }
-            });
-        }
+                    if (topupModal) topupModal.style.display = 'none';
+                }, 1000);
+            }
+        });
 
         // Login Modal
         const loginModal = document.getElementById('loginModal');
         const loginLink = document.getElementById('loginLink');
         const closeLoginModal = document.getElementById('closeLoginModal');
         const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
 
-        if (loginLink) {
-            loginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (loginModal && topupModal && registerModal && loginError && loginForm) {
-                    loginModal.style.display = 'flex';
-                    topupModal.style.display = 'none';
-                    registerModal.style.display = 'none';
-                    loginError.style.display = 'none';
-                    loginForm.reset();
-                }
-            });
-        }
+        loginLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginModal) loginModal.style.display = 'flex';
+        });
 
-        if (closeLoginModal) {
-            closeLoginModal.addEventListener('click', () => {
-                if (loginModal) loginModal.style.display = 'none';
-            });
-        }
+        closeLoginModal?.addEventListener('click', () => {
+            if (loginModal) loginModal.style.display = 'none';
+        });
 
-        if (loginModal) {
-            loginModal.addEventListener('click', (e) => {
-                if (e.target === loginModal) {
-                    loginModal.style.display = 'none';
-                }
-            });
-        }
+        loginModal?.addEventListener('click', (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+        });
 
-        if (loginForm) {
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                showSpinner('loginSpinner');
-                const loginEmail = document.getElementById('loginEmail');
-                const loginPassword = document.getElementById('loginPassword');
-                if (!loginEmail || !loginPassword) {
-                    console.error('Lỗi: Thiếu loginEmail hoặc loginPassword.');
-                    if (loginError) {
-                        loginError.textContent = 'Lỗi giao diện, vui lòng thử lại!';
-                        loginError.style.display = 'block';
-                    }
-                    showNotification('Lỗi giao diện, vui lòng thử lại!', 'error');
-                    hideSpinner('loginSpinner');
-                    return;
+        loginForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loginEmail = document.getElementById('loginEmail');
+            const loginPassword = document.getElementById('loginPassword');
+            const loginError = document.getElementById('loginError');
+            if (!loginEmail || !loginPassword) return;
+            const email = sanitizeInput(loginEmail.value.trim());
+            const password = loginPassword.value.trim();
+            if (!email || !password) {
+                if (loginError) {
+                    loginError.textContent = 'Vui lòng nhập email và mật khẩu!';
+                    loginError.style.display = 'block';
+                    setTimeout(() => loginError.style.display = 'none', 3000);
                 }
-                const email = sanitizeInput(loginEmail.value.trim());
-                const password = loginPassword.value.trim();
-                if (!email || !password) {
-                    if (loginError) {
-                        loginError.textContent = 'Vui lòng nhập email và mật khẩu!';
-                        loginError.style.display = 'block';
-                        setTimeout(() => loginError.style.display = 'none', 5000);
-                    }
-                    showNotification('Vui lòng nhập email và mật khẩu!', 'error');
-                    hideSpinner('loginSpinner');
-                    return;
+                return;
+            }
+            try {
+                await loadData();
+                const user = users.find(u => u.email === email);
+                if (!user) throw new Error('Email không tồn tại!');
+                const hashedPassword = await hashPassword(password, user.salt);
+                if (hashedPassword !== user.password) throw new Error('Mật khẩu không đúng!');
+                isLoggedIn = true;
+                userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
+                await saveData();
+                loginModal.style.display = 'none';
+                updateUserInterface();
+                showNotification('Đăng nhập thành công!', 'success');
+            } catch (error) {
+                if (loginError) {
+                    loginError.textContent = error.message;
+                    loginError.style.display = 'block';
+                    setTimeout(() => loginError.style.display = 'none', 3000);
                 }
-                try {
-                    await loadData();
-                    const user = users.find(u => u.email === email);
-                    if (!user) {
-                        throw new Error('Email không tồn tại!');
-                    }
-                    const hashedPassword = await hashPassword(password, user.salt);
-                    if (hashedPassword !== user.password) {
-                        throw new Error('Mật khẩu không đúng!');
-                    }
-                    isLoggedIn = true;
-                    userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
-                    await saveData();
-                    loginModal.style.display = 'none';
-                    updateUserInterface();
-                    loginForm.reset();
-                    showNotification('Đăng nhập thành công!', 'success');
-                } catch (error) {
-                    console.error('Lỗi khi đăng nhập:', error);
-                    showNotification(error.message || 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
-                    if (loginError) {
-                        loginError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại.';
-                        loginError.style.display = 'block';
-                        setTimeout(() => loginError.style.display = 'none', 5000);
-                    }
-                } finally {
-                    hideSpinner('loginSpinner');
-                }
-            });
-        }
+            }
+        });
 
         // Register Modal
         const registerModal = document.getElementById('registerModal');
         const registerLink = document.getElementById('registerLink');
         const closeRegisterModal = document.getElementById('closeRegisterModal');
         const registerForm = document.getElementById('registerForm');
-        const registerError = document.getElementById('registerError');
-        const registerSuccess = document.getElementById('registerSuccess');
         const showLogin = document.getElementById('showLogin');
         const showRegister = document.getElementById('showRegister');
 
-        if (registerLink) {
-            registerLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (registerModal && topupModal && loginModal) {
-                    registerModal.style.display = 'flex';
-                    topupModal.style.display = 'none';
-                    loginModal.style.display = 'none';
-                }
-            });
-        }
+        registerLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (registerModal) registerModal.style.display = 'flex';
+        });
 
-        if (closeRegisterModal) {
-            closeRegisterModal.addEventListener('click', () => {
-                if (registerModal) registerModal.style.display = 'none';
-            });
-        }
+        closeRegisterModal?.addEventListener('click', () => {
+            if (registerModal) registerModal.style.display = 'none';
+        });
 
-        if (registerModal) {
-            registerModal.addEventListener('click', (e) => {
-                if (e.target === registerModal) {
-                    registerModal.style.display = 'none';
-                }
-            });
-        }
+        registerModal?.addEventListener('click', (e) => {
+            if (e.target === registerModal) registerModal.style.display = 'none';
+        });
 
-        if (showLogin) {
-            showLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (loginModal && registerModal) {
-                    loginModal.style.display = 'flex';
-                    registerModal.style.display = 'none';
-                }
-            });
-        }
+        showLogin?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginModal && registerModal) {
+                loginModal.style.display = 'flex';
+                registerModal.style.display = 'none';
+            }
+        });
 
-        if (showRegister) {
-            showRegister.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (loginModal && registerModal) {
-                    loginModal.style.display = 'none';
-                    registerModal.style.display = 'flex';
-                }
-            });
-        }
+        showRegister?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginModal && registerModal) {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'flex';
+            }
+        });
 
-        if (registerForm) {
-            registerForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                showSpinner('registerSpinner');
-                const registerUsername = document.getElementById('registerUsername');
-                const registerEmail = document.getElementById('registerEmail');
-                const registerPassword = document.getElementById('registerPassword');
-                const confirmPassword = document.getElementById('confirmPassword');
-                if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) {
-                    showNotification('Lỗi giao diện đăng ký, vui lòng thử lại!', 'error');
-                    if (registerError) {
-                        registerError.textContent = 'Lỗi giao diện, vui lòng thử lại!';
-                        registerError.style.display = 'block';
-                    }
-                    hideSpinner('registerSpinner');
-                    return;
+        registerForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const registerUsername = document.getElementById('registerUsername');
+            const registerEmail = document.getElementById('registerEmail');
+            const registerPassword = document.getElementById('registerPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const registerError = document.getElementById('registerError');
+            const registerSuccess = document.getElementById('registerSuccess');
+            if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) return;
+            const username = sanitizeInput(registerUsername.value.trim());
+            const email = sanitizeInput(registerEmail.value.trim());
+            const password = registerPassword.value.trim();
+            const confirmPasswordValue = confirmPassword.value.trim();
+            if (username.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 6 || password !== confirmPasswordValue) {
+                if (registerError) {
+                    registerError.textContent = 'Thông tin không hợp lệ!';
+                    registerError.style.display = 'block';
+                    setTimeout(() => registerError.style.display = 'none', 3000);
                 }
-                const username = sanitizeInput(registerUsername.value.trim());
-                const email = sanitizeInput(registerEmail.value.trim());
-                const password = registerPassword.value.trim();
-                const confirmPasswordValue = confirmPassword.value.trim();
-                let errorMessage = '';
-                if (username.length < 3) {
-                    errorMessage = 'Tên người dùng phải ít nhất 3 ký tự!';
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    errorMessage = 'Email không hợp lệ!';
-                } else if (password.length < 6 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
-                    errorMessage = 'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa và số!';
-                } else if (password !== confirmPasswordValue) {
-                    errorMessage = 'Mật khẩu xác nhận không khớp!';
-                } else if (users.some(u => u.email === email)) {
-                    errorMessage = 'Email đã được sử dụng!';
-                } else if (users.some(u => u.username === username)) {
-                    errorMessage = 'Tên người dùng đã được sử dụng!';
-                }
-                if (errorMessage) {
-                    if (registerError) {
-                        registerError.textContent = errorMessage;
-                        registerError.style.display = 'block';
-                        registerSuccess.style.display = 'none';
-                        setTimeout(() => registerError.style.display = 'none', 5000);
-                    }
-                    showNotification(errorMessage, 'error');
-                    hideSpinner('registerSpinner');
-                    return;
-                }
-                try {
-                    await loadData();
-                    const salt = generateSalt();
-                    const hashedPassword = await hashPassword(password, salt);
-                    let playerId;
-                    do {
-                        playerId = generatePlayerId();
-                    } while (users.some(u => u.playerId === playerId));
-                    const newUser = {
-                        username,
-                        email,
-                        password: hashedPassword,
-                        salt,
-                        playerId,
-                        balance: 0
-                    };
-                    users.push(newUser);
-                    isLoggedIn = true;
-                    userData = { username, email, playerId, balance: 0 };
-                    await saveData();
-                    if (registerSuccess && registerError) {
-                        registerSuccess.textContent = 'Đăng ký thành công! Đang đăng nhập...';
-                        registerSuccess.style.display = 'block';
-                        registerError.style.display = 'none';
-                    }
-                    updateUserInterface();
-                    registerForm.reset();
-                    showNotification('Đăng ký thành công!', 'success');
+                return;
+            }
+            try {
+                await loadData();
+                if (users.some(u => u.email === email)) throw new Error('Email đã được sử dụng!');
+                const salt = generateSalt();
+                const hashedPassword = await hashPassword(password, salt);
+                const playerId = generatePlayerId();
+                const newUser = { username, email, password: hashedPassword, salt, playerId, balance: 0 };
+                users.push(newUser);
+                isLoggedIn = true;
+                userData = { username, email, playerId, balance: 0 };
+                await saveData();
+                if (registerSuccess) {
+                    registerSuccess.style.display = 'block';
                     setTimeout(() => {
-                        if (registerModal) registerModal.style.display = 'none';
-                        if (registerSuccess) registerSuccess.style.display = 'none';
-                    }, 1000);
-                } catch (error) {
-                    console.error('Lỗi khi đăng ký:', error);
-                    showNotification(error.message || 'Có lỗi xảy ra khi đăng ký, vui lòng thử lại.', 'error');
-                    if (registerError) {
-                        registerError.textContent = error.message || 'Có lỗi xảy ra, vui lòng thử lại!';
-                        registerError.style.display = 'block';
                         registerSuccess.style.display = 'none';
-                        setTimeout(() => registerError.style.display = 'none', 5000);
-                    }
-                } finally {
-                    hideSpinner('registerSpinner');
+                        if (registerModal) registerModal.style.display = 'none';
+                    }, 1000);
                 }
-            });
-        }
+                updateUserInterface();
+                showNotification('Đăng ký thành công!', 'success');
+            } catch (error) {
+                if (registerError) {
+                    registerError.textContent = error.message;
+                    registerError.style.display = 'block';
+                    setTimeout(() => registerError.style.display = 'none', 3000);
+                }
+            }
+        });
 
         // Hamburger Menu
         const hamburger = document.querySelector('.hamburger');
         const menu = document.querySelector('.menu');
-        if (hamburger && menu) {
-            hamburger.addEventListener('click', () => {
-                menu.classList.toggle('active');
-            });
-        }
+        hamburger?.addEventListener('click', () => {
+            menu?.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
