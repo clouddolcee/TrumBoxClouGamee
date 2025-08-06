@@ -6,6 +6,7 @@
     <title>Cloud Game PC - Chơi Game Mượt Mà</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        /* Giữ nguyên toàn bộ CSS từ mã gốc */
         * {
             margin: 0;
             padding: 0;
@@ -616,10 +617,28 @@
                     <button onclick="playGame('Counter-Strike 2')">Chơi Ngay</button>
                 </div>
                 <div class="game-card">
-                    <img src="https://i.imgur.com/4f6Z0Z6.jpg" alt="Minecraft" loading="lazy" onerror="handleImageError(this)">
+                    <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Minecraft-keyart_600x360.jpg" alt="Minecraft" loading="lazy" onerror="handleImageError(this)">
                     <h3>Minecraft</h3>
                     <p>Xây dựng thế giới sáng tạo.</p>
                     <button onclick="playGame('Minecraft')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2669400/header.jpg" alt="EA Sports FC 25" loading="lazy" onerror="handleImageError(this)">
+                    <h3>EA Sports FC 25</h3>
+                    <p>Trải nghiệm bóng đá chân thực với FC IQ.</p>
+                    <button onclick="playGame('EA Sports FC 25')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2526180/header.jpg" alt="WWE 2K25" loading="lazy" onerror="handleImageError(this)">
+                    <h3>WWE 2K25</h3>
+                    <p>Đấu vật đỉnh cao với The Bloodline.</p>
+                    <button onclick="playGame('WWE 2K25')">Chơi Ngay</button>
+                </div>
+                <div class="game-card">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2358720/header.jpg" alt="Black Myth: Wukong" loading="lazy" onerror="handleImageError(this)">
+                    <h3>Black Myth: Wukong</h3>
+                    <p>Hành trình sử thi đậm chất thần thoại.</p>
+                    <button onclick="playGame('Black Myth: Wukong')">Chơi Ngay</button>
                 </div>
             </div>
         </div>
@@ -819,7 +838,7 @@
             if (typeof input !== 'string') return '';
             const div = document.createElement('div');
             div.textContent = input;
-            return div.innerHTML.replace(/</g, '<').replace(/>/g, '>');
+            return div.innerHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
         // Spinner Functions
@@ -859,6 +878,7 @@
             img.onerror = () => {
                 console.warn(`Không thể tải placeholder chính: ${primaryPlaceholder}`);
                 img.src = 'https://via.placeholder.com/220x120?text=Image+Not+Found';
+                showNotification(`Không tải được hình ảnh cho ${img.alt}`, 'error');
                 img.onerror = null;
             };
         }
