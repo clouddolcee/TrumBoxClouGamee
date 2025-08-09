@@ -6,7 +6,6 @@
     <title>Cloud Game PC - Chơi Game Mượt Mà</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Giữ nguyên toàn bộ CSS từ mã gốc */
         * {
             margin: 0;
             padding: 0;
@@ -792,7 +791,8 @@
                 password: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
                 salt: "1234567890abcdef",
                 playerId: 123456,
-                balance: 500000
+                balance: 500000,
+                purchasedPlan: null // Thêm trường purchasedPlan
             }
         ];
         const defaultPlans = {
@@ -807,7 +807,7 @@
         let plans = defaultPlans;
         let codes = defaultCodes;
         let isLoggedIn = false;
-        let userData = { username: "", email: "", playerId: 0, balance: 0 };
+        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null }; // Thêm purchasedPlan vào userData
 
         // DOM Elements
         const authLinks = document.getElementById('authLinks');
@@ -991,9 +991,11 @@
                     await loadData();
                     if (userData.balance < price) throw new Error(`Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ!`);
                     userData.balance -= price;
+                    userData.purchasedPlan = planName; // Lưu gói đã mua
                     const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                     if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
                     users[userIndex].balance = userData.balance;
+                    users[userIndex].purchasedPlan = planName; // Cập nhật gói vào users
                     await saveData();
                     showNotification(`Đã mua ${planName} thành công!`, 'success');
                     updateUserInterface();
@@ -1006,10 +1008,14 @@
             }, 1000);
         }
 
-        // Play Game (Placeholder)
+        // Play Game
         function playGame(gameName) {
             if (!isLoggedIn) {
                 showNotification('Vui lòng đăng nhập để chơi game!', 'error');
+                return;
+            }
+            if (!userData.purchasedPlan) {
+                showNotification('Phải mua gói dịch vụ trước khi chơi!', 'error');
                 return;
             }
             showNotification(`Bắt đầu chơi ${gameName}!`, 'success');
@@ -1018,7 +1024,7 @@
         // Logout
         function logout() {
             isLoggedIn = false;
-            userData = { username: "", email: "", playerId: 0, balance: 0 };
+            userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userData');
             saveData();
@@ -1031,7 +1037,7 @@
             try {
                 await loadData();
                 isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0 };
+                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
                 updateUserInterface();
 
                 const gameImages = document.querySelectorAll('.game-card img');
@@ -1155,7 +1161,7 @@
                 const hashedPassword = await hashPassword(password, user.salt);
                 if (hashedPassword !== user.password) throw new Error('Mật khẩu không đúng!');
                 isLoggedIn = true;
-                userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance };
+                userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance, purchasedPlan: user.purchasedPlan || null };
                 await saveData();
                 loginModal.style.display = 'none';
                 updateUserInterface();
@@ -1233,10 +1239,10 @@
                 const salt = generateSalt();
                 const hashedPassword = await hashPassword(password, salt);
                 const playerId = generatePlayerId();
-                const newUser = { username, email, password: hashedPassword, salt, playerId, balance: 0 };
+                const newUser = { username, email, password: hashedPassword, salt, playerId, balance: 0, purchasedPlan: null };
                 users.push(newUser);
                 isLoggedIn = true;
-                userData = { username, email, playerId, balance: 0 };
+                userData = { username, email, playerId, balance: 0, purchasedPlan: null };
                 await saveData();
                 if (registerSuccess) {
                     registerSuccess.style.display = 'block';
