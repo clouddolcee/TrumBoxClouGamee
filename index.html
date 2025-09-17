@@ -198,6 +198,7 @@
             padding: 0.5rem 0;
             scrollbar-width: thin;
             scrollbar-color: #ffffff #222222;
+            position: relative;
         }
         .pricing::-webkit-scrollbar {
             height: 8px;
@@ -251,6 +252,26 @@
         .plan button {
             width: 100%;
             max-width: 180px;
+        }
+        .virtual-pc-img {
+            flex: 0 0 280px;
+            background: #222222;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #444444;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .virtual-pc-img:hover {
+            transform: translateY(-4px);
+        }
+        .virtual-pc-img img {
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
         }
         .games {
             display: flex;
@@ -499,6 +520,13 @@
                 width: 70px;
                 height: 70px;
             }
+            .virtual-pc-img {
+                flex: 0 0 260px;
+                max-width: 260px;
+            }
+            .virtual-pc-img img {
+                max-width: 220px;
+            }
             .modal-content {
                 width: 95%;
                 max-width: 340px;
@@ -550,6 +578,13 @@
             .plan img.pc-icon {
                 width: 60px;
                 height: 60px;
+            }
+            .virtual-pc-img {
+                flex: 0 0 240px;
+                max-width: 240px;
+            }
+            .virtual-pc-img img {
+                max-width: 200px;
             }
         }
     </style>
@@ -644,44 +679,20 @@
         <div class="section" id="pricing">
             <h2>Gói Dịch Vụ</h2>
             <div class="pricing">
-                <div class="plan" id="standardPlan">
+                <div class="plan" id="hourlyPlan">
                     <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói Chuẩn</h3>
-                    <p class="price">149.000 VNĐ/Tháng</p>
+                    <h3>Gói Giờ</h3>
+                    <p class="price">7.000 VNĐ/Giờ</p>
                     <ul>
                         <li>CPU: Intel i5 3.2GHz</li>
                         <li>RAM: 8GB</li>
                         <li>GPU: GTX 1650 4GB</li>
                         <li>Độ phân giải: 1080p</li>
                     </ul>
-                    <button onclick="purchasePlan('Gói Chuẩn', 149000, event)">Mua Gói</button>
-                    <div class="loading-spinner" id="standardSpinner"></div>
+                    <a href="https://zalo.me/0355761396" class="support-link" target="_blank">Liên hệ qua Zalo để mua</a>
                 </div>
-                <div class="plan" id="proPlan">
-                    <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói Pro</h3>
-                    <p class="price">239.000 VNĐ/Tháng</p>
-                    <ul>
-                        <li>CPU: Intel i7 3.8GHz</li>
-                        <li>RAM: 16GB</li>
-                        <li>GPU: RTX 3060 6GB</li>
-                        <li>Độ phân giải: 1440p</li>
-                    </ul>
-                    <button onclick="purchasePlan('Gói Pro', 239000, event)">Mua Gói</button>
-                    <div class="loading-spinner" id="proSpinner"></div>
-                </div>
-                <div class="plan" id="ultimatePlan">
-                    <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói Vĩnh Viễn</h3>
-                    <p class="price">399.000 VNĐ</p>
-                    <ul>
-                        <li>CPU: Intel i9 4.0GHz</li>
-                        <li>RAM: 32GB</li>
-                        <li>GPU: RTX 4080 12GB</li>
-                        <li>Độ phân giải: 4K</li>
-                    </ul>
-                    <button onclick="purchasePlan('Gói Vĩnh Viễn', 399000, event)">Mua Gói</button>
-                    <div class="loading-spinner" id="ultimateSpinner"></div>
+                <div class="virtual-pc-img">
+                    <img src="https://img.icons8.com/color/240/virtual-machine.png" alt="Virtual PC" loading="lazy" onerror="handleImageError(this)">
                 </div>
             </div>
         </div>
@@ -792,13 +803,11 @@
                 salt: "1234567890abcdef",
                 playerId: 123456,
                 balance: 500000,
-                purchasedPlan: null // Thêm trường purchasedPlan
+                purchasedPlan: null
             }
         ];
         const defaultPlans = {
-            standard: { price: 149000, description: "CPU: Intel i5 3.2GHz, RAM: 8GB, GPU: GTX 1650 4GB, Độ phân giải: 1080p" },
-            pro: { price: 239000, description: "CPU: Intel i7 3.8GHz, RAM: 16GB, GPU: RTX 3060 6GB, Độ phân giải: 1440p" },
-            ultimate: { price: 399000, description: "CPU: Intel i9 4.0GHz, RAM: 32GB, GPU: RTX 4080 12GB, Độ phân giải: 4K" }
+            hourly: { price: 7000, description: "CPU: Intel i5 3.2GHz, RAM: 8GB, GPU: GTX 1650 4GB, Độ phân giải: 1080p" }
         };
         const defaultCodes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
 
@@ -807,7 +816,7 @@
         let plans = defaultPlans;
         let codes = defaultCodes;
         let isLoggedIn = false;
-        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null }; // Thêm purchasedPlan vào userData
+        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
 
         // DOM Elements
         const authLinks = document.getElementById('authLinks');
@@ -975,37 +984,12 @@
         }
 
         // Purchase Plan
-        function purchasePlan(planName, price, event) {
+        function purchasePlan(planName) {
             if (!isLoggedIn) {
                 showNotification('Vui lòng đăng nhập!', 'error');
                 return;
             }
-            const button = event.target;
-            const spinnerId = planName === 'Gói Chuẩn' ? 'standardSpinner' : planName === 'Gói Pro' ? 'proSpinner' : 'ultimateSpinner';
-            const spinner = document.getElementById(spinnerId);
-            if (!button || !spinner) return;
-            showSpinner(spinnerId);
-            button.disabled = true;
-            setTimeout(async () => {
-                try {
-                    await loadData();
-                    if (userData.balance < price) throw new Error(`Cần ít nhất ${price.toLocaleString('vi-VN')} VNĐ!`);
-                    userData.balance -= price;
-                    userData.purchasedPlan = planName; // Lưu gói đã mua
-                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
-                    users[userIndex].balance = userData.balance;
-                    users[userIndex].purchasedPlan = planName; // Cập nhật gói vào users
-                    await saveData();
-                    showNotification(`Đã mua ${planName} thành công!`, 'success');
-                    updateUserInterface();
-                } catch (error) {
-                    showNotification(error.message, 'error');
-                } finally {
-                    button.disabled = false;
-                    hideSpinner(spinnerId);
-                }
-            }, 1000);
+            window.open('https://zalo.me/0355761396', '_blank');
         }
 
         // Play Game
