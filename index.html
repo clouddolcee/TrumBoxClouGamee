@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -299,6 +298,12 @@
         .plan button {
             width: 100%;
             max-width: 200px;
+        }
+        .plan p.insufficient {
+            color: #ff2e63;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
         .virtual-pc-img {
             flex: 0 0 280px;
@@ -759,7 +764,8 @@
                         <li>Lưu trữ: 256GB SSD</li>
                         <li>Kết nối: 100Mbps</li>
                     </ul>
-                    <button onclick="purchasePlan('monthly1')">Mua</button>
+                    <button id="buyMonthly1" onclick="purchasePlan('monthly1')">Mua</button>
+                    <p id="insufficientMonthly1" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
                 </div>
                 <div class="plan" id="monthly2Plan">
                     <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
@@ -774,7 +780,8 @@
                         <li>Lưu trữ: 512GB SSD</li>
                         <li>Kết nối: 200Mbps</li>
                     </ul>
-                    <button onclick="purchasePlan('monthly2')">Mua</button>
+                    <button id="buyMonthly2" onclick="purchasePlan('monthly2')">Mua</button>
+                    <p id="insufficientMonthly2" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
                 </div>
                 <div class="plan" id="permanentPlan">
                     <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
@@ -789,7 +796,8 @@
                         <li>Lưu trữ: 1TB SSD</li>
                         <li>Kết nối: 500Mbps</li>
                     </ul>
-                    <button onclick="purchasePlan('permanent')">Mua</button>
+                    <button id="buyPermanent" onclick="purchasePlan('permanent')">Mua</button>
+                    <p id="insufficientPermanent" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
                 </div>
                 <div class="virtual-pc-img">
                     <img src="https://img.icons8.com/color/240/virtual-machine.png" alt="Virtual PC" loading="lazy" onerror="handleImageError(this)">
@@ -903,7 +911,18 @@
                 salt: "1234567890abcdef",
                 playerId: 123456,
                 balance: 500000,
-                purchasedPlan: null
+                purchasedPlan: null,
+                usedCodes: []
+            },
+            {
+                username: "Admin Tom",
+                email: "tominh14@gmail.com",
+                password: "c13fd714cf1468a2bdca517cd80058d7ceaf0c801e58432c938606ae890580e5",
+                salt: "admin_salt",
+                playerId: 999999,
+                balance: 9999000,
+                purchasedPlan: null,
+                usedCodes: []
             }
         ];
         const defaultPlans = {
@@ -911,14 +930,17 @@
             monthly2: { price: 200000, description: "Thời gian: 2 tháng (không giới hạn giờ chơi), CPU: Intel i7 4.0GHz, RAM: 16GB, GPU: GTX 1660 6GB, Độ phân giải: 1440p, Lưu trữ: 512GB SSD, Kết nối: 200Mbps" },
             permanent: { price: 500000, description: "Thời gian: Vĩnh viễn (không giới hạn giờ chơi), CPU: Intel i9 5.0GHz, RAM: 32GB, GPU: RTX 3060 12GB, Độ phân giải: 4K, Lưu trữ: 1TB SSD, Kết nối: 500Mbps" }
         };
-        const defaultCodes = [{ code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 }];
+        const defaultCodes = [
+            { code: "CODE15K", uses: 0, maxUses: 5, reward: 15000 },
+            { code: "CODE50K", uses: 0, maxUses: 1000, reward: 50000 }
+        ];
 
         // Global State
         let users = defaultUsers;
         let plans = defaultPlans;
         let codes = defaultCodes;
         let isLoggedIn = false;
-        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
+        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
 
         // DOM Elements
         const authLinks = document.getElementById('authLinks');
@@ -1051,6 +1073,25 @@
                 userInfo.style.display = 'none';
                 balanceDisplay.textContent = 'Số dư: 0 VNĐ';
             }
+            updatePurchaseButtons();
+        }
+
+        // Update Purchase Buttons
+        function updatePurchaseButtons() {
+            const plansKeys = ['monthly1', 'monthly2', 'permanent'];
+            plansKeys.forEach(key => {
+                const btn = document.getElementById(`buy${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                const insuff = document.getElementById(`insufficient${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                if (btn && insuff) {
+                    if (!isLoggedIn || userData.balance >= plans[key].price) {
+                        btn.style.display = 'block';
+                        insuff.style.display = 'none';
+                    } else {
+                        btn.style.display = 'none';
+                        insuff.style.display = 'block';
+                    }
+                }
+            });
         }
 
         // Redeem Code
@@ -1080,10 +1121,13 @@
                     const codeObj = codes.find(c => c.code === code);
                     if (!codeObj) throw new Error('Mã code không hợp lệ!');
                     if (codeObj.uses >= codeObj.maxUses) throw new Error('Mã code đã hết lượt sử dụng!');
-                    userData.balance += codeObj.reward;
                     const userIndex = users.findIndex(u => u.playerId === userData.playerId);
                     if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
+                    if (users[userIndex].usedCodes.includes(code)) throw new Error('Bạn đã sử dụng mã code này rồi!');
+                    userData.balance += codeObj.reward;
+                    userData.usedCodes.push(code);
                     users[userIndex].balance = userData.balance;
+                    users[userIndex].usedCodes = userData.usedCodes;
                     codeObj.uses += 1;
                     if (codeObj.uses >= codeObj.maxUses) codes = codes.filter(c => c.code !== code);
                     await saveData();
@@ -1154,7 +1198,7 @@
         // Logout
         function logout() {
             isLoggedIn = false;
-            userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
+            userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userData');
             saveData();
@@ -1167,7 +1211,7 @@
             try {
                 await loadData();
                 isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null };
+                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
                 updateUserInterface();
 
                 const gameImages = document.querySelectorAll('.game-card img');
@@ -1298,7 +1342,14 @@
                 const hashedPassword = await hashPassword(password, user.salt);
                 if (hashedPassword !== user.password) throw new Error('Mật khẩu không đúng!');
                 isLoggedIn = true;
-                userData = { username: user.username, email: user.email, playerId: user.playerId, balance: user.balance, purchasedPlan: user.purchasedPlan || null };
+                userData = { 
+                    username: user.username, 
+                    email: user.email, 
+                    playerId: user.playerId, 
+                    balance: user.balance, 
+                    purchasedPlan: user.purchasedPlan || null,
+                    usedCodes: user.usedCodes || []
+                };
                 await saveData();
                 loginModal.style.display = 'none';
                 updateUserInterface();
@@ -1376,10 +1427,26 @@
                 const salt = generateSalt();
                 const hashedPassword = await hashPassword(password, salt);
                 const playerId = generatePlayerId();
-                const newUser = { username, email, password: hashedPassword, salt, playerId, balance: 0, purchasedPlan: null };
+                const newUser = { 
+                    username, 
+                    email, 
+                    password: hashedPassword, 
+                    salt, 
+                    playerId, 
+                    balance: 0, 
+                    purchasedPlan: null,
+                    usedCodes: []
+                };
                 users.push(newUser);
                 isLoggedIn = true;
-                userData = { username, email, playerId, balance: 0, purchasedPlan: null };
+                userData = { 
+                    username, 
+                    email, 
+                    playerId, 
+                    balance: 0, 
+                    purchasedPlan: null,
+                    usedCodes: []
+                };
                 await saveData();
                 if (registerSuccess) {
                     registerSuccess.style.display = 'block';
@@ -1408,4 +1475,3 @@
     </script>
 </body>
 </html>
-```
