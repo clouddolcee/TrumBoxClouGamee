@@ -1,1479 +1,359 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cloud Game PC - Chơi Game Mượt Mà</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            background-size: 200% 200%;
-            animation: gradientAnimation 15s ease infinite;
-            color: #e5e5e5;
-            line-height: 1.6;
-        }
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        header {
-            background: #0f0f1c;
-            color: #e5e5e5;
-            text-align: center;
-            padding: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-        }
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        header p {
-            font-size: 1rem;
-            color: #a0a0b0;
-        }
-        nav {
-            background: #0f0f1c;
-            padding: 0.8rem 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-        }
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .hamburger {
-            display: none;
-            font-size: 1.8rem;
-            color: #e5e5e5;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .hamburger:hover {
-            color: #ff2e63;
-        }
-        .menu {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .menu a {
-            color: #e5e5e5;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: color 0.3s, transform 0.3s;
-        }
-        .menu a:hover {
-            color: #ff2e63;
-            transform: translateY(-2px);
-        }
-        .wallet {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-        .wallet a {
-            color: #e5e5e5;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        .wallet a:hover {
-            color: #ff2e63;
-        }
-        .wallet .balance {
-            background: #252a34;
-            color: #e5e5e5;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 0 10px rgba(8, 217, 214, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .wallet .balance:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(8, 217, 214, 0.5);
-        }
-        .wallet .topup-button {
-            background: linear-gradient(45deg, #ff2e63, #08d9d6);
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .wallet .topup-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 46, 99, 0.7);
-        }
-        .wallet .logout {
-            background: #252a34;
-            color: #e5e5e5;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .wallet .logout:hover {
-            background: #ff2e63;
-            transform: scale(1.05);
-        }
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 1.5rem auto;
-            padding: 0 0.5rem;
-        }
-        .section {
-            background: #252a34;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            border: 1px solid #3a3f4a;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in-out;
-            transition: box-shadow 0.3s;
-        }
-        .section:hover {
-            box-shadow: 0 0 20px rgba(8, 217, 214, 0.3);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .section h2 {
-            color: #e5e5e5;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.7rem;
-            text-transform: uppercase;
-        }
-        .section p {
-            font-size: 0.9rem;
-            color: #a0a0b0;
-        }
-        .section label {
-            display: block;
-            margin: 0.5rem 0 0.3rem;
-            color: #a0a0b0;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .section input {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 0.7rem;
-            border: 1px solid #3a3f4a;
-            border-radius: 10px;
-            background: #1a1a2e;
-            color: #e5e5e5;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-        .section input:focus {
-            border-color: #08d9d6;
-            outline: none;
-        }
-        .section button {
-            background: linear-gradient(45deg, #ff2e63, #08d9d6);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: pulse 2s infinite;
-        }
-        .section button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 46, 99, 0.7);
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-        .section a.support-link {
-            display: inline-block;
-            background: #252a34;
-            color: #e5e5e5;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .section a.support-link:hover {
-            background: #ff2e63;
-            transform: scale(1.05);
-        }
-        .pricing {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding: 0.7rem 0;
-            scrollbar-width: thin;
-            scrollbar-color: #08d9d6 #252a34;
-        }
-        .pricing::-webkit-scrollbar {
-            height: 8px;
-        }
-        .pricing::-webkit-scrollbar-track {
-            background: #252a34;
-        }
-        .pricing::-webkit-scrollbar-thumb {
-            background: #08d9d6;
-            border-radius: 4px;
-        }
-        .plan {
-            flex: 0 0 280px;
-            background: #252a34;
-            padding: 1.2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid #3a3f4a;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .plan:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 20px rgba(8, 217, 214, 0.5);
-        }
-        .plan img.pc-icon {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            margin: 0.7rem auto;
-            display: block;
-            filter: drop-shadow(0 0 10px rgba(8, 217, 214, 0.3));
-        }
-        .plan h3 {
-            font-size: 1.2rem;
-            color: #e5e5e5;
-            font-weight: 600;
-            margin-bottom: 0.7rem;
-        }
-        .plan .price {
-            font-size: 1.4rem;
-            color: #08d9d6;
-            font-weight: 700;
-            margin: 0.7rem 0;
-        }
-        .plan ul {
-            list-style: none;
-            font-size: 0.9rem;
-            color: #a0a0b0;
-            margin-bottom: 0.7rem;
-            text-align: left;
-        }
-        .plan ul li {
-            margin-bottom: 0.4rem;
-        }
-        .plan button {
-            width: 100%;
-            max-width: 200px;
-        }
-        .plan p.insufficient {
-            color: #ff2e63;
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-        .virtual-pc-img {
-            flex: 0 0 280px;
-            background: #252a34;
-            padding: 1.2rem;
-            border-radius: 15px;
-            border: 1px solid #3a3f4a;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .virtual-pc-img:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 20px rgba(8, 217, 214, 0.5);
-        }
-        .virtual-pc-img img {
-            width: 100%;
-            max-width: 240px;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            filter: drop-shadow(0 0 10px rgba(8, 217, 214, 0.3));
-        }
-        .games {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            padding: 0.7rem 0;
-            scrollbar-width: thin;
-            scrollbar-color: #08d9d6 #252a34;
-        }
-        .games::-webkit-scrollbar {
-            height: 8px;
-        }
-        .games::-webkit-scrollbar-track {
-            background: #252a34;
-        }
-        .games::-webkit-scrollbar-thumb {
-            background: #08d9d6;
-            border-radius: 4px;
-        }
-        .game-card {
-            flex: 0 0 220px;
-            background: #252a34;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #3a3f4a;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .game-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 20px rgba(255, 46, 99, 0.5);
-        }
-        .game-card img {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            display: block;
-            background: #1a1a2e;
-            transition: transform 0.3s;
-        }
-        .game-card img:hover {
-            transform: scale(1.05);
-        }
-        .game-card img.error {
-            background: #1a1a2e;
-        }
-        .game-card h3 {
-            font-size: 1.1rem;
-            color: #e5e5e5;
-            font-weight: 600;
-            margin: 0.7rem 0;
-        }
-        .game-card p {
-            font-size: 0.85rem;
-            color: #a0a0b0;
-            padding: 0 0.7rem;
-        }
-        .game-card button {
-            margin: 0.7rem 0;
-            width: 90%;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 30, 0.9);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #252a34;
-            padding: 1.8rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            border: 1px solid #3a3f4a;
-            box-shadow: 0 0 20px rgba(8, 217, 214, 0.5);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        .modal-content h3 {
-            color: #e5e5e5;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-        }
-        .modal-content .close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #e5e5e5;
-            transition: color 0.3s;
-        }
-        .modal-content .close:hover {
-            color: #ff2e63;
-        }
-        .modal-content label {
-            display: block;
-            margin: 0.5rem 0 0.3rem;
-            color: #a0a0b0;
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .modal-content input,
-        .modal-content select {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 0.7rem;
-            border: 1px solid #3a3f4a;
-            border-radius: 10px;
-            background: #1a1a2e;
-            color: #e5e5e5;
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-        .modal-content input:focus,
-        .modal-content select:focus {
-            border-color: #08d9d6;
-            outline: none;
-        }
-        .modal-content button {
-            width: 100%;
-            animation: pulse 2s infinite;
-        }
-        .modal-content img.qr-code {
-            max-width: 160px;
-            margin: 0.7rem auto;
-            display: block;
-            border: 2px solid #3a3f4a;
-            border-radius: 10px;
-        }
-        .modal-content p.note {
-            font-size: 0.85rem;
-            color: #a0a0b0;
-            text-align: left;
-        }
-        .modal-content p.error,
-        .modal-content p.success {
-            font-size: 0.9rem;
-            margin: 0.7rem 0;
-            display: none;
-        }
-        .modal-content p.error {
-            color: #ff2e63;
-        }
-        .modal-content p.success {
-            color: #08d9d6;
-        }
-        footer {
-            background: #0f0f1c;
-            color: #a0a0b0;
-            text-align: center;
-            padding: 1.2rem;
-            font-size: 0.9rem;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.7);
-        }
-        .loading-spinner {
-            display: none;
-            border: 4px solid #e5e5e5;
-            border-top: 4px solid #08d9d6;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            animation: spin 1s linear infinite;
-            margin: 0.7rem auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-            header p {
-                font-size: 0.9rem;
-            }
-            .hamburger {
-                display: block;
-            }
-            .menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                background: #0f0f1c;
-                width: 100%;
-                padding: 1.2rem;
-                border: 1px solid #3a3f4a;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-            }
-            .menu.active {
-                display: flex;
-            }
-            .menu a {
-                padding: 0.7rem 0;
-                font-size: 1.1rem;
-            }
-            .wallet .balance {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-            .wallet .topup-button {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.9rem;
-            }
-            .wallet .logout {
-                padding: 0.4rem 0.7rem;
-                font-size: 0.8rem;
-            }
-            .container {
-                width: 98%;
-                padding: 0 0.7rem;
-            }
-            .section {
-                padding: 1.2rem;
-            }
-            .section h2 {
-                font-size: 1.4rem;
-            }
-            .section button {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            .games {
-                gap: 1.2rem;
-                padding: 0.7rem 0;
-            }
-            .game-card {
-                flex: 0 0 200px;
-                max-width: 200px;
-            }
-            .game-card img {
-                height: 120px;
-            }
-            .game-card h3 {
-                font-size: 1rem;
-            }
-            .game-card p {
-                font-size: 0.8rem;
-            }
-            .game-card button {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            .pricing {
-                gap: 1.2rem;
-                padding: 0.7rem 0;
-            }
-            .plan {
-                flex: 0 0 260px;
-                max-width: 260px;
-            }
-            .plan img.pc-icon {
-                width: 80px;
-                height: 80px;
-            }
-            .virtual-pc-img {
-                flex: 0 0 260px;
-                max-width: 260px;
-            }
-            .virtual-pc-img img {
-                max-width: 220px;
-            }
-            .modal-content {
-                width: 95%;
-                max-width: 360px;
-                padding: 1.5rem;
-            }
-            .modal-content h3 {
-                font-size: 1.4rem;
-            }
-            .modal-content input,
-            .modal-content select {
-                padding: 0.7rem;
-                font-size: 0.9rem;
-            }
-            .modal-content button {
-                padding: 0.8rem;
-                font-size: 0.9rem;
-            }
-        }
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.6rem;
-            }
-            header p {
-                font-size: 0.85rem;
-            }
-            .wallet .balance {
-                font-size: 0.85rem;
-                padding: 0.3rem 0.7rem;
-            }
-            .wallet .topup-button {
-                font-size: 0.85rem;
-                padding: 0.3rem 0.8rem;
-            }
-            .wallet .logout {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.75rem;
-            }
-            .game-card {
-                flex: 0 0 180px;
-                max-width: 180px;
-            }
-            .game-card img {
-                height: 110px;
-            }
-            .plan {
-                flex: 0 0 240px;
-                max-width: 240px;
-            }
-            .plan img.pc-icon {
-                width: 70px;
-                height: 70px;
-            }
-            .virtual-pc-img {
-                flex: 0 0 240px;
-                max-width: 240px;
-            }
-            .virtual-pc-img img {
-                max-width: 200px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☁ CloudGame V5</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#040612; --bg2:#0a1220; --card:#0f1726;
+  --accent:#06b6d4; --accent2:#8b5cf6; --text:#e6eef8;
+  --warn:#f87171;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Poppins",sans-serif;background:linear-gradient(130deg,var(--bg1),var(--bg2));color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(6,10,20,0.7);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.02);z-index:10}
+.logo{font-weight:700;font-size:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-right{display:flex;align-items:center;gap:8px;}
+.header-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.menu-btn{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:10px;font-size:13px;cursor:pointer}
+.menu-link{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:10px;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--card);padding:6px 10px;border-radius:12px}
+.user-pill img{width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,0.06);object-fit:cover}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;padding:8px 12px;border-radius:12px;color:#000;font-weight:700;cursor:pointer;font-size:14px;transition:0.2s}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04)}
+.btn:disabled{opacity:0.6;cursor:not-allowed}
+.container{max-width:480px;margin:16px auto;padding:0 12px;flex:1;width:100%}
+.package{background:linear-gradient(180deg, rgba(6,182,212,0.05), rgba(139,92,246,0.05));border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:20px;text-align:center;box-shadow:0 8px 30px rgba(11,22,40,0.5);margin-bottom:16px;}
+.package h3{color:var(--accent);margin-bottom:6px;font-size:18px;font-weight:600}
+.package .price{font-size:22px;font-weight:700;margin-bottom:6px}
+.package p{color:#b6c7df;margin-bottom:12px;font-size:14px}
+.pkg-details{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;color:#b6c7df;text-align:left;font-size:13px;margin-top:10px}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:50;padding:10px;}
+.modal.show{display:flex}
+.modal-card{width:100%;max-width:420px;background:var(--card);padding:18px;border-radius:16px;box-shadow:0 18px 60px rgba(3,6,12,0.7)}
+.input{width:100%;padding:10px;border-radius:10px;border:none;background:#0b1624;color:var(--text);margin:8px 0;font-size:14px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:60px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;padding:10px 14px;border-radius:14px;font-weight:700;display:none;z-index:60;text-align:center;font-size:14px}
+.footer-note{padding:8px 16px;color:#92a6cc;font-size:13px;text-align:center}
+.small{font-size:13px;color:#9fb0d3}
+.warn-text{color:var(--warn);font-weight:700}
+@media (max-width:400px){.package h3{font-size:16px}.package .price{font-size:18px}}
+</style>
 </head>
 <body>
-    <header>
-        <h1>Cloud Game PC</h1>
-        <p>Chơi game mượt mà trên mọi thiết bị!</p>
-    </header>
-    <nav>
-        <div class="nav-container">
-            <div class="hamburger">☰</div>
-            <div class="menu">
-                <a href="#home">Trang Chủ</a>
-                <a href="#games">Game</a>
-                <a href="#pricing">Gói Dịch Vụ</a>
-                <a href="#code">Nhập Code</a>
-                <a href="#support">Hỗ Trợ</a>
-            </div>
-            <div class="wallet">
-                <span class="balance">Số dư: 0 VNĐ</span>
-                <button class="topup-button" id="topupButton">Nạp Tiền</button>
-                <div id="authLinks">
-                    <a href="#" id="loginLink">Đăng Nhập</a>
-                    <a href="#" id="registerLink">Đăng Ký</a>
-                </div>
-                <div id="userInfo" style="display: none;">
-                    <span class="user-info" id="userDetails"></span>
-                    <button class="logout" id="logoutButton">Đăng Xuất</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="section" id="home">
-            <h2>Chào Mừng</h2>
-            <p>Chơi game PC yêu thích trên điện thoại với kết nối internet.</p>
-        </div>
-        <div class="section" id="games">
-            <h2>Thư Viện Game</h2>
-            <div class="games">
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/377160/header.jpg" alt="Fallout 4" loading="lazy" onerror="handleImageError(this)">
-                    <h3>Fallout 4</h3>
-                    <p>Khám phá thế giới hậu tận thế.</p>
-                    <button onclick="playGame('Fallout 4')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" alt="GTA 5" loading="lazy" onerror="handleImageError(this)">
-                    <h3>GTA 5</h3>
-                    <p>Thế giới mở đầy hành động.</p>
-                    <button onclick="playGame('GTA 5')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg" alt="PUBG" loading="lazy" onerror="handleImageError(this)">
-                    <h3>PUBG</h3>
-                    <p>Chiến đấu sinh tồn căng thẳng.</p>
-                    <button onclick="playGame('PUBG')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg" alt="Counter-Strike 2" loading="lazy" onerror="handleImageError(this)">
-                    <h3>Counter-Strike 2</h3>
-                    <p>Bắn súng chiến thuật đội nhóm.</p>
-                    <button onclick="playGame('Counter-Strike 2')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Minecraft-keyart_600x360.jpg" alt="Minecraft" loading="lazy" onerror="handleImageError(this)">
-                    <h3>Minecraft</h3>
-                    <p>Xây dựng thế giới sáng tạo.</p>
-                    <button onclick="playGame('Minecraft')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2669400/header.jpg" alt="EA Sports FC 25" loading="lazy" onerror="handleImageError(this)">
-                    <h3>EA Sports FC 25</h3>
-                    <p>Trải nghiệm bóng đá chân thực với FC IQ.</p>
-                    <button onclick="playGame('EA Sports FC 25')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2526180/header.jpg" alt="WWE 2K25" loading="lazy" onerror="handleImageError(this)">
-                    <h3>WWE 2K25</h3>
-                    <p>Đấu vật đỉnh cao với The Bloodline.</p>
-                    <button onclick="playGame('WWE 2K25')">Chơi Ngay</button>
-                </div>
-                <div class="game-card">
-                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/2358720/header.jpg" alt="Black Myth: Wukong" loading="lazy" onerror="handleImageError(this)">
-                    <h3>Black Myth: Wukong</h3>
-                    <p>Hành trình sử thi đậm chất thần thoại.</p>
-                    <button onclick="playGame('Black Myth: Wukong')">Chơi Ngay</button>
-                </div>
-            </div>
-        </div>
-        <div class="section" id="pricing">
-            <h2>Gói Dịch Vụ</h2>
-            <div class="pricing">
-                <div class="plan" id="monthly1Plan">
-                    <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói 1 Tháng</h3>
-                    <p class="price">119.000 VNĐ</p>
-                    <ul>
-                        <li>Thời gian: 1 tháng (không giới hạn giờ chơi)</li>
-                        <li>CPU: Intel i5 3.2GHz</li>
-                        <li>RAM: 8GB</li>
-                        <li>GPU: GTX 1650 4GB</li>
-                        <li>Độ phân giải: 1080p</li>
-                        <li>Lưu trữ: 256GB SSD</li>
-                        <li>Kết nối: 100Mbps</li>
-                    </ul>
-                    <button id="buyMonthly1" onclick="purchasePlan('monthly1')">Mua</button>
-                    <p id="insufficientMonthly1" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
-                </div>
-                <div class="plan" id="monthly2Plan">
-                    <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói 2 Tháng</h3>
-                    <p class="price">200.000 VNĐ</p>
-                    <ul>
-                        <li>Thời gian: 2 tháng (không giới hạn giờ chơi)</li>
-                        <li>CPU: Intel i7 4.0GHz</li>
-                        <li>RAM: 16GB</li>
-                        <li>GPU: GTX 1660 6GB</li>
-                        <li>Độ phân giải: 1440p</li>
-                        <li>Lưu trữ: 512GB SSD</li>
-                        <li>Kết nối: 200Mbps</li>
-                    </ul>
-                    <button id="buyMonthly2" onclick="purchasePlan('monthly2')">Mua</button>
-                    <p id="insufficientMonthly2" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
-                </div>
-                <div class="plan" id="permanentPlan">
-                    <img src="https://img.icons8.com/ios-filled/100/ffffff/desktop.png" alt="PC Icon" class="pc-icon">
-                    <h3>Gói Vĩnh Viễn</h3>
-                    <p class="price">500.000 VNĐ</p>
-                    <ul>
-                        <li>Thời gian: Vĩnh viễn (không giới hạn giờ chơi)</li>
-                        <li>CPU: Intel i9 5.0GHz</li>
-                        <li>RAM: 32GB</li>
-                        <li>GPU: RTX 3060 12GB</li>
-                        <li>Độ phân giải: 4K</li>
-                        <li>Lưu trữ: 1TB SSD</li>
-                        <li>Kết nối: 500Mbps</li>
-                    </ul>
-                    <button id="buyPermanent" onclick="purchasePlan('permanent')">Mua</button>
-                    <p id="insufficientPermanent" class="insufficient" style="display: none;">Chưa đủ số dư để mua gói này!</p>
-                </div>
-                <div class="virtual-pc-img">
-                    <img src="https://img.icons8.com/color/240/virtual-machine.png" alt="Virtual PC" loading="lazy" onerror="handleImageError(this)">
-                </div>
-            </div>
-        </div>
-        <div class="section" id="code">
-            <h2>Nhập Code</h2>
-            <p>Nhập mã để nhận thưởng!</p>
-            <label for="redeemCode">Mã Code</label>
-            <input type="text" id="redeemCode" placeholder="VD: CODEABC">
-            <button onclick="redeemCode()">Nhập Code</button>
-            <div class="loading-spinner" id="codeSpinner"></div>
-            <p class="success" id="codeSuccess" style="display: none;"></p>
-            <p class="error" id="codeError" style="display: none;"></p>
-        </div>
-        <div class="section" id="support">
-            <h2>Hỗ Trợ</h2>
-            <p>Liên hệ qua Zalo để được hỗ trợ!</p>
-            <a href="https://zalo.me/0355761396" class="support-link" target="_blank">Chat với Zalo</a>
-        </div>
+
+<header>
+  <div class="header-left">
+    <div class="logo">☁ CloudGame V5</div>
+    <button class="menu-btn" id="openHelp">Hướng dẫn nạp tiền</button>
+    <button class="menu-btn" id="openRentGuide">Hướng dẫn thuê máy</button>
+    <a class="menu-link" id="zaloLink" href="https://zalo.me/0355761396" target="_blank" rel="noopener">💬 Hỗ trợ Zalo</a>
+  </div>
+  <div class="header-right">
+    <div id="hdrGuest" style="display:flex;align-items:center;gap:6px">
+      <button class="btn ghost" id="openAuth">Đăng nhập / ĐK</button>
     </div>
-    <div class="modal" id="topupModal">
-        <div class="modal-content">
-            <span class="close" id="closeTopupModal">×</span>
-            <h3>Nạp Tiền</h3>
-            <form id="topupForm">
-                <label for="paymentMethod">Phương Thức Thanh Toán</label>
-                <select id="paymentMethod" name="paymentMethod" onchange="toggleForm()">
-                    <option value="bank">Ngân Hàng VietinBank</option>
-                    <option value="card">Thẻ Cào</option>
-                </select>
-                <div id="bankForm">
-                    <p>Quét mã QR để chuyển khoản.</p>
-                    <img src="https://i.imgur.com/4mmpR89.png" alt="QR Code VietinBank" class="qr-code">
-                    <p class="note">Tối thiểu 15.000 VNĐ.</p>
-                </div>
-                <div id="cardForm" style="display: none;">
-                    <label for="cardProvider">Nhà Mạng</label>
-                    <select id="cardProvider" name="cardProvider">
-                        <option value="viettel">Viettel</option>
-                        <option value="mobifone">Mobifone</option>
-                        <option value="vinaphone">Vinaphone</option>
-                    </select>
-                    <label for="cardAmount">Mệnh Giá (VNĐ)</label>
-                    <select id="cardAmount" name="cardAmount">
-                        <option value="10000">10.000</option>
-                        <option value="20000">20.000</option>
-                        <option value="50000">50.000</option>
-                        <option value="100000">100.000</option>
-                    </select>
-                    <label for="cardCode">Mã Thẻ</label>
-                    <input type="text" id="cardCode" name="cardCode" placeholder="Mã thẻ">
-                    <label for="cardSerial">Số Serial</label>
-                    <input type="text" id="cardSerial" name="cardSerial" placeholder="Số serial">
-                </div>
-                <button type="submit">Gửi Yêu Cầu</button>
-                <div class="loading-spinner" id="topupSpinner"></div>
-                <p class="success" id="topupSuccess" style="display: none;">Yêu cầu đã gửi!</p>
-                <p class="error" id="topupError" style="display: none;"></p>
-            </form>
-        </div>
+    <div id="hdrUser" class="user-pill" style="display:none">
+      <img id="hdrAvatar" src="https://i.pravatar.cc/100">
+      <div style="display:flex;flex-direction:column;align-items:flex-start">
+        <div id="hdrName">Khách</div>
+        <div class="small">💰 <span id="hdrBalance">0</span> đ</div>
+      </div>
+      <button class="btn" id="btnTopUp">Nạp</button>
+      <button class="btn ghost" id="btnLogout">Đăng xuất</button>
     </div>
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close" id="closeLoginModal">×</span>
-            <h3>Đăng Nhập</h3>
-            <form id="loginForm">
-                <p class="error" id="loginError" style="display: none;"></p>
-                <label for="loginEmail">Email</label>
-                <input type="email" id="loginEmail" name="loginEmail" placeholder="Email">
-                <label for="loginPassword">Mật Khẩu</label>
-                <input type="password" id="loginPassword" name="loginPassword" placeholder="Mật khẩu">
-                <button type="submit">Đăng Nhập</button>
-                <div class="loading-spinner" id="loginSpinner"></div>
-                <p>Chưa có tài khoản? <a href="#" id="showRegister">Đăng Ký</a></p>
-            </form>
-        </div>
+    <button class="btn ghost" id="btnAdminOpen" style="display:none">Admin</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="package" id="packageCard">
+    <h3 id="pkgTitle">Gói Thuê 7K / 1 giờ</h3>
+    <div class="price">7.000 đ</div>
+    <div class="pkg-details">
+      <div style="font-weight:600;margin-bottom:6px">Chi tiết cấu hình máy</div>
+      <div>• CPU: Intel Core i5 (4 cores) hoặc tương đương</div>
+      <div>• RAM: 8 GB</div>
+      <div>• GPU: NVIDIA GTX 1050 / tương đương</div>
+      <div>• Ổ cứng: SSD 50 GB</div>
+      <div>• Hệ điều hành: Windows 10</div>
     </div>
-    <div class="modal" id="registerModal">
-        <div class="modal-content">
-            <span class="close" id="closeRegisterModal">×</span>
-            <h3>Đăng Ký</h3>
-            <form id="registerForm">
-                <p class="error" id="registerError" style="display: none;"></p>
-                <p class="success" id="registerSuccess" style="display: none;">Đăng ký thành công!</p>
-                <label for="registerUsername">Tên Người Dùng</label>
-                <input type="text" id="registerUsername" name="registerUsername" placeholder="Tên người dùng">
-                <label for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" name="registerEmail" placeholder="Email">
-                <label for="registerPassword">Mật Khẩu</label>
-                <input type="password" id="registerPassword" name="registerPassword" placeholder="Mật khẩu">
-                <label for="confirmPassword">Xác Nhận Mật Khẩu</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu">
-                <button type="submit">Đăng Ký</button>
-                <div class="loading-spinner" id="registerSpinner"></div>
-                <p>Đã có tài khoản? <a href="#" id="showLogin">Đăng Nhập</a></p>
-            </form>
-        </div>
+    <p style="margin-top:12px;color:#9fb0d3">Chạy mượt các game nhẹ / mod, phù hợp thao tác chuột + bàn phím trên mobile.</p>
+    <button class="btn" id="buyPkg">Thuê ngay</button>
+    <div id="pkgStatus" class="small" style="margin-top:8px;height:18px"></div>
+  </div>
+</div>
+
+<div class="footer-note">© 2025 CloudGame — Demo V5 (Local)</div>
+
+<!-- Auth Modal -->
+<div class="modal" id="authModal">
+  <div class="modal-card">
+    <h3 id="authTitle">Đăng nhập</h3>
+    <input id="inpUser" class="input" placeholder="Tên tài khoản">
+    <input id="inpPass" class="input" type="password" placeholder="Mật khẩu">
+    <div class="row" style="margin-top:6px">
+      <button class="btn" id="authBtn">Đăng nhập</button>
+      <button class="btn ghost" id="switchReg">Đăng ký</button>
     </div>
-    <footer>
-        <p>© 2025 Cloud Game PC.</p>
-    </footer>
-    <script>
-        // Default Data
-        const defaultUsers = [
-            {
-                username: "Người Chơi 1",
-                email: "player1@example.com",
-                password: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-                salt: "1234567890abcdef",
-                playerId: 123456,
-                balance: 50000,
-                purchasedPlan: null,
-                usedCodes: []
-            },
-            {
-                username: "Admin Tom",
-                email: "tominh14@gmail.com",
-                password: "minh123",
-                salt: "admin_salt",
-                playerId: 999999,
-                balance: 9999000,
-                purchasedPlan: null,
-                usedCodes: []
-            }
-        ];
-        const defaultPlans = {
-            monthly1: { price: 119000, description: "Thời gian: 1 tháng (không giới hạn giờ chơi), CPU: Intel i5 3.2GHz, RAM: 8GB, GPU: GTX 1650 4GB, Độ phân giải: 1080p, Lưu trữ: 256GB SSD, Kết nối: 100Mbps" },
-            monthly2: { price: 200000, description: "Thời gian: 2 tháng (không giới hạn giờ chơi), CPU: Intel i7 4.0GHz, RAM: 16GB, GPU: GTX 1660 6GB, Độ phân giải: 1440p, Lưu trữ: 512GB SSD, Kết nối: 200Mbps" },
-            permanent: { price: 500000, description: "Thời gian: Vĩnh viễn (không giới hạn giờ chơi), CPU: Intel i9 5.0GHz, RAM: 32GB, GPU: RTX 3060 12GB, Độ phân giải: 4K, Lưu trữ: 1TB SSD, Kết nối: 500Mbps" }
-        };
-        const defaultCodes = [
-            { code: "CODEadmin", uses: 0, maxUses: 1, reward: 50000 },
-            { code: "CODE50K", uses: 0, maxUses: 1000, reward: 50000 }
-        ];
+  </div>
+</div>
 
-        // Global State
-        let users = defaultUsers;
-        let plans = defaultPlans;
-        let codes = defaultCodes;
-        let isLoggedIn = false;
-        let userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
+<!-- QR Modal -->
+<div class="modal" id="qrModal">
+  <div class="modal-card">
+    <h3>Nạp tiền bằng QR</h3>
+    <input id="topupAmount" class="input" placeholder="Số tiền nạp (≥15.000 đ)" type="number">
+    <div class="small warn-text" style="margin-top:4px">Lưu ý: nạp tối thiểu 15.000 đ mới cộng tiền vào tài khoản</div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn" id="confirmTopup">Xác nhận</button>
+      <button class="btn ghost" id="closeQR">Đóng</button>
+    </div>
+  </div>
+</div>
 
-        // DOM Elements
-        const authLinks = document.getElementById('authLinks');
-        const userInfo = document.getElementById('userInfo');
-        const userDetails = document.getElementById('userDetails');
-        const balanceDisplay = document.querySelector('.balance');
-        const logoutButton = document.getElementById('logoutButton');
+<!-- Help Modal -->
+<div class="modal" id="helpModal">
+  <div class="modal-card">
+    <h3>Hướng dẫn nạp tiền</h3>
+    <div class="small" style="margin-top:10px;line-height:1.4">
+      1️⃣ Mở VietinBank / ZaloPay.<br>
+      2️⃣ Nhập số tiền cần nạp (tối thiểu <b class="warn-text">15.000 đ</b>).<br>
+      3️⃣ Quét QR trên màn hình.<br>
+      4️⃣ Gửi & giữ mã tham chiếu.<br>
+      5️⃣ Số dư cập nhật sau khi xác nhận.
+    </div>
+    <div style="text-align:right;margin-top:10px">
+      <button class="btn ghost" id="closeHelp">Đóng</button>
+    </div>
+  </div>
+</div>
 
-        // Utility Functions
-        function generateSalt(length = 16) {
-            const array = new Uint8Array(length);
-            crypto.getRandomValues(array);
-            return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
-        }
+<!-- Rent Guide Modal -->
+<div class="modal" id="rentGuideModal">
+  <div class="modal-card">
+    <h3>Hướng dẫn thuê máy</h3>
+    <div class="small" style="margin-top:10px;line-height:1.4">
+      1️⃣ Đăng nhập / đăng ký tài khoản.<br>
+      2️⃣ Chọn gói thuê và nhấn "Thuê ngay".<br>
+      3️⃣ Trên desktop: mở cửa sổ Windows 10 Remote (iframe).<br>
+      4️⃣ Trên điện thoại: mở link Parsec để điều khiển PC từ xa.<br>
+      5️⃣ Thời gian thuê được tính từ khi thanh toán thành công.<br>
+      6️⃣ Hủy hoặc hết hạn sẽ tự động kết thúc phiên thuê.
+    </div>
+    <div style="text-align:right;margin-top:10px">
+      <button class="btn ghost" id="closeRentGuide">Đóng</button>
+    </div>
+  </div>
+</div>
 
-        async function hashPassword(password, salt) {
-            const saltedPassword = password + salt;
-            const msgBuffer = new TextEncoder().encode(saltedPassword);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
+<!-- Remote Windows 10 Modal -->
+<div class="modal" id="winModal">
+  <div class="modal-card" style="max-width:100%;max-height:100%;padding:0;background:#000;border-radius:8px;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(0,0,0,0.6);color:#fff;font-weight:600">
+      <span>Windows 10 Remote</span>
+      <div>
+        <button class="btn ghost" id="winFull">Full màn hình</button>
+        <button class="btn ghost" id="winClose">Đóng</button>
+      </div>
+    </div>
+    <iframe id="winFrame" src="about:blank" style="width:100%;height:calc(100vh - 44px);border:none;background:#000"></iframe>
+  </div>
+</div>
 
-        function generatePlayerId() {
-            return Math.floor(100000 + Math.random() * 900000);
-        }
+<!-- Admin Modal -->
+<div class="modal" id="adminModal">
+  <div class="modal-card" style="max-width:720px">
+    <h3>Admin Panel</h3>
+    <div class="row" style="flex-wrap:wrap;margin-top:6px">
+      <div style="flex:1">
+        <div class="small">Danh sách người dùng</div>
+        <div class="history" id="adminUsers" style="max-height:200px;overflow:auto"></div>
+      </div>
+      <div style="width:200px">
+        <div class="small">Chọn user</div>
+        <select id="adminSelect" class="input"></select>
+        <input id="adminAmount" class="input" placeholder="Số tiền cộng" type="number">
+        <div class="row" style="margin-top:4px">
+          <button class="btn" id="adminAddBal">Cộng tiền</button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:6px"><button class="btn ghost" id="adminClose">Đóng</button></div>
+  </div>
+</div>
 
-        function sanitizeInput(input) {
-            if (typeof input !== 'string') return '';
-            const div = document.createElement('div');
-            div.textContent = input;
-            return div.innerHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
+<div class="toast" id="toastBox"></div>
 
-        // Spinner Functions
-        function showSpinner(spinnerId) {
-            const spinner = document.getElementById(spinnerId);
-            if (spinner) spinner.style.display = 'block';
-        }
+<script>
+// ===== Data =====
+let store=JSON.parse(localStorage.getItem('cg_store')||'{}');
+if(!store.users) store.users={};
+if(!store.users['admin']) store.users['admin']={password:'admin',balance:0};
+let currentUser=localStorage.getItem('cg_current')||null;
 
-        function hideSpinner(spinnerId) {
-            const spinner = document.getElementById(spinnerId);
-            if (spinner) spinner.style.display = 'none';
-        }
+// ===== Elements =====
+const hdrGuest=document.getElementById('hdrGuest');
+const hdrUser=document.getElementById('hdrUser');
+const hdrName=document.getElementById('hdrName');
+const hdrBalance=document.getElementById('hdrBalance');
+const btnAdminOpen=document.getElementById('btnAdminOpen');
+const toastBox=document.getElementById('toastBox');
+const adminUsers=document.getElementById('adminUsers');
+const adminSelect=document.getElementById('adminSelect');
+const pkgStatus=document.getElementById('pkgStatus');
 
-        // Notification Function
-        function showNotification(message, type = 'success') {
-            const div = document.createElement('div');
-            div.className = `notification ${type}`;
-            div.textContent = message;
-            div.style.position = 'fixed';
-            div.style.top = '20px';
-            div.style.right = '20px';
-            div.style.padding = '12px 20px';
-            div.style.background = type === 'success' ? '#08d9d6' : '#ff2e63';
-            div.style.color = '#fff';
-            div.style.borderRadius = '8px';
-            div.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.5)';
-            div.style.zIndex = '10000';
-            div.style.animation = 'slideIn 0.5s ease-in-out';
-            document.body.appendChild(div);
-            setTimeout(() => {
-                div.style.animation = 'slideOut 0.5s ease-in-out';
-                setTimeout(() => div.remove(), 500);
-            }, 3000);
-        }
+// ===== Helpers =====
+function saveStore(){localStorage.setItem('cg_store',JSON.stringify(store))}
+function toast(msg,ms=1800){toastBox.textContent=msg;toastBox.style.display='block';setTimeout(()=>toastBox.style.display='none',ms)}
+function format(n){return Number(n).toLocaleString()}
 
-        // Notification Animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+// ===== Auth =====
+document.getElementById('openAuth').onclick=()=>authModal.classList.add('show');
+document.getElementById('switchReg').onclick=()=>{
+  const btn=document.getElementById('authBtn');
+  const title=document.getElementById('authTitle');
+  if(btn.dataset.mode==='register'){btn.dataset.mode='login';title.textContent='Đăng nhập';btn.textContent='Đăng nhập'}
+  else{btn.dataset.mode='register';title.textContent='Đăng ký';btn.textContent='Đăng ký'}
+};
+document.getElementById('authBtn').onclick=()=>{
+  const user=document.getElementById('inpUser').value.trim();
+  const pass=document.getElementById('inpPass').value.trim();
+  if(!user||!pass){toast('Nhập đủ thông tin');return;}
+  const mode=document.getElementById('authBtn').dataset.mode||'login';
+  if(mode==='register'){
+    if(store.users[user]){toast('Tài khoản tồn tại');return;}
+    store.users[user]={password:pass,balance:0}; // Không cộng 50k
+    saveStore();toast('Đăng ký thành công');
+    document.getElementById('authBtn').dataset.mode='login';document.getElementById('authTitle').textContent='Đăng nhập';document.getElementById('authBtn').textContent='Đăng nhập';
+    return;
+  }else{
+    const u=store.users[user];if(!u||u.password!==pass){toast('Sai tài khoản hoặc mật khẩu');return;}
+    currentUser=user;localStorage.setItem('cg_current',currentUser);authModal.classList.remove('show');toast('Đăng nhập thành công');renderForUser();
+  }
+};
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+document.getElementById('btnLogout').onclick=()=>{currentUser=null;localStorage.removeItem('cg_current');toast('Đã đăng xuất');renderForUser()};
 
-        // Image Error Handling
-        function handleImageError(img) {
-            console.warn(`Không thể tải hình ảnh: ${img.src}`);
-            const primaryPlaceholder = `https://placehold.co/220x130?text=${encodeURIComponent(img.alt)}`;
-            img.src = primaryPlaceholder;
-            img.classList.add('error');
-            img.onerror = () => {
-                console.warn(`Không thể tải placeholder chính: ${primaryPlaceholder}`);
-                img.src = 'https://via.placeholder.com/220x130?text=Image+Not+Found';
-                showNotification(`Không tải được hình ảnh cho ${img.alt}`, 'error');
-                img.onerror = null;
-            };
-        }
+// ===== Render =====
+function renderForUser(){
+  if(!currentUser){hdrGuest.style.display='flex';hdrUser.style.display='none';btnAdminOpen.style.display='none'} 
+  else{
+    const u=store.users[currentUser];
+    hdrGuest.style.display='none';hdrUser.style.display='flex';
+    hdrName.textContent=currentUser;hdrBalance.textContent=format(u.balance);
+    btnAdminOpen.style.display=(currentUser==='admin')?'inline-block':'none';
+  }
+}
 
-        // Data Management
-        async function saveData() {
-            try {
-                const data = { users, plans, codes, userData, isLoggedIn };
-                localStorage.setItem('appData', JSON.stringify(data));
-                localStorage.setItem('userData', JSON.stringify(userData));
-                localStorage.setItem('isLoggedIn', isLoggedIn.toString());
-            } catch (error) {
-                showNotification('Lỗi khi lưu dữ liệu!', 'error');
-            }
-        }
+// ===== Thuê & Chơi =====
+function getPkgStatus(){
+  const key='cg_pkg_'+currentUser;
+  const data=JSON.parse(localStorage.getItem(key)||'{}');
+  if(!data.expire) return null;
+  const remain=data.expire - Date.now();
+  return remain>0?remain:0;
+}
+function updatePkgBtn(){
+  const remain=getPkgStatus();
+  const btn=document.getElementById('buyPkg');
+  const status=pkgStatus;
+  if(!currentUser){btn.textContent='Thuê ngay';btn.disabled=false; status.textContent=''; return;}
+  if(remain>0){
+    btn.textContent='Chơi ngay';
+    btn.disabled=false;
+    const min=Math.floor(remain/60000);
+    const sec=Math.floor((remain%60000)/1000);
+    status.textContent=`Thời gian còn lại: ${min} phút ${sec} giây`;
+  } else{
+    btn.textContent='Thuê ngay';
+    btn.disabled=false;
+    status.textContent='';
+  }
+}
+setInterval(updatePkgBtn,1000);
 
-        async function loadData() {
-            try {
-                const storedData = localStorage.getItem('appData');
-                if (!storedData) return;
-                const data = JSON.parse(storedData);
-                users = data.users || defaultUsers;
-                plans = data.plans || defaultPlans;
-                codes = data.codes || defaultCodes;
-            } catch (error) {
-                showNotification('Lỗi khi tải dữ liệu!', 'error');
-            }
-        }
+document.getElementById('buyPkg').onclick=()=>{
+  if(!currentUser){toast('Đăng nhập để thuê gói');authModal.classList.add('show');return;}
+  const remain=getPkgStatus();
+  const btn=document.getElementById('buyPkg');
+  if(remain>0){
+    openWinRemote();
+    return;
+  }
+  btn.disabled=true; pkgStatus.textContent='Đang xử lý...';
+  setTimeout(()=>{
+    const u=store.users[currentUser];
+    if(u.balance<7000){toast('Số dư không đủ');pkgStatus.textContent='';btn.disabled=false;return;}
+    u.balance-=7000;saveStore();renderForUser();
+    const key='cg_pkg_'+currentUser;
+    localStorage.setItem(key,JSON.stringify({expire:Date.now()+3600*1000}));
+    toast('Thuê gói thành công');
+    pkgStatus.textContent='Thời gian còn lại: 60 phút 0 giây';
+    btn.textContent='Chơi ngay'; btn.disabled=false;
+    openWinRemote();
+  },1200);
+}
 
-        // Update User Interface
-        function updateUserInterface() {
-            if (!authLinks || !userInfo || !userDetails || !balanceDisplay) return;
-            if (isLoggedIn && userData.playerId) {
-                authLinks.style.display = 'none';
-                userInfo.style.display = 'flex';
-                userDetails.textContent = `${sanitizeInput(userData.username)} (ID: ${userData.playerId})`;
-                balanceDisplay.textContent = `Số dư: ${userData.balance.toLocaleString('vi-VN')} VNĐ`;
-            } else {
-                authLinks.style.display = 'flex';
-                userInfo.style.display = 'none';
-                balanceDisplay.textContent = 'Số dư: 0 VNĐ';
-            }
-            updatePurchaseButtons();
-        }
+// ===== QR Topup =====
+document.getElementById('btnTopUp').onclick=openQR;
+document.getElementById('closeQR').onclick=()=>qrModal.classList.remove('show');
+document.getElementById('confirmTopup').onclick=()=>{
+  const amt=Number(document.getElementById('topupAmount').value||0);
+  if(!currentUser){toast('Đăng nhập mới nạp được');authModal.classList.add('show');return;}
+  if(amt<15000){toast('Nạp tối thiểu 15.000 đ');return;}
+  store.users[currentUser].balance+=amt;saveStore();renderForUser();toast('Nạp tiền thành công');qrModal.classList.remove('show');
+}
+function openQR(){qrModal.classList.add('show');document.getElementById('topupAmount').value='';}
 
-        // Update Purchase Buttons
-        function updatePurchaseButtons() {
-            const plansKeys = ['monthly1', 'monthly2', 'permanent'];
-            plansKeys.forEach(key => {
-                const btn = document.getElementById(`buy${key.charAt(0).toUpperCase() + key.slice(1)}`);
-                const insuff = document.getElementById(`insufficient${key.charAt(0).toUpperCase() + key.slice(1)}`);
-                if (btn && insuff) {
-                    if (!isLoggedIn || userData.balance >= plans[key].price) {
-                        btn.style.display = 'block';
-                        insuff.style.display = 'none';
-                    } else {
-                        btn.style.display = 'none';
-                        insuff.style.display = 'block';
-                    }
-                }
-            });
-        }
+// ===== Help / Rent Guide =====
+document.getElementById('openHelp').onclick=()=>helpModal.classList.add('show');
+document.getElementById('closeHelp').onclick=()=>helpModal.classList.remove('show');
+document.getElementById('openRentGuide').onclick=()=>rentGuideModal.classList.add('show');
+document.getElementById('closeRentGuide').onclick=()=>rentGuideModal.classList.remove('show');
 
-        // Redeem Code
-        function redeemCode() {
-            if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập!', 'error');
-                return;
-            }
-            const redeemCodeInput = document.getElementById('redeemCode');
-            const codeSuccess = document.getElementById('codeSuccess');
-            const codeError = document.getElementById('codeError');
-            const codeSpinner = document.getElementById('codeSpinner');
-            const redeemButton = document.querySelector('#code button');
-            if (!redeemCodeInput || !codeSuccess || !codeError || !codeSpinner || !redeemButton) return;
-            const code = sanitizeInput(redeemCodeInput.value.trim().toUpperCase());
-            if (!code || !/^[A-Z0-9_]+$/.test(code)) {
-                codeError.textContent = 'Mã code không hợp lệ!';
-                codeError.style.display = 'block';
-                setTimeout(() => codeError.style.display = 'none', 3000);
-                return;
-            }
-            showSpinner('codeSpinner');
-            redeemButton.disabled = true;
-            setTimeout(async () => {
-                try {
-                    await loadData();
-                    const codeObj = codes.find(c => c.code === code);
-                    if (!codeObj) throw new Error('Mã code không hợp lệ!');
-                    if (codeObj.uses >= codeObj.maxUses) throw new Error('Mã code đã hết lượt sử dụng!');
-                    const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                    if (userIndex === -1) throw new Error('Không tìm thấy người dùng!');
-                    if (users[userIndex].usedCodes.includes(code)) throw new Error('Bạn đã sử dụng mã code này rồi!');
-                    userData.balance += codeObj.reward;
-                    userData.usedCodes.push(code);
-                    users[userIndex].balance = userData.balance;
-                    users[userIndex].usedCodes = userData.usedCodes;
-                    codeObj.uses += 1;
-                    if (codeObj.uses >= codeObj.maxUses) codes = codes.filter(c => c.code !== code);
-                    await saveData();
-                    codeSuccess.textContent = `Nhận ${codeObj.reward.toLocaleString('vi-VN')} VNĐ!`;
-                    codeSuccess.style.display = 'block';
-                    codeError.style.display = 'none';
-                    redeemCodeInput.value = '';
-                    updateUserInterface();
-                    setTimeout(() => codeSuccess.style.display = 'none', 3000);
-                } catch (error) {
-                    codeError.textContent = error.message;
-                    codeError.style.display = 'block';
-                    setTimeout(() => codeError.style.display = 'none', 3000);
-                } finally {
-                    hideSpinner('codeSpinner');
-                    redeemButton.disabled = false;
-                }
-            }, 1000);
-        }
+// ===== Remote Win10 =====
+function openWinRemote(){
+  const urlDesktop='https://example.com/remote-win10';
+  const urlMobile='https://parsec.gg/g/317vNH5xkJrtcEZh6wpIi7yU2nI/b8988a11';
+  const isMobile= /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if(isMobile){window.open(urlMobile,'_blank');return;}
+  const winModal=document.getElementById('winModal');
+  const winFrame=document.getElementById('winFrame');
+  winFrame.src=urlDesktop;
+  winModal.classList.add('show');
+}
+document.getElementById('winFull').onclick=()=>{
+  const el=document.getElementById('winFrame');
+  if(el.requestFullscreen){el.requestFullscreen();}
+  else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen();}
+  else if(el.msRequestFullscreen){el.msRequestFullscreen();}
+}
+document.getElementById('winClose').onclick=()=>document.getElementById('winModal').classList.remove('show');
 
-        // Purchase Plan
-        async function purchasePlan(planName) {
-            if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập!', 'error');
-                return;
-            }
-            try {
-                await loadData();
-                const plan = plans[planName];
-                if (!plan) {
-                    showNotification('Gói dịch vụ không tồn tại!', 'error');
-                    return;
-                }
-                if (userData.balance < plan.price) {
-                    showNotification('Chưa đủ số dư để mua gói này!', 'error');
-                    return;
-                }
-                userData.balance -= plan.price;
-                userData.purchasedPlan = planName;
-                const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                if (userIndex === -1) {
-                    showNotification('Không tìm thấy người dùng!', 'error');
-                    return;
-                }
-                users[userIndex].balance = userData.balance;
-                users[userIndex].purchasedPlan = planName;
-                await saveData();
-                updateUserInterface();
-                showNotification(`Mua gói ${planName === 'monthly1' ? '1 Tháng' : planName === 'monthly2' ? '2 Tháng' : 'Vĩnh Viễn'} thành công!`, 'success');
-            } catch (error) {
-                showNotification('Đã xảy ra lỗi khi mua gói!', 'error');
-            }
-        }
+// ===== Admin =====
+document.getElementById('btnAdminOpen').onclick=()=>{populateAdmin();adminModal.classList.add('show')};
+document.getElementById('adminClose').onclick=()=>adminModal.classList.remove('show');
+function populateAdmin(){
+  adminUsers.innerHTML='';adminSelect.innerHTML='';
+  Object.keys(store.users).forEach(u=>{
+    const row=document.createElement('div');row.className='history-item';
+    row.innerHTML=`<b>${u}</b> — ${format(store.users[u].balance)} đ`;
+    adminUsers.appendChild(row);
+    const opt=document.createElement('option');opt.value=u;opt.textContent=u;adminSelect.appendChild(opt);
+  });
+}
+document.getElementById('adminAddBal').onclick=()=>{
+  const u=adminSelect.value;const v=Number(document.getElementById('adminAmount').value||0);
+  if(!u||!v){toast('Chọn user và số tiền');return;}
+  store.users[u].balance+=v;saveStore();populateAdmin();renderForUser();toast('Cập nhật thành công');
+};
 
-        // Play Game
-        function playGame(gameName) {
-            if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập để chơi game!', 'error');
-                return;
-            }
-            if (!userData.purchasedPlan) {
-                showNotification('Phải mua gói dịch vụ trước khi chơi!', 'error');
-                return;
-            }
-            showNotification(`Bắt đầu chơi ${gameName}!`, 'success');
-        }
-
-        // Logout
-        function logout() {
-            isLoggedIn = false;
-            userData = { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('userData');
-            saveData();
-            updateUserInterface();
-            showNotification('Đăng xuất thành công!', 'success');
-        }
-
-        // Initialize
-        async function initialize() {
-            try {
-                await loadData();
-                isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-                userData = JSON.parse(localStorage.getItem('userData')) || { username: "", email: "", playerId: 0, balance: 0, purchasedPlan: null, usedCodes: [] };
-                updateUserInterface();
-
-                const gameImages = document.querySelectorAll('.game-card img');
-                gameImages.forEach(img => {
-                    img.addEventListener('load', () => {
-                        console.log(`Hình ảnh đã tải thành công: ${img.src}`);
-                        img.classList.remove('error');
-                    });
-                });
-            } catch (error) {
-                console.error('Lỗi khởi tạo:', error);
-                showNotification('Đã xảy ra lỗi khi khởi tạo trang!', 'error');
-            }
-        }
-
-        initialize();
-
-        // Event Listeners
-        logoutButton?.addEventListener('click', logout);
-
-        // Topup Modal
-        const topupModal = document.getElementById('topupModal');
-        const topupButton = document.getElementById('topupButton');
-        const closeTopupModal = document.getElementById('closeTopupModal');
-        const topupForm = document.getElementById('topupForm');
-        const paymentMethodSelect = document.getElementById('paymentMethod');
-
-        function toggleForm() {
-            const paymentMethod = paymentMethodSelect?.value;
-            const bankForm = document.getElementById('bankForm');
-            const cardForm = document.getElementById('cardForm');
-            if (bankForm && cardForm) {
-                bankForm.style.display = paymentMethod === 'bank' ? 'block' : 'none';
-                cardForm.style.display = paymentMethod === 'card' ? 'block' : 'none';
-            }
-        }
-
-        topupButton?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (topupModal) topupModal.style.display = 'flex';
-        });
-
-        closeTopupModal?.addEventListener('click', () => {
-            if (topupModal) topupModal.style.display = 'none';
-        });
-
-        topupModal?.addEventListener('click', (e) => {
-            if (e.target === topupModal) topupModal.style.display = 'none';
-        });
-
-        topupForm?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!isLoggedIn) {
-                showNotification('Vui lòng đăng nhập!', 'error');
-                return;
-            }
-            const paymentMethod = paymentMethodSelect?.value;
-            const topupSuccess = document.getElementById('topupSuccess');
-            const topupError = document.getElementById('topupError');
-            if (paymentMethod === 'card') {
-                const cardCode = document.getElementById('cardCode')?.value.trim();
-                const cardSerial = document.getElementById('cardSerial')?.value.trim();
-                const cardAmount = parseInt(document.getElementById('cardAmount')?.value || '0');
-                if (!cardCode || !cardSerial || cardAmount < 10000) {
-                    if (topupError) {
-                        topupError.textContent = 'Vui lòng nhập đầy đủ thông tin thẻ!';
-                        topupError.style.display = 'block';
-                        setTimeout(() => topupError.style.display = 'none', 3000);
-                    }
-                    return;
-                }
-                userData.balance += cardAmount;
-                const userIndex = users.findIndex(u => u.playerId === userData.playerId);
-                if (userIndex !== -1) {
-                    users[userIndex].balance = userData.balance;
-                    saveData();
-                    updateUserInterface();
-                }
-            }
-            if (topupSuccess) {
-                topupSuccess.style.display = 'block';
-                setTimeout(() => {
-                    topupSuccess.style.display = 'none';
-                    if (topupModal) topupModal.style.display = 'none';
-                }, 1000);
-            }
-        });
-
-        // Login Modal
-        const loginModal = document.getElementById('loginModal');
-        const loginLink = document.getElementById('loginLink');
-        const closeLoginModal = document.getElementById('closeLoginModal');
-        const loginForm = document.getElementById('loginForm');
-
-        loginLink?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (loginModal) loginModal.style.display = 'flex';
-        });
-
-        closeLoginModal?.addEventListener('click', () => {
-            if (loginModal) loginModal.style.display = 'none';
-        });
-
-        loginModal?.addEventListener('click', (e) => {
-            if (e.target === loginModal) loginModal.style.display = 'none';
-        });
-
-        loginForm?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const loginEmail = document.getElementById('loginEmail');
-            const loginPassword = document.getElementById('loginPassword');
-            const loginError = document.getElementById('loginError');
-            if (!loginEmail || !loginPassword) return;
-            const email = sanitizeInput(loginEmail.value.trim());
-            const password = loginPassword.value.trim();
-            if (!email || !password) {
-                if (loginError) {
-                    loginError.textContent = 'Vui lòng nhập email và mật khẩu!';
-                    loginError.style.display = 'block';
-                    setTimeout(() => loginError.style.display = 'none', 3000);
-                }
-                return;
-            }
-            try {
-                await loadData();
-                const user = users.find(u => u.email === email);
-                if (!user) throw new Error('Email không tồn tại!');
-                const hashedPassword = await hashPassword(password, user.salt);
-                if (hashedPassword !== user.password) throw new Error('Mật khẩu không đúng!');
-                isLoggedIn = true;
-                userData = { 
-                    username: user.username, 
-                    email: user.email, 
-                    playerId: user.playerId, 
-                    balance: user.balance, 
-                    purchasedPlan: user.purchasedPlan || null,
-                    usedCodes: user.usedCodes || []
-                };
-                await saveData();
-                loginModal.style.display = 'none';
-                updateUserInterface();
-                showNotification('Đăng nhập thành công!', 'success');
-            } catch (error) {
-                if (loginError) {
-                    loginError.textContent = error.message;
-                    loginError.style.display = 'block';
-                    setTimeout(() => loginError.style.display = 'none', 3000);
-                }
-            }
-        });
-
-        // Register Modal
-        const registerModal = document.getElementById('registerModal');
-        const registerLink = document.getElementById('registerLink');
-        const closeRegisterModal = document.getElementById('closeRegisterModal');
-        const registerForm = document.getElementById('registerForm');
-        const showLogin = document.getElementById('showLogin');
-        const showRegister = document.getElementById('showRegister');
-
-        registerLink?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (registerModal) registerModal.style.display = 'flex';
-        });
-
-        closeRegisterModal?.addEventListener('click', () => {
-            if (registerModal) registerModal.style.display = 'none';
-        });
-
-        registerModal?.addEventListener('click', (e) => {
-            if (e.target === registerModal) registerModal.style.display = 'none';
-        });
-
-        showLogin?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (loginModal && registerModal) {
-                loginModal.style.display = 'flex';
-                registerModal.style.display = 'none';
-            }
-        });
-
-        showRegister?.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (loginModal && registerModal) {
-                loginModal.style.display = 'none';
-                registerModal.style.display = 'flex';
-            }
-        });
-
-        registerForm?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const registerUsername = document.getElementById('registerUsername');
-            const registerEmail = document.getElementById('registerEmail');
-            const registerPassword = document.getElementById('registerPassword');
-            const confirmPassword = document.getElementById('confirmPassword');
-            const registerError = document.getElementById('registerError');
-            const registerSuccess = document.getElementById('registerSuccess');
-            if (!registerUsername || !registerEmail || !registerPassword || !confirmPassword) return;
-            const username = sanitizeInput(registerUsername.value.trim());
-            const email = sanitizeInput(registerEmail.value.trim());
-            const password = registerPassword.value.trim();
-            const confirmPasswordValue = confirmPassword.value.trim();
-            if (username.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 6 || password !== confirmPasswordValue) {
-                if (registerError) {
-                    registerError.textContent = 'Thông tin không hợp lệ!';
-                    registerError.style.display = 'block';
-                    setTimeout(() => registerError.style.display = 'none', 3000);
-                }
-                return;
-            }
-            try {
-                await loadData();
-                if (users.some(u => u.email === email)) throw new Error('Email đã được sử dụng!');
-                const salt = generateSalt();
-                const hashedPassword = await hashPassword(password, salt);
-                const playerId = generatePlayerId();
-                const newUser = { 
-                    username, 
-                    email, 
-                    password: hashedPassword, 
-                    salt, 
-                    playerId, 
-                    balance: 0, 
-                    purchasedPlan: null,
-                    usedCodes: []
-                };
-                users.push(newUser);
-                isLoggedIn = true;
-                userData = { 
-                    username, 
-                    email, 
-                    playerId, 
-                    balance: 0, 
-                    purchasedPlan: null,
-                    usedCodes: []
-                };
-                await saveData();
-                if (registerSuccess) {
-                    registerSuccess.style.display = 'block';
-                    setTimeout(() => {
-                        registerSuccess.style.display = 'none';
-                        if (registerModal) registerModal.style.display = 'none';
-                    }, 1000);
-                }
-                updateUserInterface();
-                showNotification('Đăng ký thành công!', 'success');
-            } catch (error) {
-                if (registerError) {
-                    registerError.textContent = error.message;
-                    registerError.style.display = 'block';
-                    setTimeout(() => registerError.style.display = 'none', 3000);
-                }
-            }
-        });
-
-        // Hamburger Menu
-        const hamburger = document.querySelector('.hamburger');
-        const menu = document.querySelector('.menu');
-        hamburger?.addEventListener('click', () => {
-            menu?.classList.toggle('active');
-        });
-    </script>
+// ===== Init =====
+renderForUser();
+updatePkgBtn();
+</script>
 </body>
-</html
-
-
+</html>
