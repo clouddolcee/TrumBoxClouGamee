@@ -8,7 +8,7 @@
 <style>
 :root{
   --bg1:#040612; --bg2:#0a1220; --card:#0f1726;
-  --accent:#06b6d4; --accent2:#8b5cf6; --text:#e6eef8; --warn:#f87171;
+  --accent:#06b6d4; --accent2:#8b5cf6; --text:#e6eef8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:"Poppins",sans-serif;background:linear-gradient(130deg,var(--bg1),var(--bg2));color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
@@ -37,7 +37,6 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:60px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;padding:10px 14px;border-radius:14px;font-weight:700;display:none;z-index:60;text-align:center;font-size:14px}
 .footer-note{padding:8px 16px;color:#92a6cc;font-size:13px;text-align:center}
 .small{font-size:13px;color:#9fb0d3}
-.warn-text{color:var(--warn);font-weight:600}
 @media (max-width:400px){.package h3{font-size:16px}.package .price{font-size:18px}}
 </style>
 </head>
@@ -47,7 +46,6 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
   <div class="header-left">
     <div class="logo">☁ CloudGame V5</div>
     <button class="menu-btn" id="openHelp">Hướng dẫn nạp tiền</button>
-    <button class="menu-btn" id="openRentGuide">Hướng dẫn thuê máy</button>
     <a class="menu-link" id="zaloLink" href="https://zalo.me/0355761396" target="_blank" rel="noopener">💬 Hỗ trợ Zalo</a>
   </div>
   <div class="header-right">
@@ -105,72 +103,29 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
 <div class="modal" id="qrModal">
   <div class="modal-card">
     <h3>Nạp tiền bằng QR</h3>
-    <input id="topupAmount" class="input" placeholder="Số tiền nạp (≥15k)" type="number">
-    <div class="row" style="margin-top:6px">
-      <button class="btn" id="confirmTopup">Nạp</button>
+    <img id="qrImg" src="https://i.imgur.com/4mmpR89.png" alt="QR Code VietinBank" class="qr-code" style="width:200px;height:200px;margin:10px auto;display:block;border-radius:8px">
+    <div class="small" style="margin-top:6px">Mã giao dịch: <b id="qrRef"></b></div>
+    <div class="row" style="margin-top:10px">
       <button class="btn ghost" id="closeQR">Đóng</button>
     </div>
-    <div class="small warn-text" style="margin-top:6px">Lưu ý: Nạp dưới 15k sẽ không được cộng vào tài khoản</div>
   </div>
 </div>
 
-<!-- Help Modal -->
+<!-- Help Modal: Hướng dẫn nạp tiền & hỗ trợ Zalo gọn -->
 <div class="modal" id="helpModal">
   <div class="modal-card">
     <h3>Hướng dẫn nạp tiền</h3>
-    <div class="small" style="margin-top:10px;line-height:1.4">
-      1️⃣ Mở VietinBank / ZaloPay.<br>
-      2️⃣ Nhập số tiền ≥ 15.000 đ.<br>
-      3️⃣ Quét QR và gửi.<br>
-      4️⃣ Số dư cập nhật sau khi xác nhận.
+    <div style="margin-top:8px;color:#b6c7df;font-size:14px;line-height:1.5">
+      1. Nhấn <b>“Nạp”</b> sau khi đăng nhập.<br>
+      2. Mở app ngân hàng → quét QR.<br>
+      3. Nhập số tiền muốn nạp.<br>
+      4. Liên hệ <b>Zalo</b> để xác nhận (nếu cần).
     </div>
-    <div style="text-align:right;margin-top:10px">
+    <div style="margin-top:12px;text-align:center">
+      <a href="https://zalo.me/0355761396" target="_blank" class="menu-link" style="justify-content:center">💬 Hỗ trợ Zalo: 0355761396</a>
+    </div>
+    <div style="text-align:right;margin-top:12px">
       <button class="btn ghost" id="closeHelp">Đóng</button>
-    </div>
-  </div>
-</div>
-
-<!-- Rent Guide Modal -->
-<div class="modal" id="rentGuideModal">
-  <div class="modal-card">
-    <h3>Hướng dẫn thuê máy</h3>
-    <div class="small" style="margin-top:10px;line-height:1.4">
-      1️⃣ Đăng nhập tài khoản.<br>
-      2️⃣ Chọn gói thuê.<br>
-      3️⃣ Bấm "Thuê ngay".<br>
-      4️⃣ Nếu còn thời gian, bấm "Chơi ngay" để điều khiển PC từ xa.<br>
-      5️⃣ Thao tác chuột + bàn phím như trên PC.
-    </div>
-    <div style="text-align:right;margin-top:10px">
-      <button class="btn ghost" id="closeRentGuide">Đóng</button>
-    </div>
-  </div>
-</div>
-
-<!-- Remote Windows 10 Modal (Desktop) -->
-<div class="modal" id="winModal">
-  <div class="modal-card" style="max-width:100%;max-height:100%;padding:0;background:#000;border-radius:8px;overflow:hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(0,0,0,0.6);color:#fff;font-weight:600">
-      <span>Windows 10 Remote</span>
-      <div>
-        <button class="btn ghost" id="winFull">Full màn hình</button>
-        <button class="btn ghost" id="winClose">Đóng</button>
-      </div>
-    </div>
-    <iframe id="winFrame" src="about:blank" style="width:100%;height:calc(100vh - 44px);border:none;background:#000"></iframe>
-  </div>
-</div>
-
-<!-- Mobile Remote Modal -->
-<div class="modal" id="mobileWinModal">
-  <div class="modal-card" style="width:100%;height:100%;padding:0;background:#000;border-radius:0;display:flex;flex-direction:column;">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(0,0,0,0.8);color:#fff;font-weight:600">
-      <span>Điều khiển PC từ xa</span>
-      <button class="btn ghost" id="mobileWinClose">Đóng</button>
-    </div>
-    <div style="flex:1;display:flex;justify-content:center;align-items:center;color:#fff;flex-direction:column">
-      <p style="margin-bottom:12px;text-align:center;padding:0 20px">Bấm nút dưới để mở Parsec và điều khiển máy tính từ xa.</p>
-      <a id="mobileParsecLink" href="#" target="_blank" class="btn" style="padding:12px 20px;font-size:16px">Mở Parsec App</a>
     </div>
   </div>
 </div>
@@ -184,7 +139,7 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
         <div class="small">Danh sách người dùng</div>
         <div class="history" id="adminUsers" style="max-height:200px;overflow:auto"></div>
       </div>
-      <div style="width:200px">
+      <div style="width:220px">
         <div class="small">Chọn user</div>
         <select id="adminSelect" class="input"></select>
         <input id="adminAmount" class="input" placeholder="Số tiền cộng" type="number">
@@ -237,8 +192,8 @@ document.getElementById('authBtn').onclick=()=>{
   const mode=document.getElementById('authBtn').dataset.mode||'login';
   if(mode==='register'){
     if(store.users[user]){toast('Tài khoản tồn tại');return;}
-    store.users[user]={password:pass,balance:0};
-    saveStore();toast('Đăng ký thành công (không cộng tiền)');
+    store.users[user]={password:pass,balance:50000};
+    saveStore();toast('Đăng ký thành công +50k');
     document.getElementById('authBtn').dataset.mode='login';document.getElementById('authTitle').textContent='Đăng nhập';document.getElementById('authBtn').textContent='Đăng nhập';
     return;
   }else{
@@ -260,108 +215,53 @@ function renderForUser(){
   }
 }
 
-// ===== Thuê & Chơi lại =====
-function getPkgStatus(){
-  const key='cg_pkg_'+currentUser;
-  const data=JSON.parse(localStorage.getItem(key)||'{}');
-  if(!data.expire) return null;
-  const remain=data.expire - Date.now();
-  return remain>0?remain:0;
-}
-function updatePkgBtn(){
-  const remain=getPkgStatus();
-  const btn=document.getElementById('buyPkg');
-  const status=pkgStatus;
-  if(!currentUser){btn.textContent='Thuê ngay';btn.disabled=false; status.textContent=''; return;}
-  if(remain>0){
-    btn.textContent='Chơi ngay';
-    btn.disabled=false;
-    const min=Math.floor(remain/60000);
-    const sec=Math.floor((remain%60000)/1000);
-    status.textContent=`Thời gian còn lại: ${min} phút ${sec} giây`;
-  } else{
-    btn.textContent='Thuê ngay';
-    btn.disabled=false;
-    status.textContent='';
-  }
-}
-setInterval(updatePkgBtn,1000);
-
+// ===== Buy =====
 document.getElementById('buyPkg').onclick=()=>{
   if(!currentUser){toast('Đăng nhập để thuê gói');authModal.classList.add('show');return;}
-  const remain=getPkgStatus();
   const btn=document.getElementById('buyPkg');
-  if(remain>0){
-    openWinRemote();
-    return;
-  }
   btn.disabled=true; pkgStatus.textContent='Đang xử lý...';
   setTimeout(()=>{
     const u=store.users[currentUser];
     if(u.balance<7000){toast('Số dư không đủ');pkgStatus.textContent='';btn.disabled=false;return;}
-    u.balance-=7000;saveStore();renderForUser();
-    const key='cg_pkg_'+currentUser;
-    localStorage.setItem(key,JSON.stringify({expire:Date.now()+3600*1000}));
-    toast('Thuê gói thành công');
-    pkgStatus.textContent='Thời gian còn lại: 60 phút 0 giây';
-    btn.textContent='Chơi ngay'; btn.disabled=false;
-    openWinRemote();
+    u.balance-=7000;saveStore();toast('Thuê gói thành công');renderForUser();
+    pkgStatus.textContent='Đã thuê gói';btn.disabled=false;
   },1200);
 }
 
 // ===== QR Topup =====
 document.getElementById('btnTopUp').onclick=openQR;
 document.getElementById('closeQR').onclick=()=>qrModal.classList.remove('show');
-document.getElementById('confirmTopup').onclick=()=>{
+function openQR(){
   if(!currentUser){toast('Đăng nhập mới nạp được');authModal.classList.add('show');return;}
-  const amt=Number(document.getElementById('topupAmount').value||0);
-  if(amt<15000){toast('Số tiền nạp phải ≥ 15k');return;}
-  store.users[currentUser].balance+=amt;saveStore();renderForUser();toast(`Nạp ${format(amt)} đ thành công`);qrModal.classList.remove('show');
-};
-function openQR(){qrModal.classList.add('show');}
+  const ref='NAP'+Date.now();
+  document.getElementById('qrRef').textContent=ref;
+  qrModal.classList.add('show');
+}
 
 // ===== Help =====
 document.getElementById('openHelp').onclick=()=>helpModal.classList.add('show');
 document.getElementById('closeHelp').onclick=()=>helpModal.classList.remove('show');
-document.getElementById('openRentGuide').onclick=()=>rentGuideModal.classList.add('show');
-document.getElementById('closeRentGuide').onclick=()=>rentGuideModal.classList.remove('show');
-
-// ===== Windows Remote =====
-function openWinRemote(){
-  if(window.innerWidth>768){
-    winFrame.src='https://parsec.gg/g/317vNH5xkJrtcEZh6wpIi7yU2nI/b8988a11/';
-    winModal.classList.add('show');
-  }else{
-    mobileParsecLink.href='https://parsec.gg/g/317vNH5xkJrtcEZh6wpIi7yU2nI/b8988a11/';
-    mobileWinModal.classList.add('show');
-  }
-}
-document.getElementById('winClose').onclick=()=>winModal.classList.remove('show');
-document.getElementById('mobileWinClose').onclick=()=>mobileWinModal.classList.remove('show');
-document.getElementById('winFull').onclick=()=>{winFrame.requestFullscreen();}
-document.getElementById('zaloLink').onclick=()=>{}; // đã link
 
 // ===== Admin =====
-btnAdminOpen.onclick=()=>{adminModal.classList.add('show');renderAdmin();}
+document.getElementById('btnAdminOpen').onclick=()=>{populateAdmin();adminModal.classList.add('show')};
 document.getElementById('adminClose').onclick=()=>adminModal.classList.remove('show');
-document.getElementById('adminAddBal').onclick=()=>{
-  const user=adminSelect.value; const amt=Number(adminAmount.value||0);
-  if(!user||amt<=0){toast('Chọn user & số tiền >0');return;}
-  store.users[user].balance+=amt;saveStore();renderForUser();renderAdmin();toast(`Cộng ${format(amt)} đ cho ${user}`);
-};
-function renderAdmin(){
+function populateAdmin(){
   adminUsers.innerHTML='';adminSelect.innerHTML='';
   Object.keys(store.users).forEach(u=>{
-    const div=document.createElement('div');div.textContent=`${u} — ${format(store.users[u].balance)} đ`;
-    adminUsers.appendChild(div);
+    const row=document.createElement('div');row.className='history-item';
+    row.innerHTML=`<b>${u}</b> — ${format(store.users[u].balance)} đ`;
+    adminUsers.appendChild(row);
     const opt=document.createElement('option');opt.value=u;opt.textContent=u;adminSelect.appendChild(opt);
   });
 }
+document.getElementById('adminAddBal').onclick=()=>{
+  const u=adminSelect.value;const v=Number(document.getElementById('adminAmount').value||0);
+  if(!u||!v){toast('Chọn user và số tiền');return;}
+  store.users[u].balance+=v;saveStore();populateAdmin();renderForUser();toast('Cập nhật thành công');
+};
 
 // ===== Init =====
 renderForUser();
-updatePkgBtn();
 </script>
-
 </body>
 </html>
