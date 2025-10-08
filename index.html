@@ -66,21 +66,41 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
 </header>
 
 <div class="container">
-  <div class="package" id="packageCard">
-    <h3 id="pkgTitle">Gói Thuê 7K / 1 giờ</h3>
-    <div class="price">7.000 đ</div>
+
+  <!-- GÓI 99K -->
+  <div class="package" data-price="99000">
+    <h3>Gói Thuê 99K / 1 tháng</h3>
+    <div class="price">99.000 đ</div>
     <div class="pkg-details">
-      <div style="font-weight:600;margin-bottom:6px">Chi tiết cấu hình máy</div>
-      <div>• CPU: Intel Core i5 (4 cores) hoặc tương đương</div>
-      <div>• RAM: 8 GB</div>
-      <div>• GPU: NVIDIA GTX 1050 / tương đương</div>
-      <div>• Ổ cứng: SSD 50 GB</div>
-      <div>• Hệ điều hành: Windows 10</div>
+      <div style="font-weight:600;margin-bottom:6px">Cấu hình máy</div>
+      <div>• CPU: Intel Core i7 (8 cores)</div>
+      <div>• RAM: 16 GB</div>
+      <div>• GPU: GTX 1650 / tương đương</div>
+      <div>• SSD: 100 GB</div>
+      <div>• Windows 10 Pro</div>
     </div>
-    <p style="margin-top:12px;color:#9fb0d3">Chạy mượt các game nhẹ / mod, phù hợp thao tác chuột + bàn phím trên mobile.</p>
-    <button class="btn" id="buyPkg">Thuê ngay</button>
-    <div id="pkgStatus" class="small" style="margin-top:8px;height:18px"></div>
+    <p style="margin-top:12px;color:#9fb0d3">Phù hợp chơi game phổ thông, mượt và ổn định.</p>
+    <button class="btn buyPkgBtn">Thuê ngay</button>
+    <div class="small pkgStatus" style="margin-top:8px;height:18px"></div>
   </div>
+
+  <!-- GÓI 200K -->
+  <div class="package" data-price="200000">
+    <h3>Gói Thuê 200K / 3 tháng</h3>
+    <div class="price">200.000 đ</div>
+    <div class="pkg-details">
+      <div style="font-weight:600;margin-bottom:6px">Cấu hình máy</div>
+      <div>• CPU: Intel Core i9 (12 cores)</div>
+      <div>• RAM: 32 GB</div>
+      <div>• GPU: RTX 3060 / tương đương</div>
+      <div>• SSD: 200 GB</div>
+      <div>• Windows 11 Pro</div>
+    </div>
+    <p style="margin-top:12px;color:#9fb0d3">Hiệu suất cao, chạy mượt các tựa game nặng.</p>
+    <button class="btn buyPkgBtn">Thuê ngay</button>
+    <div class="small pkgStatus" style="margin-top:8px;height:18px"></div>
+  </div>
+
 </div>
 
 <div class="footer-note">© 2025 CloudGame — Demo V5 (Local)</div>
@@ -111,7 +131,7 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
   </div>
 </div>
 
-<!-- Help Modal: Hướng dẫn nạp tiền & hỗ trợ Zalo gọn -->
+<!-- Help Modal -->
 <div class="modal" id="helpModal">
   <div class="modal-card">
     <h3>Hướng dẫn nạp tiền</h3>
@@ -155,13 +175,11 @@ header{position:sticky;top:0;display:flex;justify-content:space-between;align-it
 <div class="toast" id="toastBox"></div>
 
 <script>
-// ===== Data =====
 let store=JSON.parse(localStorage.getItem('cg_store')||'{}');
 if(!store.users) store.users={};
 if(!store.users['admin']) store.users['admin']={password:'admin',balance:0};
 let currentUser=localStorage.getItem('cg_current')||null;
 
-// ===== Elements =====
 const hdrGuest=document.getElementById('hdrGuest');
 const hdrUser=document.getElementById('hdrUser');
 const hdrName=document.getElementById('hdrName');
@@ -170,14 +188,12 @@ const btnAdminOpen=document.getElementById('btnAdminOpen');
 const toastBox=document.getElementById('toastBox');
 const adminUsers=document.getElementById('adminUsers');
 const adminSelect=document.getElementById('adminSelect');
-const pkgStatus=document.getElementById('pkgStatus');
 
-// ===== Helpers =====
 function saveStore(){localStorage.setItem('cg_store',JSON.stringify(store))}
 function toast(msg,ms=1800){toastBox.textContent=msg;toastBox.style.display='block';setTimeout(()=>toastBox.style.display='none',ms)}
 function format(n){return Number(n).toLocaleString()}
 
-// ===== Auth =====
+// Auth
 document.getElementById('openAuth').onclick=()=>authModal.classList.add('show');
 document.getElementById('switchReg').onclick=()=>{
   const btn=document.getElementById('authBtn');
@@ -204,7 +220,7 @@ document.getElementById('authBtn').onclick=()=>{
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
 document.getElementById('btnLogout').onclick=()=>{currentUser=null;localStorage.removeItem('cg_current');toast('Đã đăng xuất');renderForUser()};
 
-// ===== Render =====
+// Render
 function renderForUser(){
   if(!currentUser){hdrGuest.style.display='flex';hdrUser.style.display='none';btnAdminOpen.style.display='none'} 
   else{
@@ -215,20 +231,24 @@ function renderForUser(){
   }
 }
 
-// ===== Buy =====
-document.getElementById('buyPkg').onclick=()=>{
-  if(!currentUser){toast('Đăng nhập để thuê gói');authModal.classList.add('show');return;}
-  const btn=document.getElementById('buyPkg');
-  btn.disabled=true; pkgStatus.textContent='Đang xử lý...';
-  setTimeout(()=>{
-    const u=store.users[currentUser];
-    if(u.balance<7000){toast('Số dư không đủ');pkgStatus.textContent='';btn.disabled=false;return;}
-    u.balance-=7000;saveStore();toast('Thuê gói thành công');renderForUser();
-    pkgStatus.textContent='Đã thuê gói';btn.disabled=false;
-  },1200);
-}
+// Mua gói
+document.querySelectorAll('.buyPkgBtn').forEach(btn=>{
+  btn.onclick=()=>{
+    if(!currentUser){toast('Đăng nhập để thuê gói');authModal.classList.add('show');return;}
+    const pkg=btn.closest('.package');
+    const price=Number(pkg.dataset.price);
+    const status=pkg.querySelector('.pkgStatus');
+    btn.disabled=true; status.textContent='Đang xử lý...';
+    setTimeout(()=>{
+      const u=store.users[currentUser];
+      if(u.balance<price){toast('Số dư không đủ');status.textContent='';btn.disabled=false;return;}
+      u.balance-=price;saveStore();toast('Thuê gói thành công');renderForUser();
+      status.textContent='Đã thuê gói';btn.disabled=false;
+    },1200);
+  }
+});
 
-// ===== QR Topup =====
+// QR Topup
 document.getElementById('btnTopUp').onclick=openQR;
 document.getElementById('closeQR').onclick=()=>qrModal.classList.remove('show');
 function openQR(){
@@ -238,11 +258,11 @@ function openQR(){
   qrModal.classList.add('show');
 }
 
-// ===== Help =====
+// Help
 document.getElementById('openHelp').onclick=()=>helpModal.classList.add('show');
 document.getElementById('closeHelp').onclick=()=>helpModal.classList.remove('show');
 
-// ===== Admin =====
+// Admin
 document.getElementById('btnAdminOpen').onclick=()=>{populateAdmin();adminModal.classList.add('show')};
 document.getElementById('adminClose').onclick=()=>adminModal.classList.remove('show');
 function populateAdmin(){
@@ -260,7 +280,6 @@ document.getElementById('adminAddBal').onclick=()=>{
   store.users[u].balance+=v;saveStore();populateAdmin();renderForUser();toast('Cập nhật thành công');
 };
 
-// ===== Init =====
 renderForUser();
 </script>
 </body>
