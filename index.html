@@ -1,286 +1,146 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>☁ CloudGame V5</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRUMBOX.NET - Cloud PC Gaming</title>
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <style>
-:root{
-  --bg1:#040612; --bg2:#0a1220; --card:#0f1726;
-  --accent:#06b6d4; --accent2:#8b5cf6; --text:#e6eef8;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:"Poppins",sans-serif;background:linear-gradient(130deg,var(--bg1),var(--bg2));color:var(--text);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
-header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(6,10,20,0.7);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.02);z-index:10}
-.logo{font-weight:700;font-size:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header-right{display:flex;align-items:center;gap:8px;}
-.header-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.menu-btn{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:10px;font-size:13px;cursor:pointer}
-.menu-link{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:10px;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;justify-content:center}
-.user-pill{display:flex;align-items:center;gap:8px;background:var(--card);padding:6px 10px;border-radius:12px}
-.user-pill img{width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,0.06);object-fit:cover}
-.btn{background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;padding:8px 12px;border-radius:12px;color:#000;font-weight:700;cursor:pointer;font-size:14px;transition:0.2s}
-.btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04)}
-.btn:disabled{opacity:0.6;cursor:not-allowed}
-.container{max-width:480px;margin:16px auto;padding:0 12px;flex:1;width:100%}
-.package{background:linear-gradient(180deg, rgba(6,182,212,0.05), rgba(139,92,246,0.05));border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:20px;text-align:center;box-shadow:0 8px 30px rgba(11,22,40,0.5);margin-bottom:16px;}
-.package h3{color:var(--accent);margin-bottom:6px;font-size:18px;font-weight:600}
-.package .price{font-size:22px;font-weight:700;margin-bottom:6px}
-.package p{color:#b6c7df;margin-bottom:12px;font-size:14px}
-.pkg-details{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;color:#b6c7df;text-align:left;font-size:13px;margin-top:10px}
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:50;padding:10px;}
-.modal.show{display:flex}
-.modal-card{width:100%;max-width:420px;background:var(--card);padding:18px;border-radius:16px;box-shadow:0 18px 60px rgba(3,6,12,0.7)}
-.input{width:100%;padding:10px;border-radius:10px;border:none;background:#0b1624;color:var(--text);margin:8px 0;font-size:14px}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:60px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#000;padding:10px 14px;border-radius:14px;font-weight:700;display:none;z-index:60;text-align:center;font-size:14px}
-.footer-note{padding:8px 16px;color:#92a6cc;font-size:13px;text-align:center}
-.small{font-size:13px;color:#9fb0d3}
-@media (max-width:400px){.package h3{font-size:16px}.package .price{font-size:18px}}
+body { font-family: Arial, sans-serif; background:#121212; color:#fff; margin:0; padding:0;}
+.container { max-width:960px; margin:auto; padding:20px; text-align:center;}
+.logo { width:300px; margin-bottom:10px;}
+.user-info { margin-bottom:15px; font-size:16px;}
+.actions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:20px; }
+.actions-grid button { padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; color:#fff; background:#1f1f1f; transition:0.2s; }
+.actions-grid button:hover { background:#2c2c2c; }
+.warning-box { background:#e74c3c; color:#fff; padding:15px; border-radius:10px; margin-bottom:20px; font-size:14px; }
+
+/* Card cloud game kiểu Trumbox depth */
+.carousel-wrapper { display:flex; justify-content:center; margin-top:20px; flex-wrap:wrap; gap:20px;}
+.card { background:#1f1f1f; border-radius:20px; width:260px; box-shadow:0 10px 20px rgba(0,0,0,0.6); transition:0.3s; overflow:hidden; text-align:center; }
+.card:hover { transform: translateY(-10px) scale(1.03); box-shadow:0 15px 30px rgba(0,0,0,0.8); }
+.card img { width:100%; height:150px; object-fit:cover; border-bottom: 2px solid #00d084;}
+.card .title { font-size:18px; font-weight:bold; text-transform:uppercase; margin:10px 0 5px; color:#00d084; }
+.card .cloud-name { font-size:16px; margin-bottom:5px; color:#fff; }
+.card .price { font-size:28px; font-weight:bold; color:#fff; margin-bottom:5px; }
+.card .resolution { font-size:14px; margin-bottom:10px; }
+.card textarea { width:90%; height:60px; resize:none; border-radius:8px; border:1px solid #555; background:transparent; color:#fff; padding:5px; margin-bottom:10px; font-size:12px; }
+.card button { background:#00d084; color:#080808; font-weight:bold; border:none; padding:10px; width:90%; border-radius:8px; cursor:pointer; transition:0.2s; margin-bottom:10px; }
+.card button:hover { background:#00ff9d; }
+
+/* Popup overlay */
+.overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000; }
+.popup { background:#1f1f1f; padding:20px; border-radius:10px; max-width:400px; width:90%; text-align:center; color:#fff; }
+.popup img { width:200px; margin-bottom:10px; }
+.popup button { margin-top:10px; background:#00b894; border:none; padding:8px 15px; border-radius:8px; color:#fff; cursor:pointer; transition:0.2s; }
+.popup button:hover { background:#00ff9d; }
+input { width:90%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #555; background:transparent; color:#fff; }
+/* Hỗ trợ khách hàng */
+.support-box { margin-top:30px; padding:15px; background:#1f1f1f; border-radius:10px; font-size:14px; }
+.support-box a { color:#00d084; text-decoration:none; font-weight:bold; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-left">
-    <div class="logo">☁ CloudGame V5</div>
-    <button class="menu-btn" id="openHelp">Hướng dẫn nạp tiền</button>
-    <a class="menu-link" id="zaloLink" href="https://zalo.me/0355761396" target="_blank" rel="noopener">💬 Hỗ trợ Zalo</a>
-  </div>
-  <div class="header-right">
-    <div id="hdrGuest" style="display:flex;align-items:center;gap:6px">
-      <button class="btn ghost" id="openAuth">Đăng nhập / ĐK</button>
-    </div>
-    <div id="hdrUser" class="user-pill" style="display:none">
-      <img id="hdrAvatar" src="https://i.pravatar.cc/100">
-      <div style="display:flex;flex-direction:column;align-items:flex-start">
-        <div id="hdrName">Khách</div>
-        <div class="small">💰 <span id="hdrBalance">0</span> đ</div>
-      </div>
-      <button class="btn" id="btnTopUp">Nạp</button>
-      <button class="btn ghost" id="btnLogout">Đăng xuất</button>
-    </div>
-    <button class="btn ghost" id="btnAdminOpen" style="display:none">Admin</button>
-  </div>
-</header>
-
 <div class="container">
+    <img src="https://server.trumbox.net/img/logo/512x128.png" alt="TRUMBOX.NET" class="logo">
 
-  <!-- GÓI 99K -->
-  <div class="package" data-price="99000">
-    <h3>Gói Thuê 99K / 1 tháng</h3>
-    <div class="price">99.000 đ</div>
-    <div class="pkg-details">
-      <div style="font-weight:600;margin-bottom:6px">Cấu hình máy</div>
-      <div>• CPU: Intel Core i7 (8 cores)</div>
-      <div>• RAM: 16 GB</div>
-      <div>• GPU: GTX 1650 / tương đương</div>
-      <div>• SSD: 100 GB</div>
-      <div>• Windows 10 Pro</div>
+    <div class="user-info" id="user-info">
+        Xin chào: <b id="username">Khách</b> - Số dư chính/tổng: <b id="balance">0đ</b>/<b>0đ</b> - Mã ID: <b id="user-id">---</b>
     </div>
-    <p style="margin-top:12px;color:#9fb0d3">Phù hợp chơi game phổ thông, mượt và ổn định.</p>
-    <button class="btn buyPkgBtn">Thuê ngay</button>
-    <div class="small pkgStatus" style="margin-top:8px;height:18px"></div>
-  </div>
 
-  <!-- GÓI 200K -->
-  <div class="package" data-price="200000">
-    <h3>Gói Thuê 200K / 3 tháng</h3>
-    <div class="price">200.000 đ</div>
-    <div class="pkg-details">
-      <div style="font-weight:600;margin-bottom:6px">Cấu hình máy</div>
-      <div>• CPU: Intel Core i9 (12 cores)</div>
-      <div>• RAM: 32 GB</div>
-      <div>• GPU: RTX 3060 / tương đương</div>
-      <div>• SSD: 200 GB</div>
-      <div>• Windows 11 Pro</div>
+    <!-- Nút thao tác -->
+    <div class="actions-grid">
+        <button id="btn-topup">Nạp Tiền</button>
+        <button id="btn-account">Tài khoản</button>
+        <button id="btn-logout">Đăng xuất</button>
+        <button>Thông báo</button>
+        <button>Hướng dẫn bố cục phím</button>
+        <button>Dọn bộ nhớ đệm (F5)</button>
     </div>
-    <p style="margin-top:12px;color:#9fb0d3">Hiệu suất cao, chạy mượt các tựa game nặng.</p>
-    <button class="btn buyPkgBtn">Thuê ngay</button>
-    <div class="small pkgStatus" style="margin-top:8px;height:18px"></div>
-  </div>
 
-</div>
-
-<div class="footer-note">© 2025 CloudGame — Demo V5 (Local)</div>
-
-<!-- Auth Modal -->
-<div class="modal" id="authModal">
-  <div class="modal-card">
-    <h3 id="authTitle">Đăng nhập</h3>
-    <input id="inpUser" class="input" placeholder="Tên tài khoản">
-    <input id="inpPass" class="input" type="password" placeholder="Mật khẩu">
-    <div class="row" style="margin-top:6px">
-      <button class="btn" id="authBtn">Đăng nhập</button>
-      <button class="btn ghost" id="switchReg">Đăng ký</button>
+    <div class="warning-box">
+        <p>Chú Ý: Máy không tự tắt khi thoát web, bạn hãy tự tắt để không bị tính tiền khi nghỉ chơi.</p>
+        <p>+ Nhấn vào <b>Thông báo</b> chọn <b>Không</b> để tắt máy trước khi nghỉ.</p>
+        <p>(Sử dụng "Số dư phụ - Số dư chính" để kiểm soát số dư và thời gian chơi của bạn)</p>
     </div>
-    <div class="small" style="margin-top:8px">Admin demo: <b>admin / admin</b></div>
-  </div>
-</div>
 
-<!-- QR Modal -->
-<div class="modal" id="qrModal">
-  <div class="modal-card">
-    <h3>Nạp tiền bằng QR</h3>
-    <img id="qrImg" src="https://i.imgur.com/4mmpR89.png" alt="QR Code VietinBank" class="qr-code" style="width:200px;height:200px;margin:10px auto;display:block;border-radius:8px">
-    <div class="small" style="margin-top:6px">Mã giao dịch: <b id="qrRef"></b></div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn ghost" id="closeQR">Đóng</button>
-    </div>
-  </div>
-</div>
-
-<!-- Help Modal -->
-<div class="modal" id="helpModal">
-  <div class="modal-card">
-    <h3>Hướng dẫn nạp tiền</h3>
-    <div style="margin-top:8px;color:#b6c7df;font-size:14px;line-height:1.5">
-      1. Nhấn <b>“Nạp”</b> sau khi đăng nhập.<br>
-      2. Mở app ngân hàng → quét QR.<br>
-      3. Nhập số tiền muốn nạp.<br>
-      4. Liên hệ <b>Zalo</b> để xác nhận (nếu cần).
-    </div>
-    <div style="margin-top:12px;text-align:center">
-      <a href="https://zalo.me/0355761396" target="_blank" class="menu-link" style="justify-content:center">💬 Hỗ trợ Zalo: 0355761396</a>
-    </div>
-    <div style="text-align:right;margin-top:12px">
-      <button class="btn ghost" id="closeHelp">Đóng</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin Modal -->
-<div class="modal" id="adminModal">
-  <div class="modal-card" style="max-width:720px">
-    <h3>Admin Panel</h3>
-    <div class="row" style="flex-wrap:wrap;margin-top:6px">
-      <div style="flex:1">
-        <div class="small">Danh sách người dùng</div>
-        <div class="history" id="adminUsers" style="max-height:200px;overflow:auto"></div>
-      </div>
-      <div style="width:220px">
-        <div class="small">Chọn user</div>
-        <select id="adminSelect" class="input"></select>
-        <input id="adminAmount" class="input" placeholder="Số tiền cộng" type="number">
-        <div class="row" style="margin-top:4px">
-          <button class="btn" id="adminAddBal">Cộng tiền</button>
+    <!-- Card Cloud Game -->
+    <div class="carousel-wrapper">
+        <div class="card">
+            <img src="https://i.imgur.com/IDxOp8E.jpg" alt="Cloud Game Ultra">
+            <div class="title">Cao Cấp</div>
+            <div class="cloud-name">Cloud Game Ultra</div>
+            <div class="price">10.000đ/1h</div>
+            <div class="resolution">Cấu hình mạnh nhất</div>
+            <textarea disabled>CPU cao, RAM lớn, GPU mạnh nhất hiện tại</textarea>
+            <button id="play-btn">Chơi Ngay</button>
         </div>
-      </div>
     </div>
-    <div style="text-align:right;margin-top:6px"><button class="btn ghost" id="adminClose">Đóng</button></div>
-  </div>
+
+    <!-- Hỗ trợ khách hàng -->
+    <div class="support-box">
+        Hỗ trợ khách hàng: Zalo <a href="https://zalo.me/0355761396" target="_blank">0355761396</a>
+    </div>
 </div>
 
-<div class="toast" id="toastBox"></div>
+<!-- Popup Nạp tiền -->
+<div class="overlay" id="topup-popup">
+    <div class="popup">
+        <h2>Nạp Tiền</h2>
+        <img src="https://i.imgur.com/4mmpR89.png" alt="QR Nạp tiền">
+        <p>Lưu ý: Nạp trên 100k trở lên mới được cộng tiền.</p>
+        <button onclick="closeTopup()">Đóng</button>
+    </div>
+</div>
+
+<!-- Popup Đăng nhập/Đăng ký -->
+<div class="overlay" id="account-popup">
+    <div class="popup">
+        <h2>Đăng nhập / Đăng ký</h2>
+        <input type="text" id="input-username" placeholder="Tên đăng nhập">
+        <input type="password" id="input-password" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập / Đăng ký</button>
+        <button onclick="closeAccount()">Đóng</button>
+    </div>
+</div>
 
 <script>
-let store=JSON.parse(localStorage.getItem('cg_store')||'{}');
-if(!store.users) store.users={};
-if(!store.users['admin']) store.users['admin']={password:'admin',balance:0};
-let currentUser=localStorage.getItem('cg_current')||null;
+const topupPopup = document.getElementById("topup-popup");
+const accountPopup = document.getElementById("account-popup");
 
-const hdrGuest=document.getElementById('hdrGuest');
-const hdrUser=document.getElementById('hdrUser');
-const hdrName=document.getElementById('hdrName');
-const hdrBalance=document.getElementById('hdrBalance');
-const btnAdminOpen=document.getElementById('btnAdminOpen');
-const toastBox=document.getElementById('toastBox');
-const adminUsers=document.getElementById('adminUsers');
-const adminSelect=document.getElementById('adminSelect');
-
-function saveStore(){localStorage.setItem('cg_store',JSON.stringify(store))}
-function toast(msg,ms=1800){toastBox.textContent=msg;toastBox.style.display='block';setTimeout(()=>toastBox.style.display='none',ms)}
-function format(n){return Number(n).toLocaleString()}
-
-// Auth
-document.getElementById('openAuth').onclick=()=>authModal.classList.add('show');
-document.getElementById('switchReg').onclick=()=>{
-  const btn=document.getElementById('authBtn');
-  const title=document.getElementById('authTitle');
-  if(btn.dataset.mode==='register'){btn.dataset.mode='login';title.textContent='Đăng nhập';btn.textContent='Đăng nhập'}
-  else{btn.dataset.mode='register';title.textContent='Đăng ký';btn.textContent='Đăng ký'}
-};
-document.getElementById('authBtn').onclick=()=>{
-  const user=document.getElementById('inpUser').value.trim();
-  const pass=document.getElementById('inpPass').value.trim();
-  if(!user||!pass){toast('Nhập đủ thông tin');return;}
-  const mode=document.getElementById('authBtn').dataset.mode||'login';
-  if(mode==='register'){
-    if(store.users[user]){toast('Tài khoản tồn tại');return;}
-    store.users[user]={password:pass,balance:50000};
-    saveStore();toast('Đăng ký thành công +50k');
-    document.getElementById('authBtn').dataset.mode='login';document.getElementById('authTitle').textContent='Đăng nhập';document.getElementById('authBtn').textContent='Đăng nhập';
-    return;
-  }else{
-    const u=store.users[user];if(!u||u.password!==pass){toast('Sai tài khoản hoặc mật khẩu');return;}
-    currentUser=user;localStorage.setItem('cg_current',currentUser);authModal.classList.remove('show');toast('Đăng nhập thành công');renderForUser();
-  }
-};
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
-document.getElementById('btnLogout').onclick=()=>{currentUser=null;localStorage.removeItem('cg_current');toast('Đã đăng xuất');renderForUser()};
-
-// Render
-function renderForUser(){
-  if(!currentUser){hdrGuest.style.display='flex';hdrUser.style.display='none';btnAdminOpen.style.display='none'} 
-  else{
-    const u=store.users[currentUser];
-    hdrGuest.style.display='none';hdrUser.style.display='flex';
-    hdrName.textContent=currentUser;hdrBalance.textContent=format(u.balance);
-    btnAdminOpen.style.display=(currentUser==='admin')?'inline-block':'none';
-  }
-}
-
-// Mua gói
-document.querySelectorAll('.buyPkgBtn').forEach(btn=>{
-  btn.onclick=()=>{
-    if(!currentUser){toast('Đăng nhập để thuê gói');authModal.classList.add('show');return;}
-    const pkg=btn.closest('.package');
-    const price=Number(pkg.dataset.price);
-    const status=pkg.querySelector('.pkgStatus');
-    btn.disabled=true; status.textContent='Đang xử lý...';
-    setTimeout(()=>{
-      const u=store.users[currentUser];
-      if(u.balance<price){toast('Số dư không đủ');status.textContent='';btn.disabled=false;return;}
-      u.balance-=price;saveStore();toast('Thuê gói thành công');renderForUser();
-      status.textContent='Đã thuê gói';btn.disabled=false;
-    },1200);
-  }
-});
-
-// QR Topup
-document.getElementById('btnTopUp').onclick=openQR;
-document.getElementById('closeQR').onclick=()=>qrModal.classList.remove('show');
-function openQR(){
-  if(!currentUser){toast('Đăng nhập mới nạp được');authModal.classList.add('show');return;}
-  const ref='NAP'+Date.now();
-  document.getElementById('qrRef').textContent=ref;
-  qrModal.classList.add('show');
-}
-
-// Help
-document.getElementById('openHelp').onclick=()=>helpModal.classList.add('show');
-document.getElementById('closeHelp').onclick=()=>helpModal.classList.remove('show');
-
-// Admin
-document.getElementById('btnAdminOpen').onclick=()=>{populateAdmin();adminModal.classList.add('show')};
-document.getElementById('adminClose').onclick=()=>adminModal.classList.remove('show');
-function populateAdmin(){
-  adminUsers.innerHTML='';adminSelect.innerHTML='';
-  Object.keys(store.users).forEach(u=>{
-    const row=document.createElement('div');row.className='history-item';
-    row.innerHTML=`<b>${u}</b> — ${format(store.users[u].balance)} đ`;
-    adminUsers.appendChild(row);
-    const opt=document.createElement('option');opt.value=u;opt.textContent=u;adminSelect.appendChild(opt);
-  });
-}
-document.getElementById('adminAddBal').onclick=()=>{
-  const u=adminSelect.value;const v=Number(document.getElementById('adminAmount').value||0);
-  if(!u||!v){toast('Chọn user và số tiền');return;}
-  store.users[u].balance+=v;saveStore();populateAdmin();renderForUser();toast('Cập nhật thành công');
+document.getElementById("btn-topup").onclick = () => topupPopup.style.display = "flex";
+document.getElementById("btn-account").onclick = () => accountPopup.style.display = "flex";
+document.getElementById("btn-logout").onclick = () => {
+    document.getElementById("username").innerText = "Khách";
+    document.getElementById("balance").innerText = "0đ";
+    document.getElementById("user-id").innerText = "---";
 };
 
-renderForUser();
+function closeTopup() { topupPopup.style.display = "none"; }
+function closeAccount() { accountPopup.style.display = "none"; }
+
+function login() {
+    const username = document.getElementById("input-username").value || "User";
+    const userId = Math.random().toString(36).substr(2,10);
+    document.getElementById("username").innerText = username;
+    document.getElementById("user-id").innerText = userId;
+    document.getElementById("balance").innerText = "0đ";
+    closeAccount();
+}
+
+// Khi bấm Chơi Ngay
+document.getElementById("play-btn").onclick = () => {
+    let balanceText = document.getElementById("balance").innerText.replace('đ','');
+    let balance = parseInt(balanceText);
+    if(balance >= 10000){
+        alert("Máy bật thành công! Chuyển đến Discord...");
+        window.location.href = "https://discord.gg/mDTfcaeb";
+    } else {
+        alert("Không đủ tiền để chơi gói này!");
+    }
+};
 </script>
+
 </body>
 </html>
