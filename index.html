@@ -3,396 +3,408 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bảng điều khiển - TRUMBOX style</title>
+  <title>Limore Cloud Game</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* 🔸 Nút mở form */
-    .btn-account {
-      padding: 10px 20px;
-      background: linear-gradient(45deg, #4caf50, #2e7d32);
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 16px;
-      width: 100%;
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to bottom right, #e6f2ff, #ffffff);
+      color: #1a1a1a;
     }
 
-    /* 🔸 Modal */
-    .modal {
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-login {
+      background: linear-gradient(45deg, #007bff, #00bfff);
+      color: white;
+    }
+
+    .btn-login:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #339cff, #00ccff);
+    }
+
+    .popup-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.7);
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 1000;
     }
 
-    .modal-content {
-      background: #fff;
-      padding: 25px;
-      border-radius: 15px;
-      width: 300px;
-      position: relative;
-      animation: fadeIn 0.3s;
+    .popup-overlay.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    .close {
+    .popup-content {
+      background: white;
+      color: black;
+      border-radius: 20px;
+      padding: 25px;
+      width: 340px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0,128,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .popup-content h2 {
+      color: #007bff;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .popup-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+    }
+
+    .popup-content button {
+      width: 100%;
+      background: linear-gradient(90deg, #007bff, #00bfff);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .popup-content button:hover {
+      background: linear-gradient(90deg, #339cff, #00ccff);
+      transform: scale(1.05);
+    }
+
+    .switch-link {
+      color: #007bff;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .close-btn {
       position: absolute;
       top: 10px;
       right: 15px;
       font-size: 20px;
       cursor: pointer;
+      color: #999;
     }
 
-    .tabs { display: flex; margin-bottom: 15px; }
-
-    .tab {
-      flex: 1;
-      padding: 10px;
-      background: #eee;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .tab.active { background: #4caf50; color: #fff; }
-
-    .form { display: none; flex-direction: column; gap: 10px; }
-    .form.active { display: flex; }
-
-    .form input { padding: 8px; border: 1px solid #ccc; border-radius: 8px; }
-    .btn-submit { background: #4caf50; color: white; padding: 10px; border: none; border-radius: 8px; cursor: pointer; }
+    .close-btn:hover { color: black; }
   </style>
 </head>
-<body class="bg-black min-h-screen flex items-center justify-center p-4">
+<body class="flex flex-col items-center min-h-screen p-4">
 
-  <div class="w-full max-w-md bg-[#0b0b0b]/90 p-4 rounded-2xl shadow-xl border border-white/6">
+  <!-- Khung chính -->
+  <div class="w-full max-w-4xl bg-white/90 p-4 rounded-2xl shadow-xl border border-gray-200">
 
-    <!-- Thanh tài khoản trên cùng -->
-    <div class="flex justify-between items-center mb-4 p-3 bg-[#1a1a1a]/90 rounded-xl border border-white/10">
+    <!-- Thanh tài khoản -->
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 p-3 bg-blue-50 rounded-xl border border-blue-100">
       <div>
-        <span class="text-gray-400">Tài khoản: </span>
-        <span id="usernameDisplay" class="text-white font-bold">Chưa đăng nhập</span>
+        <span class="text-gray-600">Tài khoản: </span>
+        <span id="usernameDisplay" class="text-blue-700 font-bold">Chưa đăng nhập</span>
       </div>
-      <div class="flex gap-4 items-center">
+      <div class="flex gap-4 items-center mt-2 sm:mt-0">
         <div>
-          <span class="text-gray-400">Số dư: </span>
-          <span id="balanceDisplay" class="text-yellow-400 font-bold">0đ</span>
+          <span class="text-gray-600">Số dư: </span>
+          <span id="balanceDisplay" class="text-green-600 font-bold">0đ</span>
         </div>
         <div>
-          <span class="text-gray-400">ID: </span>
-          <span id="userIdDisplay" class="text-green-400 font-bold">-</span>
+          <span class="text-gray-600">ID: </span>
+          <span id="userIdDisplay" class="text-blue-600 font-bold">-</span>
         </div>
       </div>
     </div>
 
-    <!-- 🔸 Hàng nút -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-      <!-- Nạp tiền -->
-      <button id="topupBtn" class="flex items-center justify-center gap-2 text-sm font-semibold bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg h-14 col-span-2 transition">
-        Nạp Tiền - Số Dư
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
-          <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
-        </svg>
-      </button>
-
-      <!-- Đăng nhập / Đăng ký -->
-      <button id="accountBtn" class="flex items-center justify-center gap-2 text-sm font-semibold bg-[#2e2e2e]/80 hover:bg-[#3a3a3a] text-white rounded-lg h-14 col-span-1 border border-white/10 transition">
-        Đăng nhập / Đăng ký
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-      </button>
-
-      <!-- Đăng xuất -->
-      <button class="flex items-center justify-center gap-2 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-lg h-14 col-span-1 transition">
-        Đăng xuất
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m16 17 5-5-5-5" />
-          <path d="M21 12H9" />
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-        </svg>
-      </button>
-
-      <!-- Thông báo -->
-      <button class="flex items-center justify-center gap-2 text-sm font-semibold bg-[#121212]/80 hover:bg-[#1b1b1b] text-white rounded-lg h-14 col-span-2 border border-white/8 transition">
-        Thông báo
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10.268 21a2 2 0 0 0 3.464 0" />
-          <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-        </svg>
-      </button>
-
-      <!-- Hướng dẫn -->
-      <button class="flex items-center justify-center gap-2 text-sm font-semibold bg-[#2e2e2e]/80 hover:bg-[#3a3a3a] text-white rounded-lg h-14 col-span-2 border border-white/10 transition">
-        Hướng dẫn bố cục phím
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 7v14" />
-          <path d="M16 12h2" />
-          <path d="M16 8h2" />
-          <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
-          <path d="M6 12h2" />
-          <path d="M6 8h2" />
-        </svg>
-      </button>
+    <!-- Nút thao tác -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+      <button id="topupBtn" class="btn bg-yellow-400 hover:bg-yellow-500 text-black">Nạp Tiền</button>
+      <button id="accountBtn" class="btn btn-login">Đăng nhập</button>
+      <button id="logoutBtn" class="btn bg-red-500 hover:bg-red-600 text-white">Đăng xuất</button>
+      <button class="btn bg-gray-100 hover:bg-gray-200 text-black">Hướng dẫn</button>
     </div>
 
-    <!-- Gói máy 10k -->
-    <div class="bg-[#0f0f10] border border-white/6 rounded-xl p-4 mb-4">
-      <div class="flex items-center justify-between mb-3">
-        <div>
-          <div class="text-sm text-gray-300">GÓI</div>
-          <div class="text-xl font-bold">Tiêu Chuẩn</div>
-        </div>
-        <div class="text-right">
-          <div class="text-xs text-gray-400">Giá</div>
-          <div class="text-2xl font-extrabold text-white">10.000đ<span class="text-sm font-medium">/1h</span></div>
-        </div>
+    <!-- Gói Cloud Game -->
+    <h2 class="text-xl font-bold text-center text-blue-700 mb-4">Các gói Cloud Game</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+      <!-- Gói 1 -->
+      <div class="bg-white rounded-2xl border border-blue-100 shadow-md hover:shadow-xl p-4 text-center transition-transform hover:-translate-y-1">
+        <h3 class="text-lg font-bold text-blue-600">Gói Tiết Kiệm</h3>
+        <p class="text-2xl font-bold text-blue-700 mt-2">7.000đ / 1h</p>
+        <ul class="text-gray-600 text-sm mt-3 text-left list-disc list-inside">
+          <li>CPU: 2 Core (Ryzen 3 / i3)</li>
+          <li>RAM: 4GB</li>
+          <li>GPU: GTX 750 Ti / RX 550</li>
+          <li>Ổ cứng: SSD 60GB</li>
+          <li>Phù hợp: Liên Minh, CS:GO, CF</li>
+        </ul>
+        <button class="btn btn-thue bg-blue-500 hover:bg-blue-600 text-white w-full mt-4">Thuê Ngay</button>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-200 mb-3">
-        <div class="space-y-1">
-          <div class="flex justify-between"><span>CPU</span><span class="font-bold">i7-9700K</span></div>
-          <div class="flex justify-between"><span>GPU</span><span class="font-bold">RTX 2060 6GB</span></div>
-          <div class="flex justify-between"><span>RAM</span><span class="font-bold">16GB</span></div>
-        </div>
-        <div class="space-y-1">
-          <div class="flex justify-between"><span>Ổ cứng</span><span class="font-bold">512GB SSD</span></div>
-          <div class="flex justify-between"><span>Mạng</span><span class="font-bold">200 Mbps</span></div>
-          <div class="flex justify-between"><span>HĐH</span><span class="font-bold">Win 10/11</span></div>
-        </div>
+
+      <!-- Gói 2 -->
+      <div class="bg-white rounded-2xl border border-blue-100 shadow-md hover:shadow-xl p-4 text-center transition-transform hover:-translate-y-1">
+        <h3 class="text-lg font-bold text-blue-600">Gói Tiêu Chuẩn</h3>
+        <p class="text-2xl font-bold text-blue-700 mt-2">10.000đ / 1h</p>
+        <ul class="text-gray-600 text-sm mt-3 text-left list-disc list-inside">
+          <li>CPU: 4 Core (Ryzen 5 / i5)</li>
+          <li>RAM: 8GB</li>
+          <li>GPU: GTX 1050 Ti / RX 580</li>
+          <li>Ổ cứng: SSD 120GB</li>
+          <li>Phù hợp: Valorant, GTA V, PUBG Lite</li>
+        </ul>
+        <button class="btn btn-thue bg-blue-500 hover:bg-blue-600 text-white w-full mt-4">Thuê Ngay</button>
       </div>
-      <p class="text-xs text-gray-400 mb-3">Phù hợp chơi game trung - cao, độ trễ thấp, ổn định.</p>
-      <div class="flex gap-2">
-        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg h-12 transition">Chơi Ngay</button>
-        <button class="flex-1 bg-[#2e2e2e]/80 hover:bg-[#3a3a3a] text-white font-semibold rounded-lg h-12 border border-white/8 transition">Chi tiết</button>
+
+      <!-- Gói 3 -->
+      <div class="bg-white rounded-2xl border border-blue-100 shadow-md hover:shadow-xl p-4 text-center transition-transform hover:-translate-y-1">
+        <h3 class="text-lg font-bold text-blue-600">Gói Cao Cấp</h3>
+        <p class="text-2xl font-bold text-blue-700 mt-2">13.000đ / 1h</p>
+        <ul class="text-gray-600 text-sm mt-3 text-left list-disc list-inside">
+          <li>CPU: 6 Core (Ryzen 7 / i7)</li>
+          <li>RAM: 16GB</li>
+          <li>GPU: RTX 2060 / RX 6600</li>
+          <li>Ổ cứng: SSD NVMe 240GB</li>
+          <li>Phù hợp: Cyberpunk, Warzone, Fortnite</li>
+        </ul>
+        <button class="btn btn-thue bg-blue-500 hover:bg-blue-600 text-white w-full mt-4">Thuê Ngay</button>
       </div>
     </div>
 
-    <!-- Gói máy 7k1h -->
-    <div class="bg-[#0f0f10] border border-white/6 rounded-xl p-4 mb-4">
-      <div class="flex items-center justify-between mb-3">
-        <div>
-          <div class="text-sm text-gray-300">GÓI</div>
-          <div class="text-xl font-bold">Tiết Kiệm 1h</div>
-        </div>
-        <div class="text-right">
-          <div class="text-xs text-gray-400">Giá</div>
-          <div class="text-2xl font-extrabold text-white">7.000đ<span class="text-sm font-medium">/1h</span></div>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-200 mb-3">
-        <div class="space-y-1">
-          <div class="flex justify-between"><span>CPU</span><span class="font-bold">i3-10100</span></div>
-          <div class="flex justify-between"><span>GPU</span><span class="font-bold">GTX 1050 2GB</span></div>
-          <div class="flex justify-between"><span>RAM</span><span class="font-bold">8GB</span></div>
-        </div>
-        <div class="space-y-1">
-          <div class="flex justify-between"><span>Ổ cứng</span><span class="font-bold">256GB SSD</span></div>
-          <div class="flex justify-between"><span>Mạng</span><span class="font-bold">100 Mbps</span></div>
-          <div class="flex justify-between"><span>HĐH</span><span class="font-bold">Win 10</span></div>
-        </div>
-      </div>
-      <p class="text-xs text-gray-400 mb-3">Phù hợp các tựa game nhẹ, tiết kiệm chi phí.</p>
-      <div class="flex gap-2">
-        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg h-12 transition">Chơi Ngay</button>
-        <button class="flex-1 bg-[#2e2e2e]/80 hover:bg-[#3a3a3a] text-white font-semibold rounded-lg h-12 border border-white/8 transition">Chi tiết</button>
-      </div>
-    </div>
+    <!-- Giới thiệu -->
+    <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100 shadow-inner text-center">
+      <h3 class="text-xl font-bold text-blue-700 mb-2">Giới thiệu Limore Cloud Game</h3>
+      <p class="text-gray-600 leading-relaxed">
+        Limore Cloud Game giúp bạn chơi mọi tựa game PC ngay trên điện thoại, máy yếu hoặc trình duyệt.
+        Không cần cài đặt – chỉ cần Internet ổn định, bạn có thể truy cập máy chủ mạnh mẽ của Limore để chơi game mượt mà mọi lúc mọi nơi!
 
-    <!-- Phần giới thiệu & hỗ trợ chuyên nghiệp -->
-    <div class="bg-[#0f0f10] border border-white/6 rounded-xl p-4 mb-4 text-gray-200 text-sm">
-      <p>💻 TRUMBOX - Dịch vụ thuê máy chơi game trực tuyến chất lượng cao.</p>
-      <p>📱 Hỗ trợ khách hàng qua Zalo: <a href="https://zalo.me/0355761396" class="text-blue-500 font-bold">0355761396</a></p>
-      <p>⚡ Máy được cấu hình ổn định, kết nối mạng nhanh, phù hợp mọi tựa game.</p>
-    </div>
-
-    <!-- Cảnh báo nhỏ -->
-    <div class="text-xs text-gray-300 mb-2">
-      <strong class="text-red-500">Chú Ý:</strong> Máy không tự tắt khi thoát web — bạn vui lòng tự tắt để tránh tính tiền.
-    </div>
-
-    <!-- Footer nhỏ -->
-    <div class="text-center text-xs text-gray-500">
-      © 2025 - TRUMBOX
-    </div>
-
-  </div>
-
-  <!-- 🔸 Popup Form Đăng nhập / Đăng ký -->
-  <div id="authModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-
-      <div class="tabs">
-        <button class="tab active" id="loginTab">Đăng nhập</button>
-        <button class="tab" id="registerTab">Đăng ký</button>
-      </div>
-
-      <!-- Form đăng nhập -->
-      <form id="loginForm" class="form active">
-        <input type="text" placeholder="Tên đăng nhập" required>
-        <input type="password" placeholder="Mật khẩu" required>
-        <button type="submit" class="btn-submit">Đăng nhập</button>
-      </form>
-
-      <!-- Form đăng ký -->
-      <form id="registerForm" class="form">
-        <input type="text" placeholder="Tên đăng nhập" required>
-        <input type="password" placeholder="Mật khẩu" required>
-        <input type="password" placeholder="Xác nhận mật khẩu" required>
-        <button type="submit" class="btn-submit">Đăng ký</button>
-      </form>
+      </p>
+      <p class="mt-3 text-gray-500 text-sm">© 2025 LimoreCloud - Dịch vụ Cloud Gaming Việt Nam</p>
     </div>
   </div>
 
-  <!-- 🔸 Popup Nạp tiền QR -->
-  <div id="topupModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2 class="text-xl font-bold mb-3">Nạp Tiền</h2>
-      <p class="text-sm text-gray-600 mb-3">💡 Lưu ý: Nạp từ 100k trở lên mới được cộng tiền.</p>
-      <div class="flex flex-col items-center gap-2">
-        <img src="https://i.imgur.com/4mmpR89.png" alt="QR Nạp tiền" class="w-48 h-48">
-        <p class="text-sm text-gray-500">Quét QR để nạp tiền.</p>
+<!-- ===== PHẦN HỖ TRỢ ZALO (THÊM Ở CUỐI TRANG) ===== -->
+<div class="w-full max-w-4xl mx-auto mt-6">
+  <div class="bg-white/90 p-4 rounded-2xl border border-gray-200 shadow-md flex items-center justify-between gap-4">
+    <div class="flex items-center gap-4">
+      <!-- Zalo SVG icon -->
+      <div class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 border border-blue-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#0078FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V4a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"></path>
+        </svg>
       </div>
+
+      <div>
+        <div class="text-sm text-gray-600">Hỗ trợ khách hàng</div>
+        <div class="text-lg font-bold text-blue-700">Zalo: <span id="zaloNumber">0355761396</span></div>
+        <div class="text-sm text-gray-500">Nhập tin nhắn vào Zalo hoặc bấm nút mở Zalo để liên hệ trực tiếp</div>
+      </div>
+    </div>
+
+    <div class="flex gap-2 items-center">
+      <a href="https://zalo.me/0355761396" target="_blank" rel="noreferrer" class="btn px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold">
+        Mở Zalo
+      </a>
+      <a href="tel:0355761396" class="btn px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-black">
+        Gọi ngay
+      </a>
+    </div>
+  </div>
+</div>
+<!-- ===== KẾT THÚC PHẦN HỖ TRỢ ZALO ===== -->
+
+  <!-- POPUP ĐĂNG NHẬP -->
+  <div id="authPopup" class="popup-overlay">
+    <div class="popup-content" id="loginForm">
+      <span class="close-btn" id="closePopup">&times;</span>
+      <h2>Đăng Nhập</h2>
+      <input type="text" id="loginUsername" placeholder="Tên đăng nhập" />
+      <input type="password" id="loginPassword" placeholder="Mật khẩu" />
+      <button id="loginBtn">Đăng nhập</button>
+      <div class="switch-link" id="switchToRegister">Chưa có tài khoản? Đăng ký</div>
+    </div>
+
+    <div class="popup-content hidden absolute" id="registerForm">
+      <span class="close-btn" id="closePopup2">&times;</span>
+      <h2>Đăng Ký</h2>
+      <input type="text" id="registerUsername" placeholder="Tên đăng nhập" />
+      <input type="password" id="registerPassword" placeholder="Mật khẩu" />
+      <button id="registerBtn">Tạo tài khoản</button>
+      <div class="switch-link" id="switchToLogin">Đã có tài khoản? Đăng nhập</div>
     </div>
   </div>
 
-  <script>
-    // ==== Tài khoản ====
-    const accountBtn = document.getElementById('accountBtn');
-    const authModal = document.getElementById('authModal');
-    const closeAuth = authModal.querySelector('.close');
-    const loginTab = document.getElementById('loginTab');
-    const registerTab = document.getElementById('registerTab');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const usernameDisplay = document.getElementById('usernameDisplay');
-    const balanceDisplay = document.getElementById('balanceDisplay');
-    const userIdDisplay = document.getElementById('userIdDisplay');
-    const logoutBtn = document.querySelector('button.bg-red-600');
+  <!-- POPUP NẠP TIỀN -->
+  <div id="topupPopup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn" id="closeTopup">&times;</span>
+      <h2>Nạp Tiền Vào Tài Khoản</h2>
+      <img src="https://i.imgur.com/4mmpR89.png" alt="QR Nạp Tiền" class="mx-auto my-3 rounded-lg border border-gray-200 shadow-md" />
+      <p class="text-sm text-gray-600">⚠️ Vui lòng nạp 100.000đ trở lên để được cộng tiền</p>
+    </div>
+  </div>
 
-    // Load tài khoản từ localStorage
-    function loadAccount() {
-      const username = localStorage.getItem('username');
-      const balance = localStorage.getItem('balance');
-      const userId = localStorage.getItem('userId');
-      if (username && userId) {
-        usernameDisplay.innerText = username;
-        balanceDisplay.innerText = balance || '0đ';
-        userIdDisplay.innerText = userId;
-      }
+ <script>
+  const authPopup = document.getElementById("authPopup");
+  const topupPopup = document.getElementById("topupPopup");
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+  const accountBtn = document.getElementById("accountBtn");
+  const topupBtn = document.getElementById("topupBtn");
+  const closePopup = document.getElementById("closePopup");
+  const closePopup2 = document.getElementById("closePopup2");
+  const closeTopup = document.getElementById("closeTopup");
+  const switchToRegister = document.getElementById("switchToRegister");
+  const switchToLogin = document.getElementById("switchToLogin");
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  const balanceDisplay = document.getElementById("balanceDisplay");
+  const userIdDisplay = document.getElementById("userIdDisplay");
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  let currentUser = null;
+
+  // ======= TOAST HIỆN THÔNG BÁO =======
+  function showToast(message, type = "info") {
+    let toast = document.getElementById("toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "toast";
+      toast.className = "fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-5 py-3 rounded-xl shadow-lg opacity-0 pointer-events-none transition-all duration-500 text-center z-[2000]";
+      document.body.appendChild(toast);
     }
-    loadAccount();
-
-    accountBtn.onclick = () => authModal.style.display = 'flex';
-    closeAuth.onclick = () => authModal.style.display = 'none';
-    loginTab.onclick = () => {
-      loginTab.classList.add('active');
-      registerTab.classList.remove('active');
-      loginForm.classList.add('active');
-      registerForm.classList.remove('active');
+    const colors = {
+      success: "bg-green-600",
+      error: "bg-red-600",
+      info: "bg-blue-600",
+      warning: "bg-yellow-500 text-black"
     };
-    registerTab.onclick = () => {
-      registerTab.classList.add('active');
-      loginTab.classList.remove('active');
-      registerForm.classList.add('active');
-      loginForm.classList.remove('active');
+    toast.className = `fixed bottom-6 left-1/2 transform -translate-x-1/2 ${colors[type] || colors.info} text-white px-5 py-3 rounded-xl shadow-lg opacity-0 pointer-events-none transition-all duration-500 text-center z-[2000]`;
+    toast.textContent = message;
+    toast.style.opacity = "1";
+    toast.style.pointerEvents = "auto";
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.pointerEvents = "none";
+    }, 2500);
+  }
+
+  // Ghi đè alert() để dùng showToast
+  window.alert = function (msg) { showToast(msg, "info"); };
+
+  // ======= POPUP ĐĂNG NHẬP / ĐĂNG KÝ =======
+  accountBtn.onclick = () => {
+    authPopup.classList.add("active");
+    loginForm.classList.remove("hidden");
+    registerForm.classList.add("hidden");
+  };
+
+  topupBtn.onclick = () => topupPopup.classList.add("active");
+
+  [closePopup, closePopup2, closeTopup].forEach(btn => {
+    btn.onclick = () => {
+      authPopup.classList.remove("active");
+      topupPopup.classList.remove("active");
     };
+  });
 
-    loginForm.onsubmit = (e) => {
-      e.preventDefault();
-      const username = loginForm.querySelector('input[type="text"]').value;
-      const userId = 'ID' + Math.floor(Math.random() * 10000);
-      usernameDisplay.innerText = username;
-      balanceDisplay.innerText = '0đ';
-      userIdDisplay.innerText = userId;
-      authModal.style.display = 'none';
-      localStorage.setItem('username', username);
-      localStorage.setItem('balance', '0đ');
-      localStorage.setItem('userId', userId);
-    };
+  switchToRegister.onclick = () => {
+    loginForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+  };
+  switchToLogin.onclick = () => {
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  };
 
-    registerForm.onsubmit = (e) => {
-      e.preventDefault();
-      const username = registerForm.querySelector('input[type="text"]').value;
-      const userId = 'ID' + Math.floor(Math.random() * 10000);
-      usernameDisplay.innerText = username;
-      balanceDisplay.innerText = '0đ';
-      userIdDisplay.innerText = userId;
-      authModal.style.display = 'none';
-      localStorage.setItem('username', username);
-      localStorage.setItem('balance', '0đ');
-      localStorage.setItem('userId', userId);
-    };
+  // ======= ĐĂNG KÝ =======
+  registerBtn.onclick = () => {
+    const username = document.getElementById("registerUsername").value.trim();
+    const password = document.getElementById("registerPassword").value.trim();
+    if (!username || !password) return showToast("Vui lòng nhập đầy đủ thông tin!", "warning");
+    if (localStorage.getItem(username)) return showToast("Tên tài khoản đã tồn tại!", "error");
+    localStorage.setItem(username, JSON.stringify({ password, balance: 0 }));
+    showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  };
 
-    // ==== Đăng xuất ====
-    logoutBtn.onclick = () => {
-      usernameDisplay.innerText = 'Chưa đăng nhập';
-      balanceDisplay.innerText = '0đ';
-      userIdDisplay.innerText = '-';
-      localStorage.removeItem('username');
-      localStorage.removeItem('balance');
-      localStorage.removeItem('userId');
-    };
+  // ======= ĐĂNG NHẬP =======
+  loginBtn.onclick = () => {
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+    const data = JSON.parse(localStorage.getItem(username) || "{}");
+    if (data.password === password) {
+      currentUser = { username, balance: data.balance || 0, id: Math.floor(Math.random() * 9999) };
+      usernameDisplay.textContent = currentUser.username;
+      balanceDisplay.textContent = currentUser.balance.toLocaleString() + "đ";
+      userIdDisplay.textContent = currentUser.id;
+      authPopup.classList.remove("active");
+      showToast("Đăng nhập thành công!", "success");
+    } else {
+      showToast("Sai tài khoản hoặc mật khẩu!", "error");
+    }
+  };
 
-    // ==== Nạp tiền ====
-    const topupBtn = document.getElementById('topupBtn');
-    const topupModal = document.getElementById('topupModal');
-    const topupClose = topupModal.querySelector('.close');
+  // ======= ĐĂNG XUẤT =======
+  logoutBtn.onclick = () => {
+    currentUser = null;
+    usernameDisplay.textContent = "Chưa đăng nhập";
+    balanceDisplay.textContent = "0đ";
+    userIdDisplay.textContent = "-";
+    showToast("Đã đăng xuất!", "info");
+  };
 
-    topupBtn.onclick = () => topupModal.style.display = 'flex';
-    topupClose.onclick = () => topupModal.style.display = 'none';
-
-    // ==== Chơi Ngay ====
-    const playBtns = document.querySelectorAll('.bg-blue-600');
-    playBtns.forEach(btn => {
-      btn.onclick = () => {
-        const balanceStr = balanceDisplay.innerText.replace('đ','').replace(/\./g,'');
-        const balance = parseInt(balanceStr) || 0;
-        if(balance < 100000){
-          // thông báo đỏ
-          const tempMsg = document.createElement('div');
-          tempMsg.innerText = '⚠️ Không đủ số dư!';
-          tempMsg.style.color = 'red';
-          tempMsg.style.textAlign = 'center';
-          tempMsg.style.marginTop = '5px';
-          btn.parentElement.appendChild(tempMsg);
-          setTimeout(()=>tempMsg.remove(), 3000);
-        } else {
-          // hiệu ứng load thanh
-          const progress = document.createElement('div');
-          progress.style.width = '0%';
-          progress.style.height = '5px';
-          progress.style.background = 'green';
-          progress.style.borderRadius = '3px';
-          btn.parentElement.appendChild(progress);
-          let width = 0;
-          const interval = setInterval(()=>{
-            width += 2;
-            progress.style.width = width + '%';
-            if(width>=100){
-              clearInterval(interval);
-              window.location.href = 'https://discord.gg/xQbKhysh';
-            }
-          },30);
-        }
+  // ======= XỬ LÝ KHI BẤM "THUÊ NGAY" =======
+  document.querySelectorAll(".btn-thue").forEach(btn => {
+    btn.onclick = () => {
+      if (!currentUser) {
+        showToast("Vui lòng đăng nhập để thuê máy!", "warning");
+        setTimeout(() => {
+          authPopup.classList.add("active");
+          loginForm.classList.remove("hidden");
+          registerForm.classList.add("hidden");
+        }, 1000);
+        return;
       }
-    });
-
-    window.onclick = (e) => {
-      if (e.target == authModal) authModal.style.display = 'none';
-      if (e.target == topupModal) topupModal.style.display = 'none';
+      if (currentUser.balance <= 0) {
+        showToast("Số dư không đủ để thuê máy!", "error");
+        return;
+      }
+      showToast("Thuê máy thành công! Vui lòng kiểm tra tài khoản.", "success");
     };
-  </script>
+  });
+
+  // ======= ẨN POPUP KHI NHẤN NGOÀI VÙNG =======
+  window.onclick = (e) => {
+    if (e.target === authPopup || e.target === topupPopup) {
+      authPopup.classList.remove("active");
+      topupPopup.classList.remove("active");
+    }
+  };
+</script>
 </body>
 </html>
