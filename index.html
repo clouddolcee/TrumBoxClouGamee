@@ -114,6 +114,17 @@
     }
 
     .close-btn:hover { color: black; }
+
+    .badge-free {
+      display: inline-block;
+      background: linear-gradient(90deg,#34d399,#10b981);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body class="flex flex-col items-center min-h-screen p-4">
@@ -149,7 +160,24 @@
 
     <!-- Gói Cloud Game -->
     <h2 class="text-xl font-bold text-center text-blue-700 mb-4">Các gói Cloud Game</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+
+      <!-- Gói Free mới -->
+      <div class="bg-white rounded-2xl border border-blue-100 shadow-md hover:shadow-xl p-4 text-center transition-transform hover:-translate-y-1">
+        <div class="badge-free">Gói Free</div>
+        <h3 class="text-lg font-bold text-blue-600">Windows 11 Gaming VM</h3>
+        <p class="text-2xl font-bold text-blue-700 mt-2">Miễn phí / 1h</p>
+        <ul class="text-gray-600 text-sm mt-3 text-left list-disc list-inside">
+          <li>CPU: 4 vCPU</li>
+          <li>RAM: 28GB</li>
+          <li>GPU: NVIDIA RTX 2060 (VM passthrough)</li>
+          <li>Ổ cứng: SSD NVMe 120GB</li>
+          <li>Hệ điều hành: Windows 11</li>
+          <li>Phù hợp: Game nặng/Streaming nhẹ</li>
+        </ul>
+        <button class="btn btn-thue bg-green-500 hover:bg-green-600 text-white w-full mt-4" data-free="true">Nhận máy Free</button>
+        <div class="text-xs text-gray-500 mt-2">Lưu ý: mỗi user chỉ nhận thử 1 phiên free (tùy cấu hình và chính sách).</div>
+      </div>
 
       <!-- Gói 1 -->
       <div class="bg-white rounded-2xl border border-blue-100 shadow-md hover:shadow-xl p-4 text-center transition-transform hover:-translate-y-1">
@@ -200,7 +228,6 @@
       <p class="text-gray-600 leading-relaxed">
         Limore Cloud Game giúp bạn chơi mọi tựa game PC ngay trên điện thoại, máy yếu hoặc trình duyệt.
         Không cần cài đặt – chỉ cần Internet ổn định, bạn có thể truy cập máy chủ mạnh mẽ của Limore để chơi game mượt mà mọi lúc mọi nơi!
-
       </p>
       <p class="mt-3 text-gray-500 text-sm">© 2025 LimoreCloud - Dịch vụ Cloud Gaming Việt Nam</p>
     </div>
@@ -312,7 +339,6 @@
     }, 2500);
   }
 
-  // Ghi đè alert() để dùng showToast
   window.alert = function (msg) { showToast(msg, "info"); };
 
   // ======= POPUP ĐĂNG NHẬP / ĐĂNG KÝ =======
@@ -358,7 +384,11 @@
     const password = document.getElementById("loginPassword").value.trim();
     const data = JSON.parse(localStorage.getItem(username) || "{}");
     if (data.password === password) {
-      currentUser = { username, balance: data.balance || 0, id: Math.floor(Math.random() * 9999) };
+      if (!data.id) {
+        data.id = Math.floor(1000 + Math.random() * 8999);
+        localStorage.setItem(username, JSON.stringify(data));
+      }
+      currentUser = { username, balance: data.balance || 0, id: data.id };
       usernameDisplay.textContent = currentUser.username;
       balanceDisplay.textContent = currentUser.balance.toLocaleString() + "đ";
       userIdDisplay.textContent = currentUser.id;
@@ -378,22 +408,46 @@
     showToast("Đã đăng xuất!", "info");
   };
 
+  // ======= HIỆU ỨNG LOAD ĐƠN GIẢN =======
+  function showLoadingOverlay(text = "Đang khởi tạo máy...") {
+    const overlay = document.createElement("div");
+    overlay.className = "fixed inset-0 bg-white/80 flex flex-col items-center justify-center z-[3000]";
+    overlay.innerHTML = `
+      <div class="animate-spin border-4 border-blue-500 border-t-transparent rounded-full w-12 h-12 mb-4"></div>
+      <div class="text-blue-700 font-semibold text-lg">${text}</div>
+    `;
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
   // ======= XỬ LÝ KHI BẤM "THUÊ NGAY" =======
   document.querySelectorAll(".btn-thue").forEach(btn => {
     btn.onclick = () => {
+      const isFree = btn.dataset.free === "true";
       if (!currentUser) {
         showToast("Vui lòng đăng nhập để thuê máy!", "warning");
         setTimeout(() => {
           authPopup.classList.add("active");
           loginForm.classList.remove("hidden");
           registerForm.classList.add("hidden");
-        }, 1000);
+        }, 800);
         return;
       }
-      if (currentUser.balance <= 0) {
+
+      if (!isFree && currentUser.balance <= 0) {
         showToast("Số dư không đủ để thuê máy!", "error");
         return;
       }
+
+      if (isFree) {
+        const loading = showLoadingOverlay();
+        showToast("Nhận máy Free thành công! Đang khởi tạo...", "success");
+        setTimeout(() => {
+          window.location.href = "https://gpu.2z2.top/";
+        }, 2000);
+        return;
+      }
+
       showToast("Thuê máy thành công! Vui lòng kiểm tra tài khoản.", "success");
     };
   });
