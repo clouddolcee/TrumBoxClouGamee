@@ -170,13 +170,21 @@
         <ul class="text-gray-600 text-sm mt-3 text-left list-disc list-inside">
           <li>CPU: 4 vCPU</li>
           <li>RAM: 28GB</li>
-          <li>GPU: NVIDIA RTX 2060 (VM passthrough)</li>
+          <li>GPU: NVIDIA RTX 2060 (Gaming VM)</li>
           <li>Ổ cứng: SSD NVMe 120GB</li>
           <li>Hệ điều hành: Windows 11</li>
           <li>Phù hợp: Game nặng/Streaming nhẹ</li>
         </ul>
         <button class="btn btn-thue bg-green-500 hover:bg-green-600 text-white w-full mt-4" data-free="true">Nhận máy Free</button>
         <div class="text-xs text-gray-500 mt-2">Lưu ý: mỗi user chỉ nhận thử 1 phiên free (tùy cấu hình và chính sách).</div>
+
+        <!-- VIDEO HƯỚNG DẪN -->
+        <div class="mt-4">
+          <h4 class="text-sm font-semibold text-blue-700 mb-2">Video hướng dẫn nhận máy Free:</h4>
+          <div class="aspect-w-16 aspect-h-9">
+            <iframe class="w-full h-48 sm:h-56 md:h-64" src="https://www.youtube.com/embed/0jGF3JlvChQ" title="Hướng dẫn nhận máy Free" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
 
       <!-- Gói 1 -->
@@ -221,80 +229,93 @@
         <button class="btn btn-thue bg-blue-500 hover:bg-blue-600 text-white w-full mt-4">Thuê Ngay</button>
       </div>
     </div>
+   <!-- PHẦN HỖ TRỢ KHÁCH HÀNG & NHÓM CHAT (GỌN GÀNG) -->
+<div class="w-full max-w-4xl mx-auto mt-6 grid sm:grid-cols-2 gap-4">
 
-    <!-- Giới thiệu -->
-    <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100 shadow-inner text-center">
-      <h3 class="text-xl font-bold text-blue-700 mb-2">Giới thiệu Limore Cloud Game</h3>
-      <p class="text-gray-600 leading-relaxed">
-        Limore Cloud Game giúp bạn chơi mọi tựa game PC ngay trên điện thoại, máy yếu hoặc trình duyệt.
-        Không cần cài đặt – chỉ cần Internet ổn định, bạn có thể truy cập máy chủ mạnh mẽ của Limore để chơi game mượt mà mọi lúc mọi nơi!
-      </p>
-      <p class="mt-3 text-gray-500 text-sm">© 2025 LimoreCloud - Dịch vụ Cloud Gaming Việt Nam</p>
+  <!-- Zalo -->
+  <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-md flex items-center gap-4 hover:shadow-xl transition">
+    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 border border-blue-100">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#0078FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V4a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"></path>
+      </svg>
+    </div>
+    <div class="flex-1 text-left">
+      <div class="text-sm text-gray-600">Hỗ trợ khách hàng</div>
+      <div class="text-lg font-bold text-blue-700">Zalo: <span id="zaloNumber">0355761396</span></div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <a href="https://zalo.me/0355761396" target="_blank" class="btn px-3 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm">Mở Zalo</a>
+      <a href="tel:0355761396" class="btn px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-black font-semibold text-sm">Gọi ngay</a>
     </div>
   </div>
 
-<!-- ===== PHẦN HỖ TRỢ ZALO (THÊM Ở CUỐI TRANG) ===== -->
-<div class="w-full max-w-4xl mx-auto mt-6">
-  <div class="bg-white/90 p-4 rounded-2xl border border-gray-200 shadow-md flex items-center justify-between gap-4">
-    <div class="flex items-center gap-4">
-      <!-- Zalo SVG icon -->
-      <div class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 border border-blue-100">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#0078FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V4a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"></path>
-        </svg>
-      </div>
-
-      <div>
-        <div class="text-sm text-gray-600">Hỗ trợ khách hàng</div>
-        <div class="text-lg font-bold text-blue-700">Zalo: <span id="zaloNumber">0355761396</span></div>
-        <div class="text-sm text-gray-500">Nhập tin nhắn vào Zalo hoặc bấm nút mở Zalo để liên hệ trực tiếp</div>
-      </div>
+  <!-- Discord -->
+  <div class="bg-white p-4 rounded-2xl border border-purple-200 shadow-md flex items-center gap-4 hover:shadow-xl transition">
+    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-purple-50 border border-purple-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#5865F2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a4 4 0 0 1-4 4H7l-5 3V4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+      </svg>
     </div>
-
-    <div class="flex gap-2 items-center">
-      <a href="https://zalo.me/0355761396" target="_blank" rel="noreferrer" class="btn px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold">
-        Mở Zalo
-      </a>
-      <a href="tel:0355761396" class="btn px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-black">
-        Gọi ngay
-      </a>
+    <div class="flex-1 text-left">
+      <div class="text-sm text-gray-600">Nhóm chat cộng đồng</div>
+      <div class="text-lg font-bold text-purple-700">Discord</div>
+    </div>
+    <div class="flex">
+      <a href="https://discord.gg/xu6mH4Yb" target="_blank" class="btn px-3 py-2 rounded-xl bg-purple-500 hover:bg-purple-600 text-white font-semibold text-sm">Tham gia</a>
     </div>
   </div>
 </div>
-<!-- ===== KẾT THÚC PHẦN HỖ TRỢ ZALO ===== -->
 
-  <!-- POPUP ĐĂNG NHẬP -->
-  <div id="authPopup" class="popup-overlay">
-    <div class="popup-content" id="loginForm">
-      <span class="close-btn" id="closePopup">&times;</span>
-      <h2>Đăng Nhập</h2>
-      <input type="text" id="loginUsername" placeholder="Tên đăng nhập" />
-      <input type="password" id="loginPassword" placeholder="Mật khẩu" />
-      <button id="loginBtn">Đăng nhập</button>
-      <div class="switch-link" id="switchToRegister">Chưa có tài khoản? Đăng ký</div>
-    </div>
+<!-- PHẦN GIỚI THIỆU NGẮN GỌN (CUỐI TRANG) -->
+<div class="w-full max-w-4xl mx-auto mt-6 bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-inner text-center">
+  <h3 class="text-xl font-bold text-blue-700 mb-2">Giới thiệu Limore Cloud Game</h3>
+  <p class="text-gray-600 leading-relaxed">
+    Limore Cloud Game giúp bạn chơi mọi tựa game PC ngay trên điện thoại, không cần cài đặt. 
+    Máy chủ mạnh mẽ, chơi mượt mà mọi lúc mọi nơi!
+  </p>
+  <ul class="text-gray-600 mt-3 flex justify-center gap-4 text-sm font-semibold">
+    <li>⚡ Nhanh & ổn định</li>
+    <li>💻 Máy ảo mạnh mẽ</li>
+    <li>📱 Chơi trực tiếp trên điện thoại</li>
+  </ul>
+  <p class="mt-3 text-gray-500 text-sm">© 2025 LimoreCloud - Dịch vụ Cloud Gaming Việt Nam</p>
+</div>
 
-    <div class="popup-content hidden absolute" id="registerForm">
-      <span class="close-btn" id="closePopup2">&times;</span>
-      <h2>Đăng Ký</h2>
-      <input type="text" id="registerUsername" placeholder="Tên đăng nhập" />
-      <input type="password" id="registerPassword" placeholder="Mật khẩu" />
-      <button id="registerBtn">Tạo tài khoản</button>
-      <div class="switch-link" id="switchToLogin">Đã có tài khoản? Đăng nhập</div>
-    </div>
+
+<!-- ===== KẾT THÚC PHẦN HỖ TRỢ ===== -->
+
+<!-- POPUP LOGIN / REGISTER & TOPUP GIỮ NGUYÊN -->
+<div id="authPopup" class="popup-overlay">
+  <div class="popup-content" id="loginForm">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <h2>Đăng Nhập</h2>
+    <input type="text" id="loginUsername" placeholder="Tên đăng nhập" />
+    <input type="password" id="loginPassword" placeholder="Mật khẩu" />
+    <button id="loginBtn">Đăng nhập</button>
+    <div class="switch-link" id="switchToRegister">Chưa có tài khoản? Đăng ký</div>
   </div>
 
-  <!-- POPUP NẠP TIỀN -->
-  <div id="topupPopup" class="popup-overlay">
-    <div class="popup-content">
-      <span class="close-btn" id="closeTopup">&times;</span>
-      <h2>Nạp Tiền Vào Tài Khoản</h2>
-      <img src="https://i.imgur.com/4mmpR89.png" alt="QR Nạp Tiền" class="mx-auto my-3 rounded-lg border border-gray-200 shadow-md" />
-      <p class="text-sm text-gray-600">⚠️ Vui lòng nạp 100.000đ trở lên để được cộng tiền</p>
-    </div>
+  <div class="popup-content hidden absolute" id="registerForm">
+    <span class="close-btn" id="closePopup2">&times;</span>
+    <h2>Đăng Ký</h2>
+    <input type="text" id="registerUsername" placeholder="Tên đăng nhập" />
+    <input type="password" id="registerPassword" placeholder="Mật khẩu" />
+    <button id="registerBtn">Tạo tài khoản</button>
+    <div class="switch-link" id="switchToLogin">Đã có tài khoản? Đăng nhập</div>
   </div>
+</div>
 
- <script>
+<div id="topupPopup" class="popup-overlay">
+  <div class="popup-content">
+    <span class="close-btn" id="closeTopup">&times;</span>
+    <h2>Nạp Tiền Vào Tài Khoản</h2>
+    <img src="https://i.imgur.com/4mmpR89.png" alt="QR Nạp Tiền" class="mx-auto my-3 rounded-lg border border-gray-200 shadow-md" />
+    <p class="text-sm text-gray-600">⚠️ Vui lòng nạp 100.000đ trở lên để được cộng tiền</p>
+  </div>
+</div>
+
+<!-- SCRIPT GIỮ NGUYÊN -->
+<script>
   const authPopup = document.getElementById("authPopup");
   const topupPopup = document.getElementById("topupPopup");
   const loginForm = document.getElementById("loginForm");
@@ -314,7 +335,7 @@
   const logoutBtn = document.getElementById("logoutBtn");
   let currentUser = null;
 
-  // ======= TOAST HIỆN THÔNG BÁO =======
+  // ===== TOAST HIỆN THÔNG BÁO =====
   function showToast(message, type = "info") {
     let toast = document.getElementById("toast");
     if (!toast) {
@@ -339,24 +360,21 @@
     }, 2500);
   }
 
-  window.alert = function (msg) { showToast(msg, "info"); };
+  window.alert = function(msg) { showToast(msg, "info"); };
 
-  // ======= POPUP ĐĂNG NHẬP / ĐĂNG KÝ =======
+  // ===== HIỂN THỊ POPUP =====
   accountBtn.onclick = () => {
     authPopup.classList.add("active");
     loginForm.classList.remove("hidden");
     registerForm.classList.add("hidden");
   };
-
   topupBtn.onclick = () => topupPopup.classList.add("active");
-
   [closePopup, closePopup2, closeTopup].forEach(btn => {
     btn.onclick = () => {
       authPopup.classList.remove("active");
       topupPopup.classList.remove("active");
     };
   });
-
   switchToRegister.onclick = () => {
     loginForm.classList.add("hidden");
     registerForm.classList.remove("hidden");
@@ -366,7 +384,7 @@
     loginForm.classList.remove("hidden");
   };
 
-  // ======= ĐĂNG KÝ =======
+  // ===== ĐĂNG KÝ =====
   registerBtn.onclick = () => {
     const username = document.getElementById("registerUsername").value.trim();
     const password = document.getElementById("registerPassword").value.trim();
@@ -378,7 +396,7 @@
     loginForm.classList.remove("hidden");
   };
 
-  // ======= ĐĂNG NHẬP =======
+  // ===== ĐĂNG NHẬP =====
   loginBtn.onclick = () => {
     const username = document.getElementById("loginUsername").value.trim();
     const password = document.getElementById("loginPassword").value.trim();
@@ -389,9 +407,8 @@
         localStorage.setItem(username, JSON.stringify(data));
       }
       currentUser = { username, balance: data.balance || 0, id: data.id };
-      usernameDisplay.textContent = currentUser.username;
-      balanceDisplay.textContent = currentUser.balance.toLocaleString() + "đ";
-      userIdDisplay.textContent = currentUser.id;
+      localStorage.setItem("loggedInUser", JSON.stringify(currentUser)); // lưu trạng thái đăng nhập
+      updateDisplay();
       authPopup.classList.remove("active");
       showToast("Đăng nhập thành công!", "success");
     } else {
@@ -399,16 +416,37 @@
     }
   };
 
-  // ======= ĐĂNG XUẤT =======
+  // ===== ĐĂNG XUẤT =====
   logoutBtn.onclick = () => {
     currentUser = null;
-    usernameDisplay.textContent = "Chưa đăng nhập";
-    balanceDisplay.textContent = "0đ";
-    userIdDisplay.textContent = "-";
+    localStorage.removeItem("loggedInUser");
+    updateDisplay();
     showToast("Đã đăng xuất!", "info");
   };
 
-  // ======= HIỆU ỨNG LOAD ĐƠN GIẢN =======
+  // ===== CẬP NHẬT HIỂN THỊ TÀI KHOẢN =====
+  function updateDisplay() {
+    if (currentUser) {
+      usernameDisplay.textContent = currentUser.username;
+      balanceDisplay.textContent = currentUser.balance.toLocaleString() + "đ";
+      userIdDisplay.textContent = currentUser.id;
+    } else {
+      usernameDisplay.textContent = "Chưa đăng nhập";
+      balanceDisplay.textContent = "0đ";
+      userIdDisplay.textContent = "-";
+    }
+  }
+
+  // ===== KHÔI PHỤC TRẠNG THÁI KHI LOAD LẠI TRANG =====
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedUser = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+    if (savedUser) {
+      currentUser = savedUser;
+      updateDisplay();
+    }
+  });
+
+  // ===== HIỆU ỨNG THUÊ MÁY =====
   function showLoadingOverlay(text = "Đang khởi tạo máy...") {
     const overlay = document.createElement("div");
     overlay.className = "fixed inset-0 bg-white/80 flex flex-col items-center justify-center z-[3000]";
@@ -420,7 +458,6 @@
     return overlay;
   }
 
-  // ======= XỬ LÝ KHI BẤM "THUÊ NGAY" =======
   document.querySelectorAll(".btn-thue").forEach(btn => {
     btn.onclick = () => {
       const isFree = btn.dataset.free === "true";
@@ -452,7 +489,6 @@
     };
   });
 
-  // ======= ẨN POPUP KHI NHẤN NGOÀI VÙNG =======
   window.onclick = (e) => {
     if (e.target === authPopup || e.target === topupPopup) {
       authPopup.classList.remove("active");
